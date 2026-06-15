@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Application/PrimeShop.Application.csproj" />
+  <Project Path="Domain/PrimeShop.Domain.csproj" />
+  <Project Path="Infrastructure/PrimeShop.Infrastructure.csproj" />
+  <Project Path="WebApi/PrimeShop.WebApi.csproj" />
+</Solution>
