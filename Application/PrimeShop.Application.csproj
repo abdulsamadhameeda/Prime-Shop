@@ -12,12 +12,30 @@
 
   <ItemGroup>
     <Folder Include="Common\Mappings\" />
-    <Folder Include="Categories\" />
-    <Folder Include="Baskets\" />
-    <Folder Include="Orders\" />
-    <Folder Include="Products\Commands\" />
-    <Folder Include="Products\Dtos\" />
-    <Folder Include="Products\Queries\" />
+    <Folder Include="features\BasketItem\Commands\" />
+    <Folder Include="features\BasketItem\Dtos\" />
+    <Folder Include="features\BasketItem\Queries\" />
+    <Folder Include="features\Basket\Commands\" />
+    <Folder Include="features\Basket\Dtos\" />
+    <Folder Include="features\Basket\Queries\" />
+    <Folder Include="features\Category\Dtos\" />
+    <Folder Include="features\Category\Queries\" />
+    <Folder Include="features\Customer\Commands\" />
+    <Folder Include="features\Customer\Dtos\" />
+    <Folder Include="features\Customer\Queries\" />
+    <Folder Include="features\OrderItem\Commands\" />
+    <Folder Include="features\OrderItem\Dtos\" />
+    <Folder Include="features\OrderItem\Queries\" />
+    <Folder Include="features\Order\Commands\" />
+    <Folder Include="features\Order\Dtos\" />
+    <Folder Include="features\Order\Queries\" />
+    <Folder Include="features\Product\Dtos\" />
+    <Folder Include="features\Product\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
   </ItemGroup>
 
 </Project>
