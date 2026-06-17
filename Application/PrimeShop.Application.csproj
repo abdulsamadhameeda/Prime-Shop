@@ -10,4 +10,14 @@
     <ProjectReference Include="..\Domain\PrimeShop.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\Mappings\" />
+    <Folder Include="Categories\" />
+    <Folder Include="Baskets\" />
+    <Folder Include="Orders\" />
+    <Folder Include="Products\Commands\" />
+    <Folder Include="Products\Dtos\" />
+    <Folder Include="Products\Queries\" />
+  </ItemGroup>
+
 </Project>
