@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PrimeShop.Application.features.Category.Commands.CreateCategory;
+namespace PrimeShop.Application.features.Category.Dtos;
 
 public record CreateCategoryCommand(
     string Name,

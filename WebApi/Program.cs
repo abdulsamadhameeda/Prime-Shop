@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Infrastructure.Persistence;
 using PrimeShop.Application;
+using PrimeShop.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddScoped<IApplicationDbContext>(provider =>
     provider.GetRequiredService<ApplicationDbContext>());
 
 builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using PrimeShop.Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace PrimeShop.Domain.Entities
 {
-    public class Category
+    public class Category :Entity
     {
 
         public Guid Id { get; set; }

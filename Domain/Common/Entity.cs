@@ -4,7 +4,10 @@ using System.Text;
 
 namespace PrimeShop.Domain.Common
 {
-    internal class Entity
+    public abstract class Entity
     {
+
+        public Guid Id { get; set; }
+
     }
 }

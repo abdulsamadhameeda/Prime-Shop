@@ -1,31 +1,32 @@
 ﻿using MediatR;
 using PrimeShop.Application.Common.Interfaces;
+using PrimeShop.Application.features.Category.Dtos;
 
 
-namespace PrimeShop.Application.features.Category.Commands.CreateCategory;
+namespace PrimeShop.Application.features.Category.Commands;
 
 public class CreateCategoryHandler : IRequestHandler<CreateCategoryCommand, Guid>
 {
 
-    private readonly IApplicationDbContext _DbContext;
-    public CreateCategoryHandler(IApplicationDbContext context)
+    private readonly IRepository<Domain.Entities.Category> _categoryRepo;
+
+    public CreateCategoryHandler(IRepository<Domain.Entities.Category> categoryRepo)
     {
-        _DbContext = context;
+        _categoryRepo = categoryRepo;
     }
     public async Task<Guid> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         var category = new Domain.Entities.Category
         {
-            Id = Guid.NewGuid(),
             Name = request.Name,
             Description = request.Description
 
         };
 
-        _DbContext.Categories.Add(category);
+        _categoryRepo.Add(category);
 
-        await _DbContext.SaveChangesAsync(cancellationToken);
-      
+        await _categoryRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
+
         return category.Id;
     }
 }

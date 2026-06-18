@@ -4,7 +4,8 @@ using System.Text;
 
 namespace PrimeShop.Application.Common.Interfaces
 {
-    internal interface IUnitOfWork
+    public interface IUnitOfWork
     {
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

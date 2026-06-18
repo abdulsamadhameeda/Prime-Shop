@@ -27,9 +27,9 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             CategoryId = request.CategoryId       
         };
 
-        _DbContext.Products.Add(product);
+        //_DbContext.Products.Add(product);
 
-        await _DbContext.SaveChangesAsync(cancellationToken);
+        //await _DbContext.SaveChangesAsync(cancellationToken);
 
         return product.Id;
     }
