@@ -20,11 +20,11 @@ namespace PrimeShop.Application.features.Category.Commands
 
         public async Task<Guid> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
         {
-            var category = await _categoryRepo.GetAsync(request.categoryId);
+            var category = await _categoryRepo.GetAsync(request.Id);
 
             if (category != null)
             {
-                _categoryRepo.Update(category);
+                _categoryRepo.Delete(category);
             }
 
             await _categoryRepo.UnitOfWork.SaveChangesAsync(cancellationToken);

@@ -19,6 +19,24 @@ namespace PrimeShop.WebApi.Controllers
         }
 
 
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            var result = await _mediator.Send(new GetAllCategoryQueries());
+
+            return Ok(result);
+        }
+
+
+        [HttpGet("GetByIdCategories")]
+        public async Task<IActionResult> GetByIdCategories([FromQuery] Guid id)
+        {
+            var result = await _mediator.Send(new GetByIdCategoryQueries(id));
+
+            return Ok(result);
+        }
+
+
         [HttpPost("Create")]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryCommand command)
         {
@@ -26,14 +44,14 @@ namespace PrimeShop.WebApi.Controllers
             return Ok(category);
         }
 
-        [HttpPost("Update")]
+        [HttpPut("Update")]
         public async Task<IActionResult> UpdateCategory([FromBody] UpdateCategoryCommand command)
         {
             var category = await _mediator.Send(command);
             return Ok(category);
         }
-        [HttpPost("Delete")]
-        public async Task<IActionResult> DeleteCategory([FromBody] DeleteCategoryCommand command)
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> DeleteCategory([FromQuery] DeleteCategoryCommand command)
         {
             var category = await _mediator.Send(command);
             return Ok(category);

@@ -8,7 +8,7 @@ namespace PrimeShop.Application.features.Category.Dtos
 
     public record DeleteCategoryCommand
    (
-       Guid categoryId
+       Guid Id
     
    ) : IRequest<Guid>;
 }

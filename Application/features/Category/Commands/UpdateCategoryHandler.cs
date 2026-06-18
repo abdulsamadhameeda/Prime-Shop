@@ -19,7 +19,7 @@ namespace PrimeShop.Application.features.Category.Commands
 
         public async Task<Guid> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
-            var category = await _categoryRepo.GetAsync(request.categoryId);
+            var category = await _categoryRepo.GetAsync(request.Id);
 
             if(category != null)
             {

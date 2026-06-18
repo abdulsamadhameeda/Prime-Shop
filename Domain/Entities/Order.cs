@@ -1,4 +1,5 @@
-﻿using PrimeShop.Domain.Enums;
+﻿using PrimeShop.Domain.Common;
+using PrimeShop.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace PrimeShop.Domain.Entities
 {
-    public class Order
+    public class Order :Entity
     {
 
         public Guid Id { get; set; }

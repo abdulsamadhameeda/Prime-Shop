@@ -12,5 +12,6 @@ namespace PrimeShop.Application.Common.Interfaces
         void Update(T entity);
         void Delete(T entity);
         Task<T?> GetAsync(Guid id);
+        IQueryable<T> GetAll();
     }
 }

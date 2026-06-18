@@ -7,7 +7,7 @@ namespace PrimeShop.Application.features.Category.Dtos
 {
     public record UpdateCategoryCommand
     (
-        Guid categoryId,
+        Guid Id,
         string Name,
         string Description
     ) : IRequest<Guid>;

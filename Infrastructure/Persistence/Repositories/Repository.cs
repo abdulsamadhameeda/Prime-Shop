@@ -37,5 +37,9 @@ namespace PrimeShop.Infrastructure.Persistence.Repositories
         {
             return await _context.Set<T>().FindAsync(id);
         }
+        public IQueryable<T> GetAll()
+        {
+            return _context.Set<T>();
+        }
     }
 }
