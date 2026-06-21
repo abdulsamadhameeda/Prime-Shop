@@ -10,8 +10,7 @@ namespace PrimeShop.Domain.Entities
     public class OrderItem : Entity
     {
 
-        [Required]
-        public Guid Id { get; set; }
+    
 
         [Required]
         public int Quantity { get; set; }

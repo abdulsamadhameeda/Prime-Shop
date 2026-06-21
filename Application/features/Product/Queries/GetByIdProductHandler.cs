@@ -10,15 +10,15 @@ namespace PrimeShop.Application.features.Product.Queries
 {
     internal class GetByIdProductHandler : IRequestHandler<GetByIdProductQueries, ProductDto>
     {
-        private readonly IRepository<Domain.Entities.Product> _categoryRepo;
+        private readonly IRepository<Domain.Entities.Product> _ProductRepo;
 
-        public GetByIdProductHandler(IRepository<Domain.Entities.Product> categoryRepo)
+        public GetByIdProductHandler(IRepository<Domain.Entities.Product> ProductRepo)
         {
-            _categoryRepo = categoryRepo;
+            _ProductRepo = ProductRepo;
         }
         public async Task<ProductDto> Handle(GetByIdProductQueries request, CancellationToken cancellationToken)
         {
-            var product = await _categoryRepo.GetAsync(request.id);
+            var product = await _ProductRepo.GetAsync(request.id);
             return new ProductDto
             {
                 Id = product.Id,

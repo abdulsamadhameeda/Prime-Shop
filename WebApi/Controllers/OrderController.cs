@@ -11,10 +11,10 @@ namespace PrimeShop.WebApi.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly ISender _mediator;
+        private readonly IMediator _mediator;
 
 
-        public OrderController(ISender mediator)
+        public OrderController(IMediator mediator)
         {
             _mediator = mediator;
         }

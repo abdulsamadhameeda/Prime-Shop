@@ -8,7 +8,7 @@ using System.Text;
 
 namespace PrimeShop.Application.features.OrderItem.Commands
 {
-    internal class DeleteOrderItemHandler : IRequestHandler<DeleteOrderItemCommand, Guid>
+    internal class DeleteOrderItemHandler : IRequestHandler<DeleteOrderItemCommand, bool>
     {
 
         private readonly IRepository<Domain.Entities.OrderItem> _OrderItemRepo;
@@ -17,17 +17,19 @@ namespace PrimeShop.Application.features.OrderItem.Commands
         {
             _OrderItemRepo = OrderItemRepo;
         }
-        public async Task<Guid> Handle(DeleteOrderItemCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteOrderItemCommand request, CancellationToken cancellationToken)
         {
             var orderItem = await _OrderItemRepo.GetAsync(request.id);
 
-            if (orderItem != null)
+            if (orderItem == null)
             {
-                _OrderItemRepo.Delete(orderItem);
+                throw new Exception();
             }
+            _OrderItemRepo.Delete(orderItem);
 
-            await _OrderItemRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
-            return orderItem.Id;
+            await _OrderItemRepo.UnitOfWork.SaveChangesAsync();
+
+            return true;
         }
 
 

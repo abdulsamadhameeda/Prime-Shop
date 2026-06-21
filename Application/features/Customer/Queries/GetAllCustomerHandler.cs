@@ -2,10 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Application.features.Customer.Dtos;
-using PrimeShop.Application.features.Product.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace PrimeShop.Application.features.Customer.Queries
 {

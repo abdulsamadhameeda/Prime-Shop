@@ -5,7 +5,7 @@ using PrimeShop.Application.features.Basket.Dtos;
 
 namespace PrimeShop.Application.features.Basket.Commands
 {
-    internal class DeleteBasketHandler : IRequestHandler<DeleteBasketCommand, Guid>
+    internal class DeleteBasketHandler : IRequestHandler<DeleteBasketCommand, bool>
     {
 
         private readonly IRepository<Domain.Entities.Basket> _BasketRepo;
@@ -14,17 +14,18 @@ namespace PrimeShop.Application.features.Basket.Commands
         {
             _BasketRepo = BasketRepo;
         }
-        public async Task<Guid> Handle(DeleteBasketCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteBasketCommand request, CancellationToken cancellationToken)
         {
             var basket = await _BasketRepo.GetAsync(request.id);
 
-            if (basket != null)
+            if (basket == null)
             {
-                _BasketRepo.Delete(basket);
+                throw new Exception();
             }
+            _BasketRepo.Delete(basket);
 
-            await _BasketRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
-            return basket.Id;
+            await _BasketRepo.UnitOfWork.SaveChangesAsync();
+            return true;
         }
 
     }

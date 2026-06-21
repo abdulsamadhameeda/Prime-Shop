@@ -10,5 +10,5 @@ namespace PrimeShop.Application.features.Order.Dtos
 (
     Guid id
 
-) : IRequest<Guid>;
+) : IRequest<bool>;
 }

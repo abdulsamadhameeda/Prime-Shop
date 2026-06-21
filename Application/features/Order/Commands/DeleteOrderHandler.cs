@@ -5,7 +5,7 @@ using PrimeShop.Application.features.Order.Dtos;
 
 namespace PrimeShop.Application.features.Order.Commands
 {
-    internal class DeleteOrderHandler : IRequestHandler<DeleteOrderCommand, Guid>
+    internal class DeleteOrderHandler : IRequestHandler<DeleteOrderCommand, bool>
     {
 
         private readonly IRepository<Domain.Entities.Order> _OrderRepo;
@@ -14,17 +14,18 @@ namespace PrimeShop.Application.features.Order.Commands
         {
             _OrderRepo = OrderRepo;
         }
-        public async Task<Guid> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
         {
             var order = await _OrderRepo.GetAsync(request.id);
 
-            if (order != null)
+            if (order == null)
             {
-                _OrderRepo.Delete(order);
+                throw new Exception();
             }
+            _OrderRepo.Delete(order);
 
-            await _OrderRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
-            return order.Id;
+            await _OrderRepo.UnitOfWork.SaveChangesAsync();
+            return true;
         }
 
     }

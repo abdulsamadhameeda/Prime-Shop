@@ -6,7 +6,9 @@ using System.Text;
 
 namespace PrimeShop.Application.features.Product.Dtos
 {
-    public class GetAllProductQueries : IRequest<List<ProductDto>>
+    public record GetAllProductQueries(string? name) : IRequest<List<ProductDto>>
     {
+      
+       
     }
 }

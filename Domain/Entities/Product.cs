@@ -9,7 +9,6 @@ namespace PrimeShop.Domain.Entities
 {
     public class Product : Entity
     {
-        public Guid Id { get; set; }
 
         [Required]
         [MaxLength(100)]

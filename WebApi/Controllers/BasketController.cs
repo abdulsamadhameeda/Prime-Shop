@@ -8,10 +8,10 @@ namespace PrimeShop.WebApi.Controllers
     [ApiController]
     public class BasketController : ControllerBase
     {
-        private readonly ISender _mediator;
+        private readonly IMediator _mediator;
 
 
-        public BasketController(ISender mediator)
+        public BasketController(IMediator mediator)
         {
             _mediator = mediator;
         }

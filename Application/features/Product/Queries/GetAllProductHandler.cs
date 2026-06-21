@@ -8,24 +8,25 @@ namespace PrimeShop.Application.features.Product.Queries
 {
     public class GetAllProductHandler : IRequestHandler<GetAllProductQueries, List<ProductDto>>
     {
-        private readonly IRepository<Domain.Entities.Product> _categoryRepo;
+        private readonly IRepository<Domain.Entities.Product> _ProductRepo;
 
-        public GetAllProductHandler(IRepository<Domain.Entities.Product> categoryRepo)
+        public GetAllProductHandler(IRepository<Domain.Entities.Product> ProductRepo)
         {
-            _categoryRepo = categoryRepo;
+            _ProductRepo = ProductRepo;
         }
         public async Task<List<ProductDto>> Handle(GetAllProductQueries request, CancellationToken cancellationToken)
-        {
-            var product = await _categoryRepo.GetAll()
+        { 
+            var product = await _ProductRepo.GetAll()
+                .Where(p => p.Name == request.name || request.name == null)
                 .Select(x => new ProductDto
                 {
                     Id = x.Id,
                     Name = x.Name,
                     Description = x.Description,
-                    Price=x.Price,
-                    StockQuantity=x.StockQuantity,
-                    ImageUrl =x.ImageUrl,
-                    CategoryId=x.CategoryId
+                    Price = x.Price,
+                    StockQuantity = x.StockQuantity,
+                    ImageUrl = x.ImageUrl,
+                    CategoryId = x.CategoryId
                 }).ToListAsync();
 
 

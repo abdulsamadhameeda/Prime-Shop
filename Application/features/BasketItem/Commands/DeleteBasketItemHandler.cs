@@ -8,7 +8,7 @@ using System.Text;
 
 namespace PrimeShop.Application.features.BasketItem.Commands
 {
-    internal class DeleteBasketItemHandler : IRequestHandler<DeleteBasketItemCommand, Guid>
+    internal class DeleteBasketItemHandler : IRequestHandler<DeleteBasketItemCommand, bool>
     {
 
         private readonly IRepository<Domain.Entities.BasketItem> _BasketItemRepo;
@@ -17,17 +17,18 @@ namespace PrimeShop.Application.features.BasketItem.Commands
         {
             _BasketItemRepo = BasketItemRepo;
         }
-        public async Task<Guid> Handle(DeleteBasketItemCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteBasketItemCommand request, CancellationToken cancellationToken)
         {
             var basketItem = await _BasketItemRepo.GetAsync(request.id);
 
-            if (basketItem != null)
+            if (basketItem == null)
             {
-                _BasketItemRepo.Delete(basketItem);
+                throw new Exception();
             }
+            _BasketItemRepo.Delete(basketItem);
 
-            await _BasketItemRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
-            return basketItem.Id;
+            await _BasketItemRepo.UnitOfWork.SaveChangesAsync();
+            return true;
         }
 
     }

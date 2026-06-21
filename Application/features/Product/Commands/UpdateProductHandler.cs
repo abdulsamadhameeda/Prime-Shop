@@ -11,18 +11,18 @@ namespace PrimeShop.Application.features.Product.Commands
     public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Guid>
     {
 
-        private readonly IRepository<Domain.Entities.Product> _categoryRepo;
+        private readonly IRepository<Domain.Entities.Product> _ProductRepo;
 
-    public UpdateProductHandler(IRepository<Domain.Entities.Product> categoryRepo)
+    public UpdateProductHandler(IRepository<Domain.Entities.Product> ProductRepo)
     {
-        _categoryRepo = categoryRepo;
+            _ProductRepo = ProductRepo;
     }
 
     public async Task<Guid> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
 
 
-            var product = await _categoryRepo.GetAsync(request.productId);
+            var product = await _ProductRepo.GetAsync(request.productId);
 
             if (product != null)
             {
@@ -34,10 +34,10 @@ namespace PrimeShop.Application.features.Product.Commands
                 product.CategoryId = request.CategoryId;
             
             }
-       
-            _categoryRepo.Update(product);
 
-            await _categoryRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
+            _ProductRepo.Update(product);
+
+            await _ProductRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
 
             return product.Id;
 

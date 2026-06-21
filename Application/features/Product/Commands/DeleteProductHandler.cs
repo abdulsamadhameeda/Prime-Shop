@@ -8,28 +8,29 @@ using System.Text;
 
 namespace PrimeShop.Application.features.Product.Commands
 {
-    public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, Guid>
+    public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, bool>
     {
-        private readonly IRepository<Domain.Entities.Product> _categoryRepo;
+        private readonly IRepository<Domain.Entities.Product> _ProductRepo;
 
-        public DeleteProductHandler(IRepository<Domain.Entities.Product> categoryRepo)
+        public DeleteProductHandler(IRepository<Domain.Entities.Product> ProductRepo)
         {
-            _categoryRepo = categoryRepo;
+            _ProductRepo = ProductRepo;
         }
 
-        public async Task<Guid> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
 
-            var product = await _categoryRepo.GetAsync(request.id);
+            var product = await _ProductRepo.GetAsync(request.id);
 
-            if (product != null)
+            if (product == null)
             {
-                _categoryRepo.Delete(product);
+                throw new Exception();
             }
+            _ProductRepo.Delete(product);
 
-            await _categoryRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
+            await _ProductRepo.UnitOfWork.SaveChangesAsync();
 
-            return product.Id;
+            return true;
 
         }
 }

@@ -10,10 +10,10 @@ namespace PrimeShop.WebApi.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly ISender _mediator;
+        private readonly IMediator _mediator;
 
 
-        public ProductController(ISender mediator)
+        public ProductController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -21,9 +21,9 @@ namespace PrimeShop.WebApi.Controllers
 
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllProduct()
+        public async Task<IActionResult> GetAllProduct([FromQuery] string? name)
         {
-            var result = await _mediator.Send(new GetAllProductQueries());
+            var result = await _mediator.Send(new GetAllProductQueries(name));
 
             return Ok(result);
         }

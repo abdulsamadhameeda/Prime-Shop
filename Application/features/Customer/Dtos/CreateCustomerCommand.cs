@@ -13,4 +13,6 @@ namespace PrimeShop.Application.features.Customer.Dtos
     string Email,
     string PhoneNumber
    ) : IRequest<Guid>;
+
+
 }

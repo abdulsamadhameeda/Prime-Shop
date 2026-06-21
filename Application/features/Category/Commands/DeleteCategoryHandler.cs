@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PrimeShop.Application.features.Category.Commands
 {
-    internal class DeleteCategoryHandler : IRequestHandler<DeleteCategoryCommand, Guid>
+    internal class DeleteCategoryHandler : IRequestHandler<DeleteCategoryCommand, bool>
     {
 
         private readonly IRepository<Domain.Entities.Category> _categoryRepo;
@@ -18,17 +18,18 @@ namespace PrimeShop.Application.features.Category.Commands
         }
 
 
-        public async Task<Guid> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
         {
             var category = await _categoryRepo.GetAsync(request.Id);
 
-            if (category != null)
+            if (category == null)
             {
-                _categoryRepo.Delete(category);
+                throw new Exception();
             }
+            _categoryRepo.Delete(category);
 
-            await _categoryRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
-            return category.Id;
+            await _categoryRepo.UnitOfWork.SaveChangesAsync();
+            return true;
         }
     }
 }

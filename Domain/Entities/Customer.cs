@@ -10,7 +10,6 @@ namespace PrimeShop.Domain.Entities
     {
 
 
-        public Guid Id { get; set; }
 
         [Required]
         [MaxLength(100)]
@@ -27,6 +26,7 @@ namespace PrimeShop.Domain.Entities
         public string PhoneNumber { get; set; }
 
 
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
 
 
         //string IdentityUserId

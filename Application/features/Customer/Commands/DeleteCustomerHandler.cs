@@ -5,7 +5,7 @@ using PrimeShop.Application.features.Customer.Dtos;
 
 namespace PrimeShop.Application.features.Customer.Commands
 {
-    internal class DeleteCustomerHandler : IRequestHandler<DeleteCustomerCommand, Guid>
+    internal class DeleteCustomerHandler : IRequestHandler<DeleteCustomerCommand, bool>
     {
 
         private readonly IRepository<Domain.Entities.Customer> _customerRepo;
@@ -15,18 +15,23 @@ namespace PrimeShop.Application.features.Customer.Commands
             _customerRepo = customerRepo;
         }
 
-        public async Task<Guid> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
             var customer = await _customerRepo.GetAsync(request.id);
 
-            if (customer != null)
+            if (customer == null)
             {
-                _customerRepo.Delete(customer);
+                throw new Exception();
             }
 
-            await _customerRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-            return customer.Id;
+            _customerRepo.Delete(customer);
+
+            await _customerRepo.UnitOfWork.SaveChangesAsync();
+
+            return true;
+
+
 
         }
     }

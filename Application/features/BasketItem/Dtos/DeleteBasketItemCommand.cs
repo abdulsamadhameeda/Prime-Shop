@@ -10,5 +10,5 @@ namespace PrimeShop.Application.features.BasketItem.Dtos
 
      Guid id
 
-) : IRequest<Guid>;
+) : IRequest<bool>;
 }

@@ -11,7 +11,6 @@ namespace PrimeShop.Domain.Entities
     public class Order :Entity
     {
 
-        public Guid Id { get; set; }
 
         [Required]
         public DateTime OrderDate { get; set; }

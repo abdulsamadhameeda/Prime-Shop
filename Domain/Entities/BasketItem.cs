@@ -9,7 +9,6 @@ namespace PrimeShop.Domain.Entities
 {
     public class BasketItem :Entity
     {
-        public Guid Id { get; set; }
 
         [Required]
         public int Quantity { get; set; }

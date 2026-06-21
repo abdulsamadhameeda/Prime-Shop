@@ -12,11 +12,11 @@ namespace PrimeShop.Application.features.Product.Commands
     public class CreateProductHandler : IRequestHandler<CreateProductCommand, Guid>
     {
 
-        private readonly IRepository<Domain.Entities.Product> _categoryRepo;
+        private readonly IRepository<Domain.Entities.Product> _ProductRepo;
 
-        public CreateProductHandler(IRepository<Domain.Entities.Product> categoryRepo)
+        public CreateProductHandler(IRepository<Domain.Entities.Product> ProductRepo)
         {
-            _categoryRepo = categoryRepo;
+            _ProductRepo = ProductRepo;
         }
 
         public async Task<Guid> Handle(CreateProductCommand request, CancellationToken cancellationToken)
@@ -32,9 +32,9 @@ namespace PrimeShop.Application.features.Product.Commands
                 CategoryId = request.CategoryId,
 
             };
-            _categoryRepo.Add(product);
+            _ProductRepo.Add(product);
 
-            await _categoryRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
+            await _ProductRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
 
             return product.Id;
 
