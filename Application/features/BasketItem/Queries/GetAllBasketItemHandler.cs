@@ -21,18 +21,14 @@ namespace PrimeShop.Application.features.BasketItem.Queries
 
         public async Task<List<BasketItemDto>> Handle(GetAllBasketItemQueries request, CancellationToken cancellationToken)
         {
-            var BasketItem = await _BasketItemRepo.GetAll()
-                .Select(x => new BasketItemDto
-                {
-                    Id = x.Id,
-                    BasketId = x.BasketId,
-                    ProductId = x.ProductId,
-                    Quantity=x.Quantity
 
-                }).ToListAsync();
+            string filePath = Path.Combine(AppContext.BaseDirectory, "features", "BasketItem", "Queries", "SQL", "GetAllBasketItem.sql");
 
+            string sqlQuery = await File.ReadAllTextAsync(filePath);
 
-            return BasketItem;
+            var result = await _BasketItemRepo.QuerySql<BasketItemDto>(sqlQuery);
+
+            return result.ToList();
         }
 
     }

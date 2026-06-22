@@ -19,16 +19,13 @@ namespace PrimeShop.Application.features.Category.Queries
         }
         public async Task<List<CategoryDto>> Handle(GetAllCategoryQueries request, CancellationToken cancellationToken)
         {
-            var category = await _categoryRepo.GetAll()
-                .Select(x => new CategoryDto
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Description = x.Description,
-                }).ToListAsync();
-             
+            string filePath = Path.Combine(AppContext.BaseDirectory, "features", "Category", "Queries", "SQL", "GetAllCategory.sql");
 
-                return category;
+            string sqlQuery = await File.ReadAllTextAsync(filePath);
+
+            var result = await _categoryRepo.QuerySql<CategoryDto>(sqlQuery);
+
+            return result.ToList();
         }
     }
 }

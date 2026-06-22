@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Application.features.Customer.Dtos;
+using PrimeShop.Application.features.Product.Dtos;
 
 
 namespace PrimeShop.Application.features.Customer.Queries
@@ -18,19 +19,13 @@ namespace PrimeShop.Application.features.Customer.Queries
 
         public async Task<List<CustomerDto>> Handle(GetAllCustomerQueries request, CancellationToken cancellationToken)
         {
-            var customer = await _customerRepo.GetAll()
-                .Select(x => new CustomerDto
-                {
-                    Id = x.Id,
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
-                    Email= x.Email,
-                    PhoneNumber = x.PhoneNumber
-                    
-                }).ToListAsync();
+            string filePath = Path.Combine(AppContext.BaseDirectory, "features", "Customer", "Queries", "SQL", "GetAllCustomer.sql");
 
+            string sqlQuery = await File.ReadAllTextAsync(filePath);
 
-            return customer;
+            var result = await _customerRepo.QuerySql<CustomerDto>(sqlQuery, new { Name = request.name });
+
+            return result.ToList();
 
 
         }

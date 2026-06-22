@@ -17,18 +17,13 @@ namespace PrimeShop.Application.features.OrderItem.Queries
         }
         public async Task<List<OrderItemDto>> Handle(GetAllOrderItemQueries request, CancellationToken cancellationToken)
         {
-            var orderItem = await _OrderItemRepo.GetAll()
-                .Select(x => new OrderItemDto
-                {
-                    Id = x.Id,
-                  OrderId = x.OrderId,
-                  ProductId = x.ProductId,
-                  Quantity = x.Quantity,
-                  UnitPrice=x.UnitPrice
-                }).ToListAsync();
+            string filePath = Path.Combine(AppContext.BaseDirectory, "features", "OrderItem", "Queries", "SQL", "GetAllOrderItem.sql");
 
+            string sqlQuery = await File.ReadAllTextAsync(filePath);
 
-            return orderItem;
+            var result = await _OrderItemRepo.QuerySql<OrderItemDto>(sqlQuery);
+
+            return result.ToList();
         }
 
 

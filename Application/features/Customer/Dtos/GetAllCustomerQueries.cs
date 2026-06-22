@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PrimeShop.Application.features.Customer.Dtos
 {
-    public class GetAllCustomerQueries : IRequest<List<CustomerDto>>
+    public record GetAllCustomerQueries(string? name) : IRequest<List<CustomerDto>>
     {
     }
 }

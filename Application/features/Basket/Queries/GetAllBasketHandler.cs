@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Application.features.Basket.Dtos;
 using PrimeShop.Application.features.Category.Dtos;
+using PrimeShop.Application.features.Product.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,16 +21,13 @@ namespace PrimeShop.Application.features.Basket.Queries
         }
         public async Task<List<BasketDto>> Handle(GetAllBasketQueries request, CancellationToken cancellationToken)
         {
-            var Basket = await _BasketRepo.GetAll()
-                .Select(x => new BasketDto
-                {
-                    Id = x.Id,
-                    CreatedAt = x.CreatedAt,
-                    CustomerId = x.CustomerId,
-                }).ToListAsync();
+            string filePath = Path.Combine(AppContext.BaseDirectory, "features", "Basket", "Queries", "SQL", "GetAllBasket.sql");
 
+            string sqlQuery = await File.ReadAllTextAsync(filePath);
 
-            return Basket;
+            var result = await _BasketRepo.QuerySql<BasketDto>(sqlQuery);
+
+            return result.ToList();
         }
     }
 }

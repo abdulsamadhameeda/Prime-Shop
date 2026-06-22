@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Application.features.BasketItem.Dtos;
+using PrimeShop.Application.features.Product.Dtos;
 
 
 namespace PrimeShop.Application.features.BasketItem.Queries
@@ -16,16 +17,14 @@ namespace PrimeShop.Application.features.BasketItem.Queries
         }
         public async Task<BasketItemDto> Handle(GetByIdBasketItemQueries request, CancellationToken cancellationToken)
         {
-            var basketItem = await _BasketItemRepo.GetAsync(request.id);
-            return new BasketItemDto
-            {
-                Id = basketItem.Id,
-                BasketId = basketItem.BasketId,
-                ProductId = basketItem.ProductId,
-                Quantity= basketItem.Quantity
 
+            string filePath = Path.Combine(AppContext.BaseDirectory, "features", "BasketItem", "Queries", "SQL", "GetByIdBasketItem.sql");
 
-            };
+            string sqlQuery = await File.ReadAllTextAsync(filePath);
+
+            var result = await _BasketItemRepo.QuerySql<BasketItemDto>(sqlQuery, new { Id = request.id });
+
+            return result.FirstOrDefault();
         }
 
     }

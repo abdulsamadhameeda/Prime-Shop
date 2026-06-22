@@ -3,6 +3,6 @@
 namespace PrimeShop.Application.features.Order.Dtos
 {
 
-    public class GetAllOrderQueries : IRequest<List<OrderDto>>;
+    public record GetAllOrderQueries(int? status) : IRequest<List<OrderDto>>;
 
 }

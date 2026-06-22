@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Application.features.Category.Dtos;
+using PrimeShop.Application.features.Product.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,12 +19,13 @@ namespace PrimeShop.Application.features.Category.Queries
         }
         public async Task<CategoryDto> Handle(GetByIdCategoryQueries request, CancellationToken cancellationToken)
         {
-            var category = await _categoryRepo.GetAsync(request.id);
-            return new CategoryDto
-            {
-                Name = category.Name,
-                Description = category.Description
-            };
+            string filePath = Path.Combine(AppContext.BaseDirectory, "features", "Category", "Queries", "SQL", "GetByIdCategory.sql");
+
+            string sqlQuery = await File.ReadAllTextAsync(filePath);
+
+            var result = await _categoryRepo.QuerySql<CategoryDto>(sqlQuery, new { Id = request.id });
+
+            return result.FirstOrDefault();
         }
     }
 }

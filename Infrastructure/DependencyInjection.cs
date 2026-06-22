@@ -1,8 +1,11 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Infrastructure.Persistence.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace PrimeShop.Infrastructure
@@ -14,6 +17,16 @@ namespace PrimeShop.Infrastructure
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+
+            services.AddScoped<IDbConnection>(ServiceProvider =>
+            {
+                var configuration = ServiceProvider.GetRequiredService<IConfiguration>();
+
+                var connectionString = configuration.GetConnectionString("AppContext");
+
+                return new SqlConnection(connectionString);
+            });
 
             return services;
         }

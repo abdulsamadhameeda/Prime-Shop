@@ -19,15 +19,13 @@ namespace PrimeShop.Application.features.Customer.Queries
         }
         public async Task<CustomerDto> Handle(GetByIdCustomerQueries request, CancellationToken cancellationToken)
         {
-            var customer = await _customerRepo.GetAsync(request.id);
-            return new CustomerDto
-            {
-                Id = customer.Id,
-                FirstName = customer.FirstName,
-                LastName = customer.LastName,
-                Email = customer.Email,
-                PhoneNumber = customer.PhoneNumber
-            };
+            string filePath = Path.Combine(AppContext.BaseDirectory, "features", "Customer", "Queries", "SQL", "GetByIdCustomer.sql");
+
+            string sqlQuery = await File.ReadAllTextAsync(filePath);
+
+            var result = await _customerRepo.QuerySql<CustomerDto>(sqlQuery, new { Id = request.id });
+
+            return result.FirstOrDefault();
         }
 
 

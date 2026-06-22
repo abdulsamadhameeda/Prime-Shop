@@ -13,5 +13,8 @@ namespace PrimeShop.Application.Common.Interfaces
         void Delete(T entity);
         Task<T?> GetAsync(Guid id);
         IQueryable<T> GetAll();
+
+        Task<IEnumerable<TResult>> QuerySql<TResult>(string sql, object parameters = null);
+
     }
 }

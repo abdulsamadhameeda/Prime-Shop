@@ -22,9 +22,9 @@ namespace PrimeShop.WebApi.Controllers
 
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllCustomers()
+        public async Task<IActionResult> GetAllCustomers([FromQuery] string? name)
         {
-            var result = await _mediator.Send(new GetAllCustomerQueries());
+            var result = await _mediator.Send(new GetAllCustomerQueries(name));
 
             return Ok(result);
         }

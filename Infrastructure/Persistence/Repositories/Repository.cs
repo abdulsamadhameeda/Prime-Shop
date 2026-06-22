@@ -1,16 +1,20 @@
 ﻿using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Domain.Common;
+using System.Data;
+using Dapper;
 
 namespace PrimeShop.Infrastructure.Persistence.Repositories
 {
     public class Repository<T> : IRepository<T> where T : Entity
     {
         private readonly ApplicationDbContext _context;
+        private readonly IDbConnection _connection;
         public IUnitOfWork UnitOfWork { get; }
 
-        public Repository(ApplicationDbContext context)
+        public Repository(ApplicationDbContext context , IDbConnection connection)
         {
             _context = context;
+            _connection = connection;
 
             UnitOfWork = new UnitOfWork(_context);
         }
@@ -38,5 +42,12 @@ namespace PrimeShop.Infrastructure.Persistence.Repositories
         {
             return _context.Set<T>();
         }
+
+
+        public async Task<IEnumerable<TResult>> QuerySql<TResult>(string sql, object parameters = null)
+        {
+            return await _connection.QueryAsync<TResult>(sql, parameters);
+        }
+
     }
 }

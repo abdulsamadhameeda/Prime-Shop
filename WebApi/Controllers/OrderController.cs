@@ -21,9 +21,9 @@ namespace PrimeShop.WebApi.Controllers
 
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllOrders()
+        public async Task<IActionResult> GetAllOrders([FromQuery] int? status)
         {
-            var result = await _mediator.Send(new GetAllOrderQueries());
+            var result = await _mediator.Send(new GetAllOrderQueries(status));
 
             return Ok(result);
         }

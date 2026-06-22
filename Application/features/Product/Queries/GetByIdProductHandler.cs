@@ -2,6 +2,7 @@
 using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Application.features.Category.Dtos;
 using PrimeShop.Application.features.Product.Dtos;
+using PrimeShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,17 +19,13 @@ namespace PrimeShop.Application.features.Product.Queries
         }
         public async Task<ProductDto> Handle(GetByIdProductQueries request, CancellationToken cancellationToken)
         {
-            var product = await _ProductRepo.GetAsync(request.id);
-            return new ProductDto
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                StockQuantity = product.StockQuantity,
-                ImageUrl = product.ImageUrl,
-                CategoryId = product.CategoryId
-            };
+            string filePath = Path.Combine(AppContext.BaseDirectory, "features", "Product", "Queries", "SQL", "GetByIdProduct.sql");
+
+            string sqlQuery = await File.ReadAllTextAsync(filePath);
+
+            var result = await _ProductRepo.QuerySql<ProductDto>(sqlQuery, new { Id = request.id });
+           
+            return result.FirstOrDefault();
         }
 
     }
