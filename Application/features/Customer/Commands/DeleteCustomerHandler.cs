@@ -17,7 +17,7 @@ namespace PrimeShop.Application.features.Customer.Commands
 
         public async Task<bool> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customer = await _customerRepo.GetAsync(request.id);
+            var customer = await _customerRepo.GetAsync(request.Id);
 
             if (customer == null)
             {

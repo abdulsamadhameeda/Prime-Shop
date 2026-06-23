@@ -20,12 +20,12 @@ namespace PrimeShop.Application.features.Product.Commands
         public async Task<bool> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
 
-            var product = await _ProductRepo.GetAsync(request.id);
+            var product = await _ProductRepo.GetAsync(request.Id);
 
-            if (product == null)
-            {
-                throw new Exception();
-            }
+            //if (product == null)
+            //{
+            //    throw new Exception();
+            //}
             _ProductRepo.Delete(product);
 
             await _ProductRepo.UnitOfWork.SaveChangesAsync();

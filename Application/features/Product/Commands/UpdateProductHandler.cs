@@ -22,7 +22,7 @@ namespace PrimeShop.Application.features.Product.Commands
     {
 
 
-            var product = await _ProductRepo.GetAsync(request.productId);
+            var product = await _ProductRepo.GetAsync(request.Id);
 
             if (product != null)
             {

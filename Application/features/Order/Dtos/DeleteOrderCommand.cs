@@ -8,7 +8,7 @@ namespace PrimeShop.Application.features.Order.Dtos
 
     public record DeleteOrderCommand
 (
-    Guid id
+    Guid Id
 
 ) : IRequest<bool>;
 }

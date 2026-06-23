@@ -8,7 +8,7 @@ namespace PrimeShop.Application.features.Basket.Dtos
 
     public record DeleteBasketCommand(
 
-     Guid id
+     Guid Id
 
 ) : IRequest<bool>;
 }

@@ -1,8 +1,9 @@
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using PrimeShop.Application.Common.Interfaces;
-using PrimeShop.Infrastructure.Persistence;
 using PrimeShop.Application;
+using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Infrastructure;
+using PrimeShop.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,8 @@ builder.Services.AddInfrastructureServices();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddFluentValidationAutoValidation();
 
 var app = builder.Build();
 

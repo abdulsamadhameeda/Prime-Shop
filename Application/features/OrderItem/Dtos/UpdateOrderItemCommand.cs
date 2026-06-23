@@ -7,7 +7,7 @@ namespace PrimeShop.Application.features.OrderItem.Dtos
 {
  
     public record UpdateOrderItemCommand(
-        Guid id,
+        Guid Id,
         int Quantity,
 
         decimal UnitPrice,

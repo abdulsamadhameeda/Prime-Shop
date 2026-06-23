@@ -19,7 +19,7 @@ namespace PrimeShop.Application.features.BasketItem.Commands
         }
         public async Task<bool> Handle(DeleteBasketItemCommand request, CancellationToken cancellationToken)
         {
-            var basketItem = await _BasketItemRepo.GetAsync(request.id);
+            var basketItem = await _BasketItemRepo.GetAsync(request.Id);
 
             if (basketItem == null)
             {

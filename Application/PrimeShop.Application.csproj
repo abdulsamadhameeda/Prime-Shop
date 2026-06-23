@@ -79,12 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\Mappings\" />
-    <Folder Include="features\BasketItem\Validatords\" />
-    <Folder Include="features\Basket\Validatords\" />
-    <Folder Include="features\Category\Validatords\" />
-    <Folder Include="features\Customer\Validatords\" />
-    <Folder Include="features\OrderItem\Validatords\" />
-    <Folder Include="features\Order\Validatords\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />

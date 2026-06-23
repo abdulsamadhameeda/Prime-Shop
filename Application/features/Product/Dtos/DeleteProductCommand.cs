@@ -8,7 +8,7 @@ namespace PrimeShop.Application.features.Product.Dtos
    
     public record DeleteProductCommand
   (
-      Guid id
+      Guid Id
 
   ) : IRequest<bool>;
 }

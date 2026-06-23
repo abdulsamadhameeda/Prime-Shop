@@ -17,7 +17,7 @@ namespace PrimeShop.Application.features.OrderItem.Commands
 
         public async Task<Guid> Handle(UpdateOrderItemCommand request, CancellationToken cancellationToken)
         {
-            var orderItem = await _OrderItemRepo.GetAsync(request.id);
+            var orderItem = await _OrderItemRepo.GetAsync(request.Id);
 
             if (orderItem != null)
             {
