@@ -32,10 +32,16 @@ namespace PrimeShop.Infrastructure
 
 
 
-            services.AddIdentityCore<ApplicationUser>()
-      .AddRoles<IdentityRole>()
-      .AddEntityFrameworkStores<ApplicationDbContext>();
-     
+            services.AddIdentityCore<ApplicationUser>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequiredLength = 8;
+            }).AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
 
 

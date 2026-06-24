@@ -24,6 +24,8 @@ namespace PrimeShop.Infrastructure.Persistence
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Lookup> Lookups { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -38,7 +40,7 @@ namespace PrimeShop.Infrastructure.Persistence
 
         public Task<int> SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            return base.SaveChangesAsync();
         }
     }
 }

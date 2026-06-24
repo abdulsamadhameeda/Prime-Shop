@@ -4,6 +4,7 @@ using PrimeShop.Application;
 using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Infrastructure;
 using PrimeShop.Infrastructure.Persistence;
+using PrimeShop.Infrastructure.Persistence.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,8 +39,12 @@ if (app.Environment.IsDevelopment())
 
 
 }
-
-    app.UseSwagger();
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await DbSeeder.SeedAsync(context);
+}
+app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/openapi/v1.json", "PrimeShop API V1");
