@@ -1,10 +1,12 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PrimeShop.Application.Common.Interfaces;
+using PrimeShop.Infrastructure.Identity;
+using PrimeShop.Infrastructure.Persistence;
 using PrimeShop.Infrastructure.Persistence.Repositories;
-using System;
-using System.Collections.Generic;
+
 using System.Data;
 using System.Text;
 
@@ -27,6 +29,19 @@ namespace PrimeShop.Infrastructure
 
                 return new SqlConnection(connectionString);
             });
+
+
+
+            services.AddIdentityCore<ApplicationUser>()
+      .AddRoles<IdentityRole>()
+      .AddEntityFrameworkStores<ApplicationDbContext>();
+     
+
+
+
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<JwtTokenService>();
+
 
             return services;
         }

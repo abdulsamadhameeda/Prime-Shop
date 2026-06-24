@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace PrimeShop.Domain.Entities
@@ -27,9 +28,7 @@ namespace PrimeShop.Domain.Entities
 
 
         public ICollection<Order> Orders { get; set; } = new List<Order>();
-
-
-        //string IdentityUserId
+        public string ApplicationUserId { get; set; } = string.Empty;
 
 
     }
