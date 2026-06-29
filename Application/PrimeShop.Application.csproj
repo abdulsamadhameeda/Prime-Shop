@@ -16,7 +16,6 @@
   <ItemGroup>
     <None Remove="features\BasketItem\Queries\SQL\GetByIdBasketItem.sql" />
     <None Remove="features\Basket\Queries\SQL\GetAllBasket.sql" />
-    <None Remove="features\Basket\Queries\SQL\GetByIdBasket.sql" />
     <None Remove="features\Category\Queries\SQL\GetAllCategory.sql" />
     <None Remove="features\Category\Queries\SQL\GetByIdCategory.sql" />
     <None Remove="features\Customer\Queries\SQL\GetAllCustomer.sql" />

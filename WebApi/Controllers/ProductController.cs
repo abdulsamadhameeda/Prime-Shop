@@ -23,14 +23,14 @@ namespace PrimeShop.WebApi.Controllers
 
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllProduct([FromQuery] string? name)
+        public async Task<IActionResult> GetAllProduct([FromQuery] Guid? categoryId,  decimal? minPrice, decimal? maxPrice)
         {
-            var result = await _mediator.Send(new GetAllProductQueries(name));
+            var result = await _mediator.Send(new GetAllProductQueries(categoryId, minPrice, maxPrice));
 
             return Ok(result);
         }
 
-
+            
         [HttpGet("GetByIdProduct")]
         public async Task<IActionResult> GetByIdProduct([FromQuery] Guid id)
         {

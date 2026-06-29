@@ -2,5 +2,6 @@
   <Project Path="Application/PrimeShop.Application.csproj" />
   <Project Path="Domain/PrimeShop.Domain.csproj" />
   <Project Path="Infrastructure/PrimeShop.Infrastructure.csproj" />
+  <Project Path="PrimeShop.Web/PrimeShop.Web.csproj" Id="a38d0832-ce5f-4941-bd71-51c90f2e42aa" />
   <Project Path="WebApi/PrimeShop.WebApi.csproj" />
 </Solution>

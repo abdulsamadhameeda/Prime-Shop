@@ -1,0 +1,62 @@
+﻿@model PrimeShop.Application.features.Auth.Register.Dtos.RegisterCommand
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Register</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a asp-controller="Auth" asp-action="Register">Register</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="login_box_area section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login_box_img">
+                    <img class="img-fluid" src="/img/login.jpg" alt="">
+                    <div class="hover">
+                        <h4>Already have an account?</h4>
+                        <p>Sign in to access your orders, wishlist and more!</p>
+                        <a class="primary-btn" asp-controller="Auth" asp-action="Login">Log In</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login_form_inner">
+                    <h3>Create an Account</h3>
+                    <form asp-action="Register" method="post" class="row login_form" novalidate="novalidate">
+                        <div class="col-md-12 form-group">
+                            <input asp-for="FirstName" class="form-control" placeholder="First Name"
+                                   onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" />
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input asp-for="LastName" class="form-control" placeholder="Last Name"
+                                   onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'" />
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input asp-for="Email" class="form-control" placeholder="Email"
+                                   onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" />
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Password"
+                                   onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" />
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input asp-for="PhoneNumber" class="form-control" placeholder="Phone Number"
+                                   onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'" />
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" value="submit" class="primary-btn">Create Account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
