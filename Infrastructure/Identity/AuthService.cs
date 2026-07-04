@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using PrimeShop.Application.Common.Interfaces;
+using PrimeShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using PrimeShop.Application.Common.Interfaces;
 
 namespace PrimeShop.Infrastructure.Identity
 {
@@ -18,12 +19,14 @@ namespace PrimeShop.Infrastructure.Identity
             _jwtTokenService = jwtTokenService;
         }
 
-        public async Task<string> RegisterAsync(string email, string password)
-        {
+        public async Task<string> RegisterAsync(string email, string password ,Guid customerId)
+            {
             var user = new ApplicationUser
             {
                 Email = email,
-                UserName = email
+                UserName = email,
+                CustomerId = customerId
+
             };
 
             var result = await _userManager.CreateAsync(user, password);

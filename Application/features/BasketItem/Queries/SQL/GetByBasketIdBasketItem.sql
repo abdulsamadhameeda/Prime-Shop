@@ -1,3 +1,3 @@
 ﻿select *
 from BasketItems
-where Id =@id;
+where BasketId =@BasketId;

@@ -28,9 +28,9 @@ namespace PrimeShop.WebApi.Controllers
 
 
         [HttpGet("GetByCustomerId")]
-        public async Task<IActionResult> GetByIdBasket([FromQuery] Guid id)
+        public async Task<IActionResult> GetByCustomerId([FromQuery] Guid CustomerId)
         {
-            var result = await _mediator.Send(new GetByIdBasketQueries(id));
+            var result = await _mediator.Send(new GetByCustomerIdBasketQueries(CustomerId));
 
             return Ok(result);
         }

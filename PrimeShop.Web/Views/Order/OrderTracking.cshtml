@@ -1,13 +1,12 @@
-﻿<!-- Start Banner Area -->
+﻿@using PrimeShop.Application.features.Order.Dtos
+@model List<OrderDto>
+
+<!-- Start Banner Area -->  
 <section class="banner-area organic-breadcrumb">
     <div class="container">
         <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
             <div class="col-first">
                 <h1>Order Tracking</h1>
-                <nav class="d-flex align-items-center">
-                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="category.html">Fashon Category</a>
-                </nav>
             </div>
         </div>
     </div>
@@ -18,15 +17,11 @@
     <div class="container">
         <div class="tracking_box_inner">
             <p>
-                To track your order please enter your Order ID in the box below and press the "Track" button. This
-                was given to you on your receipt and in the confirmation email you should have received.
+                To track your order please enter your Order ID in the box below and press the Track Order button.
             </p>
-            <form class="row tracking_form" action="#" method="post" novalidate="novalidate">
+            <form class="row tracking_form" asp-action="OrderTracking" method="post" novalidate="novalidate">
                 <div class="col-md-12 form-group">
-                    <input type="text" class="form-control" id="order" name="order" placeholder="Order ID" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Order ID'">
-                </div>
-                <div class="col-md-12 form-group">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Billing Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Billing Email Address'">
+                    <input type="text" class="form-control" id="orderId" name="orderId" placeholder="Order ID" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Order ID'" required>
                 </div>
                 <div class="col-md-12 form-group">
                     <button type="submit" value="submit" class="primary-btn">Track Order</button>
@@ -36,3 +31,107 @@
     </div>
 </section>
 <!--================End Tracking Box Area =================-->
+
+   
+
+<section class="order_details_area pb-5">
+    <div class="container">
+        <h3 class="mb-4 text-dark">My Orders</h3>
+
+        @if (Model == null || !Model.Any())
+        {
+            <div class="alert text-center" role="alert" style=" color: #FFA500; background-color: #fff8f0; color: #333;">
+                You don't have any orders yet.
+            </div>
+        }
+        else
+        {
+            @foreach (var order in Model)
+            {
+                var collapseId = "collapse_" + order.Id.ToString("N");
+                var headingId = "heading_" + order.Id.ToString("N");
+
+                <div class="card mb-3 shadow-sm" style="border-left: 5px solid #FFA500; border-radius: 8px;">
+
+                    <div class="card-header p-0" style="background: #fff;" id="@headingId">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link btn-block text-left p-4 d-flex justify-content-between align-items-center collapsed text-decoration-none"
+                                    data-toggle="collapse"
+                                    data-target="#@collapseId"
+                                    aria-expanded="false"
+                                    aria-controls="@collapseId">
+
+                                <div>
+                                    <span class="font-weight-bold h6 d-block mb-1" style="color: #333;">
+                                        Order #@order.Id.ToString()
+                                    </span>
+                                    <small class="text-muted">
+                                        <i class="fa fa-calendar mr-1"></i>
+                                        @order.OrderDate.ToString("dd/MM/yyyy")
+                                    </small>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    @switch (order.Status)
+                                    {
+                                        case PrimeShop.Domain.Enums.OrderStatus.Pending:
+                                            <span class="badge badge-warning p-2">Pending</span>
+                                            break;
+                                        case PrimeShop.Domain.Enums.OrderStatus.Processing:
+                                            <span class="badge badge-info p-2">Processing</span>
+                                            break;
+                                        case PrimeShop.Domain.Enums.OrderStatus.Shipped:
+                                            <span class="badge badge-primary p-2">Shipped</span>
+                                            break;
+                                        case PrimeShop.Domain.Enums.OrderStatus.Delivered:
+                                            <span class="badge badge-success p-2">Delivered</span>
+                                            break;
+                                        case PrimeShop.Domain.Enums.OrderStatus.Cancelled:
+                                            <span class="badge badge-danger p-2">Cancelled</span>
+                                            break;
+                                        default:
+                                            <span class="badge badge-dark p-2">Unknown</span>
+                                            break;
+                                    }
+                                </div>
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="@collapseId" class="collapse" aria-labelledby="@headingId">
+                        <div class="card-body p-4">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <small class="text-muted d-block">Order ID</small>
+                                    <strong>@order.Id</strong>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <small class="text-muted d-block">Shipping Street</small>
+                                    <strong>@order.ShippingStreet</strong>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <small class="text-muted d-block">Shipping City</small>
+                                    <strong>@order.ShippingCity</strong>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <small class="text-muted d-block">Total Amount</small>
+                                    <strong style="color: #FFA500; font-size: 1.2rem;">$@order.TotalAmount.ToString("N2")</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        }
+
+    </div>
+    <style>
+            .card-header button:hover {
+                background-color: #fff8f0 !important;
+                transition: background-color 0.3s ease;
+            }
+            .collapsing {
+                transition: height 0.35s ease !important;
+            }
+    </style>

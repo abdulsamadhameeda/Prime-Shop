@@ -19,7 +19,7 @@ namespace PrimeShop.Application.features.Customer.Queries
         }
         public async Task<CustomerDto> Handle(GetByIdCustomerQueries request, CancellationToken cancellationToken)
         {
-            string filePath = Path.Combine(AppContext.BaseDirectory, "features", "Customer", "Queries", "SQL", "GetByIdCustomer.sql");
+            string filePath = Path.Combine(AppContext.BaseDirectory, "SQL", "GetByIdCustomer.sql");
 
             string sqlQuery = await File.ReadAllTextAsync(filePath);
 

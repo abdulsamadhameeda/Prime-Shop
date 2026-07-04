@@ -2,7 +2,7 @@
 
 namespace PrimeShop.Application.features.BasketItem.Dtos
 {
-    internal class BasketItemDto
+    public class BasketItemDto
     {
         public Guid Id { get; set; }
 

@@ -19,7 +19,7 @@ namespace PrimeShop.Application.features.Category.Queries
         }
         public async Task<List<CategoryDto>> Handle(GetAllCategoryQueries request, CancellationToken cancellationToken)
         {
-            string filePath = Path.Combine(AppContext.BaseDirectory, "features", "Category", "Queries", "SQL", "GetAllCategory.sql");
+            string filePath = Path.Combine(AppContext.BaseDirectory, "SQL", "GetAllCategory.sql");
 
             string sqlQuery = await File.ReadAllTextAsync(filePath);
 

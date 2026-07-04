@@ -1,0 +1,2 @@
+﻿SELECT * FROM Products
+WHERE Id IN (SELECT value FROM STRING_SPLIT(@Ids, ','))

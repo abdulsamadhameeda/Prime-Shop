@@ -21,9 +21,9 @@ namespace PrimeShop.WebApi.Controllers
 
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllOrders([FromQuery] int? status)
+        public async Task<IActionResult> GetAllOrders([FromQuery] int? status )
         {
-            var result = await _mediator.Send(new GetAllOrderQueries(status));
+            var result = await _mediator.Send(new GetAllOrderQueries(status ));
 
             return Ok(result);
         }
@@ -36,7 +36,15 @@ namespace PrimeShop.WebApi.Controllers
 
             return Ok(result);
         }
-
+        [HttpGet("GetByIdAndCustomerId")]
+        public async Task<IActionResult> GetByIdAndEmail([FromQuery] Guid? orderId, Guid? customerId)
+        {
+            var result = await _mediator.Send(new GetOrderByIdAndCustomerIdQuery(orderId, customerId));
+            if (result == null) {
+                return NotFound();
+            }
+            return Ok(result);
+        }
 
         [HttpPost("Create")]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)

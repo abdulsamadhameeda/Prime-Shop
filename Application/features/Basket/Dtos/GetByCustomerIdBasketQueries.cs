@@ -6,6 +6,6 @@ using System.Text;
 namespace PrimeShop.Application.features.Basket.Dtos
 {
   
-    public record GetByIdBasketQueries(Guid id) : IRequest<BasketDto>;
+    public record GetByCustomerIdBasketQueries(Guid CustomerId) : IRequest<BasketDto>;
 
 }

@@ -18,140 +18,251 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Product</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Total</th>
+                            <th scope="col" class="col-6">Product</th>
+                            <th scope="col" class="col-2">Price</th>
+                            <th scope="col" class="col-2">Quantity</th>
+                            <th scope="col" class="col-2">Total</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="basket-items">
+                    </tbody>
+                    <tfoot>
                         <tr>
-                            <td>
-                                <div class="media">
-                                    <div class="d-flex">
-                                        <img src="img/cart.jpg" alt="">
-                                    </div>
-                                    <div class="media-body">
-                                        <p>Minimalistic shop for multipurpose use</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <h5>$360.00</h5>
-                            </td>
-                            <td>
-                                <div class="product_count">
-                                    <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
-                                           class="input-text qty">
-                                    <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                            class="increase items-count" type="button">
-                                        <i class="lnr lnr-chevron-up"></i>
-                                    </button>
-                                    <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                            class="reduced items-count" type="button">
-                                        <i class="lnr lnr-chevron-down"></i>
-                                    </button>
-                                </div>
-                            </td>
-                            <td>
-                                <h5>$720.00</h5>
-                            </td>
+                            <td></td>
+                            <td></td>
+                            <td><h5 class="m-0">Subtotal</h5></td>
+                            <td><h5 class="m-0" id="basket-total"></h5></td>
                         </tr>
                         <tr>
-                            <td>
-                                <div class="media">
-                                    <div class="d-flex">
-                                        <img src="img/cart.jpg" alt="">
-                                    </div>
-                                    <div class="media-body">
-                                        <p>Minimalistic shop for multipurpose use</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <h5>$360.00</h5>
-                            </td>
-                            <td>
-                                <div class="product_count">
-                                    <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
-                                           class="input-text qty">
-                                    <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                            class="increase items-count" type="button">
-                                        <i class="lnr lnr-chevron-up"></i>
-                                    </button>
-                                    <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                            class="reduced items-count" type="button">
-                                        <i class="lnr lnr-chevron-down"></i>
-                                    </button>
-                                </div>
-                            </td>
-                            <td>
-                                <h5>$720.00</h5>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="media">
-                                    <div class="d-flex">
-                                        <img src="img/cart.jpg" alt="">
-                                    </div>
-                                    <div class="media-body">
-                                        <p>Minimalistic shop for multipurpose use</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <h5>$360.00</h5>
-                            </td>
-                            <td>
-                                <div class="product_count">
-                                    <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
-                                           class="input-text qty">
-                                    <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                            class="increase items-count" type="button">
-                                        <i class="lnr lnr-chevron-up"></i>
-                                    </button>
-                                    <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                            class="reduced items-count" type="button">
-                                        <i class="lnr lnr-chevron-down"></i>
-                                    </button>
-                                </div>
-                            </td>
-                            <td>
-                                <h5>$720.00</h5>
-                            </td>
-                        </tr>
-                       
-                        <tr>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                                <h5>Subtotal</h5>
-                            </td>
-                            <td>
-                                <h5>$2160.00</h5>
-                            </td>
-                        </tr>
-                        
-                        <tr class="out_button_area">
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                                <div class="checkout_btn_inner d-flex align-items-center">
-                                    <a class="gray_btn" asp-controller="Product" asp-action="ShopCategory">Continue Shopping</a>
+                            <td colspan="4" class="text-right">
+                                <div class="checkout_btn_inner d-flex align-items-center justify-content-end">
+                                    <a class="gray_btn mr-3" asp-controller="Product" asp-action="ShopCategory">Continue Shopping</a>
                                     <a class="primary-btn" asp-controller="Order" asp-action="Checkout">Proceed to checkout</a>
                                 </div>
                             </td>
                         </tr>
-                    </tbody>
+                    </tfoot>
                 </table>
             </div>
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script>
+
+        // $(document).ready(function() {
+
+        // var basket = JSON.parse(localStorage.getItem('basket')) || [];
+
+        // if (basket.length === 0) return;
+
+        // var token = '@Context.Session.GetString("Token")';
+
+        // if (token) {
+        //     $.ajax({
+        //         url: '/Basket/AddItemToBasket',  
+        //         type: 'POST',
+        //         contentType: 'application/json',
+        //         data: JSON.stringify(basket),
+        //         success: function() {
+        //             console.log('Basket synced and saved to DB');
+
+        //             localStorage.removeItem('basket');
+
+        //             loadCartProducts(basket);
+        //         },
+        //         error: function(err) {
+        //             console.error('Error add basket Item:', err);
+
+        //             loadCartProducts(basket);
+        //         }
+        //     });
+        // } 
+        // else 
+        // {
+        //     loadCartProducts(basket);
+        // }
+        // });
+
+        // function loadCartProducts(currentBasket) {
+        
+        // var ids = currentBasket.map(x => x.productId);
+        //     if (ids.length === 0) return;
+        //    $.ajax({
+        //         url: '/Basket/GetProductsByIds',
+        //         type: 'POST',
+        //         contentType: 'application/json',
+        //         data: JSON.stringify(ids),
+        //         success: function(products) {
+        //             var html = '';
+        //             var total = 0;
+
+        //             products.forEach(function(product) {
+        //                 var item = basket.find(x => x.productId === product.id);
+        //                 var quantity = item ? item.quantity : 1;
+        //                 var itemTotal = product.price * quantity;
+        //                 total += itemTotal;
+
+        //                 html += `
+        //                     <tr>
+        //                         <td>
+        //                             <div class="media ">
+        //                                 <div class="d-flex ">
+        //                                     <img src="/${product.imageUrl}"  class="img-fluid" style="max-width: 80px;" alt="">
+        //                                 </div>
+        //                                 <div class="media-body">
+        //                                     <p>${product.name}</p>
+        //                                 </div>
+        //                             </div>
+        //                         </td>
+        //                         <td><h5>$${product.price}</h5></td>
+        //                         <td>${quantity}</td>
+        //                         <td><h5>$${itemTotal.toFixed(2)}</h5></td>
+        //                     </tr>
+        //                 `;
+        //             });
+
+        //             $('#basket-items').html(html);
+        //             $('#basket-total').text('$' + total.toFixed(2));
+        //         }
+        //     });
+        // }
+
+    </script>
+    <script>
+    $(document).ready(function() {
+        var basket = JSON.parse(localStorage.getItem('basket')) || [];
+        var token = '@Context.Session.GetString("Token")';
+
+        if (basket.length === 0) {
+            if (token) {
+                loadCartFromDb();
+            }
+            return;
+        }
+
+
+        if (token) {
+            $.ajax({
+                url: '/Basket/AddItemToBasket',  
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(basket),
+                success: function() {
+                    console.log('Basket synced and saved to DB');
+
+                    localStorage.removeItem('basket');
+
+                    loadCartFromDb();
+                    },
+                error: function(err) {
+                    console.error('Error add basket Item:', err);
+                }
+            });
+        } 
+        else 
+        {
+            loadCartProducts(basket);
+        }
+    }); 
+
+    function loadCartProducts(currentBasket) {
+        var ids = currentBasket.map(x => x.productId);
+        if (ids.length === 0) return;
+
+        $.ajax({
+            url: '/Basket/GetProductsByIds',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(ids),
+            success: function(products) {
+                var html = '';
+                var total = 0;
+
+                products.forEach(function(product) {
+                    var item = currentBasket.find(x => x.productId === product.id);
+                    var quantity = item ? item.quantity : 1;
+                    var itemTotal = product.price * quantity;
+                    total += itemTotal;
+
+                    html += `
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="d-flex">
+                                        <img src="/${product.imageUrl}" class="img-fluid" style="max-width: 80px;" alt="">
+                                    </div>
+                                    <div class="media-body">
+                                        <p>${product.name}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><h5>$${product.price}</h5></td>
+                            <td>${quantity}</td>
+                            <td><h5>$${itemTotal.toFixed(2)}</h5></td>
+                        </tr>
+                    `;
+                });
+
+                $('#basket-items').html(html);
+                $('#basket-total').text('$' + total.toFixed(2));
+            }
+        });
+    }
+
+            function loadCartFromDb() {
+            $.ajax({
+                url: '/Basket/GetBasketItems',
+                type: 'GET',
+                success: function(items) {
+                    if (items.length === 0) return;
+
+                    var ids = items.map(x => x.productId);
+
+                    $.ajax({
+                        url: '/Basket/GetProductsByIds',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(ids),
+                        success: function(products) {
+                            var html = '';
+                            var total = 0;
+
+                            products.forEach(function(product) {
+                                var item = items.find(x => x.productId === product.id);
+                                var quantity = item ? item.quantity : 1;
+                                var itemTotal = product.price * quantity;
+                                total += itemTotal;
+
+                                html += `
+                                    <tr>
+                                        <td>
+                                            <div class="media">
+                                                <div class="d-flex">
+                                                    <img src="/${product.imageUrl}" class="img-fluid" style="max-width: 80px;" alt="">
+                                                </div>
+                                                <div class="media-body">
+                                                    <p>${product.name}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><h5>$${product.price}</h5></td>
+                                        <td>${quantity}</td>
+                                        <td><h5>$${itemTotal.toFixed(2)}</h5></td>
+                                    </tr>
+                                `;
+                            });
+
+                            $('#basket-items').html(html);
+                            $('#basket-total').text('$' + total.toFixed(2));
+                        }
+                    });
+                }
+            });
+        }
+
+
+
+</script>
+}

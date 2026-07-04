@@ -6,7 +6,7 @@ namespace PrimeShop.Application.Common.Interfaces
 {
     public interface IAuthService
     {
-        Task<string> RegisterAsync(string email, string password);
+        Task<string> RegisterAsync(string email, string password , Guid customerId);
         Task<string> LoginAsync(string email, string password);
 
     }

@@ -9,9 +9,9 @@ using System.Text;
 
 namespace PrimeShop.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-
+            
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

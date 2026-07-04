@@ -28,7 +28,7 @@ namespace PrimeShop.Domain.Entities
 
 
         public ICollection<Order> Orders { get; set; } = new List<Order>();
-        public string ApplicationUserId { get; set; } = string.Empty;
+        public string? ApplicationUserId { get; set; } 
 
 
     }

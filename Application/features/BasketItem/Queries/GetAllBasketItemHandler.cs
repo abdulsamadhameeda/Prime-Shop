@@ -22,7 +22,7 @@ namespace PrimeShop.Application.features.BasketItem.Queries
         public async Task<List<BasketItemDto>> Handle(GetAllBasketItemQueries request, CancellationToken cancellationToken)
         {
 
-            string filePath = Path.Combine(AppContext.BaseDirectory, "features", "BasketItem", "Queries", "SQL", "GetAllBasketItem.sql");
+            string filePath = Path.Combine(AppContext.BaseDirectory,  "SQL", "GetAllBasketItem.sql");
 
             string sqlQuery = await File.ReadAllTextAsync(filePath);
 

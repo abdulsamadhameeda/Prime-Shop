@@ -9,9 +9,9 @@ namespace PrimeShop.Application.features.Basket.Validatords
         public CreateBasketCommandValidators()
         {
 
-            RuleFor(c => c.CreatedAt)
-            .NotEmpty().WithMessage("This feild is requird")
-            .LessThanOrEqualTo(DateTime.Now).WithMessage("Creation date cannot be in the future.");
+            //RuleFor(c => c.CreatedAt)
+            //.NotEmpty().WithMessage("This feild is requird")
+            //.LessThanOrEqualTo(DateTime.Now).WithMessage("Creation date cannot be in the future.");
 
             RuleFor(c => c.CustomerId).NotEmpty().WithMessage("Customer Id is requird");
 

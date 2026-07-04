@@ -20,7 +20,7 @@ namespace PrimeShop.Application.features.OrderItem.Queries
         }
         public async Task<OrderItemDto> Handle(GetByIdOrderItemQueries request, CancellationToken cancellationToken)
         {
-            string filePath = Path.Combine(AppContext.BaseDirectory, "features", "OrderItem", "Queries", "SQL", "GetByIdOrderItem.sql");
+            string filePath = Path.Combine(AppContext.BaseDirectory,"SQL", "GetByIdOrderItem.sql");
 
             string sqlQuery = await File.ReadAllTextAsync(filePath);
 

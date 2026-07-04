@@ -226,7 +226,6 @@ namespace PrimeShop.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ApplicationUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
@@ -252,7 +251,8 @@ namespace PrimeShop.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ApplicationUserId] IS NOT NULL");
 
                     b.ToTable("Customers");
                 });
@@ -384,6 +384,9 @@ namespace PrimeShop.Infrastructure.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -523,9 +526,7 @@ namespace PrimeShop.Infrastructure.Migrations
                 {
                     b.HasOne("PrimeShop.Infrastructure.Identity.ApplicationUser", null)
                         .WithOne()
-                        .HasForeignKey("PrimeShop.Domain.Entities.Customer", "ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PrimeShop.Domain.Entities.Customer", "ApplicationUserId");
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.Order", b =>

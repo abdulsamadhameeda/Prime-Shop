@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using PrimeShop.Web.Interface;
 using PrimeShop.Web.Models;
 using System.Diagnostics;
 
@@ -6,9 +7,21 @@ namespace PrimeShop.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+
+
+        private readonly IPrimeShopApi _api;
+
+        public HomeController(IPrimeShopApi api)
         {
-            return View();
+            _api = api;
+        }
+
+
+        public async Task<IActionResult> Index()
+        {
+            var latestProducts = await _api.GetRandomProductBAsync(8);
+            return View(latestProducts);
+            
         }
 
         public IActionResult Privacy()

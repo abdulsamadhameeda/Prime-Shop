@@ -31,7 +31,7 @@ namespace PrimeShop.WebApi.Controllers
         }
 
             
-        [HttpGet("GetByIdProduct")]
+        [HttpGet("GetById")]
         public async Task<IActionResult> GetByIdProduct([FromQuery] Guid id)
         {
             var result = await _mediator.Send(new GetByIdProductQueries(id));
@@ -39,6 +39,20 @@ namespace PrimeShop.WebApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetRandomProduct")]
+        public async Task<IActionResult> GetRandomProduct([FromQuery] int count)
+        {
+            var result = await _mediator.Send(new GetRandomProductsQuery(count));
+
+            return Ok(result);
+        }
+
+        [HttpPost("GetByIds")]
+        public async Task<IActionResult> GetByIds([FromBody] List<Guid> ids)
+        {
+            var result = await _mediator.Send(new GetProductsByIdsQuery(ids));
+            return Ok(result);
+        }
 
         [HttpPost("Create")]
         public async Task<IActionResult> CreateProduct([FromBody] CreateProductCommand command)

@@ -19,18 +19,22 @@ namespace PrimeShop.Application.features.Auth.Register.Commands
 
         public async Task<bool> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            var userId = await _authService.RegisterAsync(request.Email, request.Password);
-
             var customer = new Domain.Entities.Customer
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
-                ApplicationUserId = userId
             };
 
             _customerRepo.Add(customer);
+            await _customerRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
+
+            var userId = await _authService.RegisterAsync(request.Email, request.Password, customer.Id);
+
+            customer.ApplicationUserId = userId;
+            _customerRepo.Update(customer);
+
             await _customerRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
 
             return true;

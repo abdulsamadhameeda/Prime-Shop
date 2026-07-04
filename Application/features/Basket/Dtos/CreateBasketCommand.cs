@@ -8,7 +8,7 @@ namespace PrimeShop.Application.features.Basket.Dtos
  
     public record CreateBasketCommand(
 
-     DateTime CreatedAt ,
+    
 
      Guid CustomerId 
 

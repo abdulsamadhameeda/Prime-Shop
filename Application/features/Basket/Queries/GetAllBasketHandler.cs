@@ -21,7 +21,7 @@ namespace PrimeShop.Application.features.Basket.Queries
         }
         public async Task<List<BasketDto>> Handle(GetAllBasketQueries request, CancellationToken cancellationToken)
         {
-            string filePath = Path.Combine(AppContext.BaseDirectory, "features", "Basket", "Queries", "SQL", "GetAllBasket.sql");
+            string filePath = Path.Combine(AppContext.BaseDirectory, "SQL", "GetAllBasket.sql");
 
             string sqlQuery = await File.ReadAllTextAsync(filePath);
 

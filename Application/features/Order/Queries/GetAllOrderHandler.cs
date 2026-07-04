@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Application.features.Customer.Dtos;
 using PrimeShop.Application.features.Order.Dtos;
+using PrimeShop.Domain.Entities;
 using System.Net.NetworkInformation;
 
 
@@ -19,7 +20,7 @@ namespace PrimeShop.Application.features.Order.Queries
         }
         public async Task<List<OrderDto>> Handle(GetAllOrderQueries request, CancellationToken cancellationToken)
         {
-            string filePath = Path.Combine(AppContext.BaseDirectory, "features", "Order", "Queries", "SQL", "GetAllOrder.sql");
+            string filePath = Path.Combine(AppContext.BaseDirectory, "SQL", "GetAllOrder.sql");
 
             string sqlQuery = await File.ReadAllTextAsync(filePath);
 

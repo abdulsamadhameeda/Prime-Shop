@@ -1,7 +1,5 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PrimeShop.Application.features.Basket.Dtos;
 using PrimeShop.Application.features.BasketItem.Dtos;
 
 namespace PrimeShop.WebApi.Controllers
@@ -28,10 +26,10 @@ namespace PrimeShop.WebApi.Controllers
         }
 
 
-        [HttpGet("GetByIdBasketItems")]
-        public async Task<IActionResult> GetByIdBasketItem([FromQuery] Guid id)
+        [HttpGet("GetByBasketIdBasketItems")]
+        public async Task<IActionResult> GetByBasketIdBasketItems([FromQuery] Guid BasketId)
         {
-            var result = await _mediator.Send(new GetByIdBasketItemQueries(id));
+            var result = await _mediator.Send(new GetByIdBasketItemQueries(BasketId));
 
             return Ok(result);
         }

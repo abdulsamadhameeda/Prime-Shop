@@ -14,6 +14,8 @@ namespace PrimeShop.Infrastructure.Persistence.Seed
                 {
                     new Lookup { Id = Guid.NewGuid(), Type = "Role", Value = "Admin" },
                     new Lookup { Id = Guid.NewGuid(), Type = "Role", Value = "Customer" },
+
+
                     new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Amman" },
                     new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Zarqa" },
                     new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Irbid" }

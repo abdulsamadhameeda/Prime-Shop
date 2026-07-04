@@ -2,7 +2,7 @@
 
 namespace PrimeShop.Application.features.Order.Dtos
 {
-    internal class OrderDto
+    public class OrderDto
     {
         public Guid Id { get; set; }
 

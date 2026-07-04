@@ -8,6 +8,7 @@ namespace PrimeShop.Infrastructure.Identity
 {
     public class ApplicationUser : IdentityUser
     {
+        public Guid CustomerId { get; set; }
 
     }
 }

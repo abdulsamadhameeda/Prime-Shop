@@ -2,7 +2,9 @@
 @model List<PrimeShop.Application.features.Product.Dtos.ProductDto>
 @{
     var categories = ViewBag.Categories as List<CategoryDto>;
+
 }
+
 
 <!-- Start Banner Area -->
 <section class="banner-area organic-breadcrumb">
@@ -10,11 +12,7 @@
         <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
             <div class="col-first">
                 <h1>Shop Category page</h1>
-                <nav class="d-flex align-items-center">
-                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="category.html">Fashon Category</a>
-                </nav>
+
             </div>
         </div>
     </div>
@@ -43,22 +41,18 @@
             </div>
             <div class="sidebar-filter mt-50">
                 <div class="top-filter-head">Product Filters</div>
-                @* <div class="common-filter">
+                <div class="common-filter">
                     <div class="head">Price</div>
-                    <div class="price-range-area">
-                        <div id="price-range"></div>
-                        <div class="value-wrapper d-flex">
-                            <div class="price">Price:</div>
-                            <span>$</span>
-                            <div id="lower-value"></div>
-                            <div class="to">to</div>
-                            <span>$</span>
-                            <div id="upper-value"></div>
+                    <form method="get" asp-action="ShopCategory">
+                        <input type="hidden" name="categoryId" value="@Context.Request.Query["categoryId"]" />
+                        <div class="d-flex align-items-center gap-2 mb-3">
+                            <input type="number" name="minPrice" class="form-control" placeholder="Min" value="@ViewBag.MinPrice" min="0" />
+                            <span>to</span>
+                            <input type="number" name="maxPrice" class="form-control" placeholder="Max" value="@ViewBag.MaxPrice" min="0" />
                         </div>
-                    </div>
-                </div> *@
-               
-
+                        <button type="submit" class="primary-btn btn btn-sm w-50 mx-auto d-block">Apply</button>
+                    </form>
+                </div>
             </div>
         </div>
         <div class="col-xl-9 col-lg-8 col-md-7">
@@ -103,7 +97,7 @@
                                         <h6>$@product.Price</h6>
                                     </div>
                                     <div class="prd-bottom">
-                                        <a asp-controller="Basket" asp-action="AddToBasket" asp-route-productId="@product.Id" class="social-info">
+                                        <a onclick="addToBasket('@product.Id')" class="social-info">
                                             <span class="ti-bag"></span>
                                             <p class="hover-text">add to bag</p>
                                         </a>
@@ -124,4 +118,80 @@
     </div>
 </div>
 
+@section Scripts {
+    <script>
+               function addToBasket(productId) {
+                    var basket = JSON.parse(localStorage.getItem('basket')) || [];
+                    var token = '@Context.Session.GetString("Token")';
 
+                    if (token) {
+                        $.ajax({
+                            url: '/Basket/AddItemToBasket',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify([{ productId: productId, quantity: 1 }]),
+                            success: function() {
+        Swal.fire({
+               toast: true,
+               position: 'bottom-end',
+               icon: 'success',
+               title: 'Added to basket!',
+               showConfirmButton: false,
+               timer: 2000,
+               timerProgressBar: true,
+               background: '#FFA500',
+               color: '#fff',
+               iconColor: '#fff',
+               showClass: {
+               popup: 'swal2-noanimation'
+               },
+               hideClass: {
+               popup: ''
+               }
+               });
+                                 },
+                            error: function() {
+                Swal.fire({
+                                   toast: true,
+                                   position: 'bottom-right',
+                                   icon: 'error',
+                                   title: 'Error adding to basket!',
+                                   showConfirmButton: false,
+                                   timer: 2000,
+                                   background: '#ff4444',
+                                   color: '#fff',
+                                   iconColor: '#fff'
+                               });                    }
+                        });
+                    } else {
+                        var existing = basket.find(x => x.productId === productId);
+
+                        if (existing) {
+                            existing.quantity += 1;
+                        } else {
+                            basket.push({ productId: productId, quantity: 1 });
+                        }
+
+                        localStorage.setItem('basket', JSON.stringify(basket));
+                      Swal.fire({
+            toast: true,
+            position: 'bottom-end',
+            icon: 'success',
+            title: 'Added to basket!',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            background: '#FFA500',
+            color: '#fff',
+            iconColor: '#fff',
+            showClass: {
+                popup: 'swal2-noanimation'
+            },
+            hideClass: {
+                popup: ''
+            }
+        });
+                                }
+                }
+    </script>
+}

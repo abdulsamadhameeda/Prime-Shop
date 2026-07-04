@@ -13,66 +13,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-  <ItemGroup>
-    <None Remove="features\BasketItem\Queries\SQL\GetByIdBasketItem.sql" />
-    <None Remove="features\Basket\Queries\SQL\GetAllBasket.sql" />
-    <None Remove="features\Category\Queries\SQL\GetAllCategory.sql" />
-    <None Remove="features\Category\Queries\SQL\GetByIdCategory.sql" />
-    <None Remove="features\Customer\Queries\SQL\GetAllCustomer.sql" />
-    <None Remove="features\Customer\Queries\SQL\GetByIdCustomer.sql" />
-    <None Remove="features\OrderItem\Queries\SQL\GetAllOrderItem.sql" />
-    <None Remove="features\OrderItem\Queries\SQL\GetByIdOrderItem.sql" />
-    <None Remove="features\Order\Queries\SQL\GetAllOrder.sql" />
-    <None Remove="features\Order\Queries\SQL\GetByIdOrder.sql" />
-    <None Remove="features\Product\Queries\SQL\GetAllProduct.sql" />
-    <None Remove="features\Product\Queries\SQL\GetByIdProduct.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="features\BasketItem\Queries\SQL\GetAllBasketItem.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="features\BasketItem\Queries\SQL\GetByIdBasketItem.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="features\Basket\Queries\SQL\GetAllBasket.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="features\Basket\Queries\SQL\GetByIdBasket.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="features\Category\Queries\SQL\GetAllCategory.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="features\Category\Queries\SQL\GetByIdCategory.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="features\Customer\Queries\SQL\GetAllCustomer.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="features\Customer\Queries\SQL\GetByIdCustomer.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="features\OrderItem\Queries\SQL\GetAllOrderItem.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="features\OrderItem\Queries\SQL\GetByIdOrderItem.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="features\Order\Queries\SQL\GetAllOrder.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="features\Order\Queries\SQL\GetByIdOrder.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="features\Product\Queries\SQL\GetAllProduct.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="features\Product\Queries\SQL\GetByIdProduct.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="features\**\SQL\*.sql">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>SQL\%(Filename)%(Extension)</TargetPath>
+		</Content>
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\PrimeShop.Domain.csproj" />
   </ItemGroup>
