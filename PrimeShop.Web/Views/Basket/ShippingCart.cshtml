@@ -50,87 +50,6 @@
 
 @section Scripts {
     <script>
-
-        // $(document).ready(function() {
-
-        // var basket = JSON.parse(localStorage.getItem('basket')) || [];
-
-        // if (basket.length === 0) return;
-
-        // var token = '@Context.Session.GetString("Token")';
-
-        // if (token) {
-        //     $.ajax({
-        //         url: '/Basket/AddItemToBasket',  
-        //         type: 'POST',
-        //         contentType: 'application/json',
-        //         data: JSON.stringify(basket),
-        //         success: function() {
-        //             console.log('Basket synced and saved to DB');
-
-        //             localStorage.removeItem('basket');
-
-        //             loadCartProducts(basket);
-        //         },
-        //         error: function(err) {
-        //             console.error('Error add basket Item:', err);
-
-        //             loadCartProducts(basket);
-        //         }
-        //     });
-        // } 
-        // else 
-        // {
-        //     loadCartProducts(basket);
-        // }
-        // });
-
-        // function loadCartProducts(currentBasket) {
-        
-        // var ids = currentBasket.map(x => x.productId);
-        //     if (ids.length === 0) return;
-        //    $.ajax({
-        //         url: '/Basket/GetProductsByIds',
-        //         type: 'POST',
-        //         contentType: 'application/json',
-        //         data: JSON.stringify(ids),
-        //         success: function(products) {
-        //             var html = '';
-        //             var total = 0;
-
-        //             products.forEach(function(product) {
-        //                 var item = basket.find(x => x.productId === product.id);
-        //                 var quantity = item ? item.quantity : 1;
-        //                 var itemTotal = product.price * quantity;
-        //                 total += itemTotal;
-
-        //                 html += `
-        //                     <tr>
-        //                         <td>
-        //                             <div class="media ">
-        //                                 <div class="d-flex ">
-        //                                     <img src="/${product.imageUrl}"  class="img-fluid" style="max-width: 80px;" alt="">
-        //                                 </div>
-        //                                 <div class="media-body">
-        //                                     <p>${product.name}</p>
-        //                                 </div>
-        //                             </div>
-        //                         </td>
-        //                         <td><h5>$${product.price}</h5></td>
-        //                         <td>${quantity}</td>
-        //                         <td><h5>$${itemTotal.toFixed(2)}</h5></td>
-        //                     </tr>
-        //                 `;
-        //             });
-
-        //             $('#basket-items').html(html);
-        //             $('#basket-total').text('$' + total.toFixed(2));
-        //         }
-        //     });
-        // }
-
-    </script>
-    <script>
     $(document).ready(function() {
         var basket = JSON.parse(localStorage.getItem('basket')) || [];
         var token = '@Context.Session.GetString("Token")';
@@ -191,7 +110,7 @@
                             <td>
                                 <div class="media">
                                     <div class="d-flex">
-                                        <img src="/${product.imageUrl}" class="img-fluid" style="max-width: 80px;" alt="">
+                                        <img src="/${product.imageUrl}" class="img-fluid" style="max-width: 80px;" alt="" >
                                     </div>
                                     <div class="media-body">
                                         <p>${product.name}</p>

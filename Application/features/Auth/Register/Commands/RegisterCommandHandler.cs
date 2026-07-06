@@ -28,6 +28,7 @@ namespace PrimeShop.Application.features.Auth.Register.Commands
             };
 
             _customerRepo.Add(customer);
+
             await _customerRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
 
             var userId = await _authService.RegisterAsync(request.Email, request.Password, customer.Id);

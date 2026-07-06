@@ -20,7 +20,7 @@ namespace PrimeShop.Infrastructure
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-
+            //DAPPER
             services.AddScoped<IDbConnection>(ServiceProvider =>
             {
                 var configuration = ServiceProvider.GetRequiredService<IConfiguration>();

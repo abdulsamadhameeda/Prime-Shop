@@ -20,14 +20,13 @@ namespace PrimeShop.Web.Interface
         Task RegisterAsync([FromBody] RegisterCommand command);
 
 
-        [Get("/api/Product/GetAll")]
-        Task<List<ProductDto>> GetProductsAsync([FromQuery] Guid? categoryId ,  decimal? minPrice ,  decimal? maxPrice );
-
-
 
         [Get("/api/Category/GetAll")]
         Task<List<CategoryDto>> GetCategoriesAsync();
 
+
+        [Get("/api/Product/GetAll")]
+        Task<List<ProductDto>> GetProductsAsync([FromQuery] Guid? categoryId ,  decimal? minPrice ,  decimal? maxPrice );
 
         [Post("/api/Product/GetByIds")]
         Task<List<ProductDto>> GetProductsByIdsAsync([FromBody] List<Guid> ids);
@@ -39,6 +38,8 @@ namespace PrimeShop.Web.Interface
 
         [Get("/api/Product/GetRandomProduct")]
         Task<List<ProductDto>> GetRandomProductBAsync([FromQuery] int count);
+
+
 
         [Get("/api/Order/GetByIdAndCustomerId")]
         Task<List<OrderDto>> GetOrderByIdAndCustomerIdAsync([FromQuery] Guid? orderId,  Guid? customerId);
