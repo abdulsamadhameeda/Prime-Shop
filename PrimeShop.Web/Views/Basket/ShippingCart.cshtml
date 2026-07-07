@@ -26,7 +26,7 @@
                     </thead>
                     <tbody id="basket-items">
                     </tbody>
-                    <tfoot>
+                    <tfoot id="checkout-section">
                         <tr>
                             <td></td>
                             <td></td>
@@ -58,6 +58,10 @@
             if (token) {
                 loadCartFromDb();
             }
+             else {
+                $('#checkout-section').hide();
+              $('#basket-items').html('<tr><td colspan="4" class="p-5"><div class="alert text-center" role="alert" style="background-color: #fff8f0; color: #333; border: 1px solid #ffe8cc; font-size: 18px;">Your cart is empty </div></td></tr>');
+             }
             return;
         }
 
@@ -135,7 +139,11 @@
                 url: '/Basket/GetBasketItems',
                 type: 'GET',
                 success: function(items) {
-                    if (items.length === 0) return;
+                    if (items.length === 0) {
+                        $('#checkout-section').hide();
+                        $('#basket-items').html('<tr><td colspan="4" class="p-5"><div class="alert text-center" role="alert" style="background-color: #fff8f0; color: #333; border: 1px solid #ffe8cc; font-size: 18px;">Your cart is empty</div></td></tr>');
+                    return
+                    };
 
                     var ids = items.map(x => x.productId);
 

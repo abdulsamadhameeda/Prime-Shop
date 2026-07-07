@@ -19,9 +19,9 @@ namespace PrimeShop.WebApi.Controllers
 
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllOrderItems()
+        public async Task<IActionResult> GetAllOrderItems( Guid? orderId)
         {
-            var result = await _mediator.Send(new GetAllOrderItemQueries());
+            var result = await _mediator.Send(new GetAllOrderItemQueries(orderId));
 
             return Ok(result);
         }

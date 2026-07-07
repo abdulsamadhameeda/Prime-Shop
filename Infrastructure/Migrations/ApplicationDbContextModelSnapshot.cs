@@ -171,7 +171,7 @@ namespace PrimeShop.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Baskets");
+                    b.ToTable("Baskets", (string)null);
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.BasketItem", b =>
@@ -195,7 +195,7 @@ namespace PrimeShop.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("BasketItems");
+                    b.ToTable("BasketItems", (string)null);
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.Category", b =>
@@ -216,7 +216,7 @@ namespace PrimeShop.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.Customer", b =>
@@ -254,7 +254,7 @@ namespace PrimeShop.Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[ApplicationUserId] IS NOT NULL");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.Lookup", b =>
@@ -273,7 +273,7 @@ namespace PrimeShop.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Lookups");
+                    b.ToTable("Lookups", (string)null);
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.Order", b =>
@@ -308,7 +308,7 @@ namespace PrimeShop.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.OrderItem", b =>
@@ -335,7 +335,7 @@ namespace PrimeShop.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.Product", b =>
@@ -370,7 +370,7 @@ namespace PrimeShop.Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("PrimeShop.Infrastructure.Identity.ApplicationUser", b =>

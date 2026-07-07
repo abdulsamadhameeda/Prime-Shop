@@ -22,12 +22,12 @@ namespace PrimeShop.Application.features.Order.Commands
             var Order = new Domain.Entities.Order
             {
                 OrderDate = request.OrderDate,
-                CustomerId = request.CustomerId,
                 TotalAmount = request.TotalAmount,
                 Status = request.Status,
-                ShippingCity = request.ShippingCity,
                 ShippingStreet = request.ShippingStreet,
-   
+                ShippingCity = request.ShippingCity,
+                CustomerId = request.CustomerId
+
             };
 
             _OrderRepo.Add(Order);

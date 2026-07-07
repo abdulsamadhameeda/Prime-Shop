@@ -21,7 +21,7 @@ namespace PrimeShop.Application.features.OrderItem.Queries
 
             string sqlQuery = await File.ReadAllTextAsync(filePath);
 
-            var result = await _OrderItemRepo.QuerySql<OrderItemDto>(sqlQuery);
+            var result = await _OrderItemRepo.QuerySql<OrderItemDto>(sqlQuery , new { OrderId = request.orderId });
 
             return result.ToList();
         }

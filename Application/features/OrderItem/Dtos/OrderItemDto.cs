@@ -2,7 +2,7 @@
 
 namespace PrimeShop.Application.features.OrderItem.Dtos
 {
-    internal class OrderItemDto
+    public class OrderItemDto
     {
         public Guid Id { get; set; }
         
@@ -13,6 +13,7 @@ namespace PrimeShop.Application.features.OrderItem.Dtos
         public Guid OrderId { get; set; }
 
         public Guid ProductId { get; set; }
+        public string ProductName { get; set; }
 
       
     }

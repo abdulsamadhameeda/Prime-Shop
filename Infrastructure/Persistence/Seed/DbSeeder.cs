@@ -16,9 +16,17 @@ namespace PrimeShop.Infrastructure.Persistence.Seed
                     new Lookup { Id = Guid.NewGuid(), Type = "Role", Value = "Customer" },
 
 
-                    new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Amman" },
-                    new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Zarqa" },
-                    new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Irbid" }
+                   new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Amman" },
+                   new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Zarqa" },
+                   new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Irbid" },
+                   new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Aqaba" },
+                   new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Mafraq" },
+                   new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Jerash" },
+                   new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Ajloun" },
+                   new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Karak" },
+                   new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Tafilah" },
+                   new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Madaba" },
+                   new Lookup { Id = Guid.NewGuid(), Type = "City", Value = "Balqa" },
                 };
 
                 await context.Lookups.AddRangeAsync(lookups);

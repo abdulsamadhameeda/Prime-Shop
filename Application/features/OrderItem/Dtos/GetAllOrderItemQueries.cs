@@ -4,6 +4,6 @@
 namespace PrimeShop.Application.features.OrderItem.Dtos
 {
   
-    public class GetAllOrderItemQueries : IRequest<List<OrderItemDto>>;
+    public record GetAllOrderItemQueries(Guid? orderId): IRequest<List<OrderItemDto>>;
 
-}
+}   

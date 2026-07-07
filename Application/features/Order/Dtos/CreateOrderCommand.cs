@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using PrimeShop.Domain.Enums;
+using System.Text.Json.Serialization;
 
 namespace PrimeShop.Application.features.Order.Dtos
 {
-   
+
     public record CreateOrderCommand(
 
          DateTime OrderDate,
@@ -11,8 +12,9 @@ namespace PrimeShop.Application.features.Order.Dtos
 
          decimal TotalAmount,
 
-         OrderStatus Status,
 
+        [property: JsonConverter(typeof(JsonStringEnumConverter))] 
+        OrderStatus Status,
 
          string ShippingStreet,
 

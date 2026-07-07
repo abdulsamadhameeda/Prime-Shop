@@ -1,0 +1,114 @@
+﻿@using PrimeShop.Application.features.Order.Dtos
+@model OrderDto
+
+<section class="banner-area organic-breadcrumb">
+	<div class="container">
+		<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+			<div class="col-first">
+				<h1>Confirmation</h1>
+				<nav class="d-flex align-items-center">
+					<a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+					<a href="#">Confirmation</a>
+				</nav>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="order_details section_gap">
+	<div class="container">
+		<h3 class="title_confirmation mb-3">Your order has been successfully received!</h3>
+	
+		<div class="row order_d_inner">
+			<div class="col-lg-12">
+				<div class="details_item">
+					<h4>Order Info</h4>
+
+					@if (Model != null)
+					{
+						<ul class="list row">
+							<li class="col-6"><span>Order number</span> : @Model.Id</li>
+							<li class="col-6"><span>Date</span> : @Model.OrderDate</li>
+							<li class="col-6"><span>Total</span> :  @Model.TotalAmount USD</li>
+							<li class="col-6"><span>City</span> : @Model.ShippingCity</li>
+						</ul>
+					}
+					else
+					{
+						<ul class="list">
+							<li><span>Order data is unavailable</span></li>
+						</ul>
+					}
+				</div>
+			</div>
+		</div>
+
+		<div class="order_details_table">
+			<h2>Order Details</h2>
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Product</th>
+							<th scope="col">Quantity</th>
+							<th scope="col">Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						@if (ViewBag.OrderItems != null)
+						{
+							foreach (var item in ViewBag.OrderItems)
+							{
+								var itemTotal = item.UnitPrice * item.Quantity;
+								<tr>
+									<td>
+										<p>@item.ProductName</p>
+									</td>
+									<td>
+										<h5>x @item.Quantity</h5>
+									</td>
+									<td>
+										<p>$@itemTotal</p>
+									</td>
+								</tr>
+							}
+						}
+						else
+						{
+							<tr>
+								<td colspan="3" class="text-center"><p>No items found in this order.</p></td>
+							</tr>
+						}
+
+						<tr>
+							<td>
+								<h4>Shipping</h4>
+							</td>
+							<td>
+								<h5></h5>
+							</td>
+							<td>
+								<p>Free</p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h4>Total</h4>
+							</td>
+							<td>
+								<h5></h5>
+							</td>
+							<td>
+								<p>$ @Model.TotalAmount</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+
+			<div class=" tracking_form mt-2 d-flex justify-content-end">
+				<a type="submit" value="submit" class="primary-btn" asp-controller="Order" asp-action="OrderTracking">Track Order</a>
+				</div>
+		</div>
+	</div>
+</section>
