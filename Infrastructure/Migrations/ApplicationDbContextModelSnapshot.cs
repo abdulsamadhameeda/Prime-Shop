@@ -171,7 +171,7 @@ namespace PrimeShop.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Baskets", (string)null);
+                    b.ToTable("Baskets");
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.BasketItem", b =>
@@ -195,7 +195,7 @@ namespace PrimeShop.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("BasketItems", (string)null);
+                    b.ToTable("BasketItems");
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.Category", b =>
@@ -216,7 +216,7 @@ namespace PrimeShop.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.Customer", b =>
@@ -254,7 +254,7 @@ namespace PrimeShop.Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[ApplicationUserId] IS NOT NULL");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.Lookup", b =>
@@ -273,7 +273,7 @@ namespace PrimeShop.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Lookups", (string)null);
+                    b.ToTable("Lookups");
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.Order", b =>
@@ -308,7 +308,7 @@ namespace PrimeShop.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.OrderItem", b =>
@@ -335,7 +335,7 @@ namespace PrimeShop.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.Product", b =>
@@ -352,9 +352,6 @@ namespace PrimeShop.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -363,6 +360,9 @@ namespace PrimeShop.Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18, 2)");
 
+                    b.Property<byte[]>("ProductImage")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<int>("StockQuantity")
                         .HasColumnType("int");
 
@@ -370,7 +370,7 @@ namespace PrimeShop.Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("PrimeShop.Infrastructure.Identity.ApplicationUser", b =>

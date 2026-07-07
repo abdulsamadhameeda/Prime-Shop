@@ -8,7 +8,7 @@
         <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
             <div class="col-first">
                 <h1>Product Details Page</h1>
-                
+
             </div>
         </div>
     </div>
@@ -18,22 +18,22 @@
     <div class="container">
         <div class="row s_product_inner">
             <div class="col-lg-6">
-                
-                <img class="img-fluid  w-100"
-                         src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/img/category/default-product.jpg" : "/" + Model.ImageUrl.TrimStart('/'))"
-                         alt="@Model.Name">
+
+                <img class="img-fluid" src="@(Model.ProductImage != null && Model.ProductImage.Length > 0 ? $"data:image/png;base64,{Convert.ToBase64String(Model.ProductImage)}" : "/img/product/p1.jpg")" style="background-color: #f8f9fa; object-fit: contain; width: 100%; height:auto;" />
             </div>
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
                     <h3>@Model.Name</h3>
                     <h2>@Model.Price.ToString("C")</h2>
                     <ul class="list">
-                        <li><a class="active" href="#"><span>Category</span> : @Model.CategoryName</a></li>
+                        <li><span class="active"><span>Category</span> : @Model.CategoryName</span></li>
                         <li>
-                            <a href="#">
+                            <span>
                                 <span>Availability</span> :
-                                @(Model.StockQuantity > 0 ? "In Stock" : "Out of Stock")
-                            </a>
+                                <span class="@(Model.StockQuantity > 0 ? "text-success" : "text-danger") fw-bold">
+                                    @(Model.StockQuantity > 0 ? "In Stock" : "Out of Stock")
+                                </span>
+                            </span>
                         </li>
                     </ul>
                     <p>@Model.Description</p>
@@ -50,16 +50,16 @@
                                 <i class="lnr lnr-chevron-up"></i>
                             </button>
                             <button onclick="var result = document.getElementById('sst'); if(parseInt(result.value) > 1) result.value--; return false;"
-                                    class="reduced items-count" type="button">  
+                                    class="reduced items-count" type="button">
                                 <i class="lnr lnr-chevron-down"></i>
                             </button>
                         </div>
 
                         <div class="card_area d-flex align-items-center">
-                            <a class="primary-btn text-white" onclick="addToBasket('@Model.Id')" @(Model.StockQuantity == 0 ? "disabled" : "")>
+                            <button type="button" class="primary-btn text-white border-0" onclick="addToBasket('@Model.Id')" @(Model.StockQuantity == 0 ? "disabled" : "")>
                                 Add to Cart
-                            </a>
-                            
+                            </button>
+
                         </div>
                     </form>
                 </div>
@@ -102,8 +102,9 @@
                function addToBasket(productId) {
                     var basket = JSON.parse(localStorage.getItem('basket')) || [];
                     var quantity = document.getElementById('sst').value;
-                    var token = '@Context.Session.GetString("Token")';
-                    if (token) {
+        var token = '@Context.Request.Cookies["jwt"]';
+
+        if (token) {
                         $.ajax({
                             url: '/Basket/AddItemToBasket',
                             type: 'POST',

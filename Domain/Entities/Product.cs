@@ -23,9 +23,9 @@ namespace PrimeShop.Domain.Entities
         public decimal Price { get; set; }
 
         [Required]
-        public int StockQuantity { get; set; }  
+        public int StockQuantity { get; set; }
 
-        public string? ImageUrl { get; set; }
+        public byte[]? ProductImage { get; set; }
 
         [Required]
         [ForeignKey("Category")]

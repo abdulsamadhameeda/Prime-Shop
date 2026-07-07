@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PrimeShop.Application.features.Basket.Dtos;
 using PrimeShop.Application.features.BasketItem.Dtos;
 using PrimeShop.Domain.Entities;
@@ -9,6 +10,7 @@ using System.Runtime.CompilerServices;
 
 namespace PrimeShop.Web.Controllers
 {
+    //[Authorize(Roles = "Customer")]
     public class BasketController : Controller
     {
 
@@ -24,8 +26,8 @@ namespace PrimeShop.Web.Controllers
         public async Task<IActionResult> ShippingCart()
         {
 
-            var token = HttpContext.Session.GetString("Token");
-
+            //var token = HttpContext.Session.GetString("Token");
+            var token = HttpContext.Request.Cookies["jwt"];
             if (string.IsNullOrEmpty(token)) return View();
 
             var handler = new JwtSecurityTokenHandler();
@@ -49,7 +51,8 @@ namespace PrimeShop.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddItemToBasket([FromBody] List<BasketItemDto> items)
         {
-            var token = HttpContext.Session.GetString("Token");
+            //var token = HttpContext.Session.GetString("Token");
+            var token = HttpContext.Request.Cookies["jwt"];
 
             if (string.IsNullOrEmpty(token))
             {
@@ -100,7 +103,8 @@ namespace PrimeShop.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetBasketItems()
         {
-            var token = HttpContext.Session.GetString("Token");
+            //var token = HttpContext.Session.GetString("Token");
+            var token = HttpContext.Request.Cookies["jwt"];
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
             var customerId = Guid.Parse(jwt.Claims.First(c => c.Type == "CustomerId").Value);
@@ -112,6 +116,11 @@ namespace PrimeShop.Web.Controllers
             return Json(items);
         }
 
-
+        [HttpDelete]
+        public async Task<IActionResult> DeleteItem([FromQuery] Guid id)
+        {
+            await _api.DeleteBasketItemAsync(id);
+            return Ok();
+        }
     }
 }

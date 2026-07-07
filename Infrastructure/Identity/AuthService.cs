@@ -31,6 +31,8 @@ namespace PrimeShop.Infrastructure.Identity
             if (!result.Succeeded)
                 throw new Exception();
 
+            await _userManager.AddToRoleAsync(user, "Customer");
+
             return user.Id;
         }
         public async Task<string> LoginAsync(string email, string password)
@@ -45,7 +47,10 @@ namespace PrimeShop.Infrastructure.Identity
             if (!result)
                 throw new Exception("error password");
 
-            return _jwtTokenService.GenerateToken(user);
+            var roles = await _userManager.GetRolesAsync(user);
+
+
+            return _jwtTokenService.GenerateToken(user, roles.First());
         }
     }
 }

@@ -28,7 +28,7 @@ namespace PrimeShop.Application.features.Product.Commands
                 Description = request.Description,
                 Price = request.Price,
                 StockQuantity = request.StockQuantity,
-                ImageUrl = request.ImageUrl,
+                ProductImage = request.ImageUrl,
                 CategoryId = request.CategoryId,
 
             };

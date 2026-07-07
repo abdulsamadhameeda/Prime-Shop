@@ -16,7 +16,7 @@ namespace PrimeShop.Infrastructure.Identity
             _config = config;
         }
 
-        public string GenerateToken(ApplicationUser user)
+        public string GenerateToken(ApplicationUser user , string role)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -26,11 +26,12 @@ namespace PrimeShop.Infrastructure.Identity
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email!),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("CustomerId", user.CustomerId.ToString())
-
+                new Claim("CustomerId", user.CustomerId.ToString()),
+                new Claim(ClaimTypes.Role, role)
 
             };
 
+       
             var token = new JwtSecurityToken(
                 claims: claims,
                 expires: DateTime.UtcNow.AddDays(1),

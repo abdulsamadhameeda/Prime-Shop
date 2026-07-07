@@ -4,7 +4,7 @@
     p.Description,
     p.Price,
     p.StockQuantity,
-    p.ImageUrl,
+    p.ProductImage,
     p.CategoryId,
     c.Name AS CategoryName
 FROM Products p

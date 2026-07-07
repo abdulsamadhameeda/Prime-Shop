@@ -38,6 +38,10 @@ namespace PrimeShop.Web.Interface
         [Get("/api/Product/GetRandomProduct")]
         Task<List<ProductDto>> GetRandomProductBAsync([FromQuery] int count);
 
+        [Put("/api/Product/Update")]
+        Task<Guid> UpdateProductBAsync([FromBody] UpdateProductCommand command);
+
+
 
 
         [Get("/api/Order/GetByIdAndCustomerId")]

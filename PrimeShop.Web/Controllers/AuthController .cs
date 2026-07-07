@@ -27,7 +27,15 @@ namespace PrimeShop.Web.Controllers
         {
             var token = await _api.LoginAsync(command);
 
-            HttpContext.Session.SetString("Token", token);
+            //HttpContext.Session.SetString("Token", token);
+            HttpContext.Response.Cookies.Append("jwt", token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTimeOffset.UtcNow.AddDays(1)
+            });
+
 
             return RedirectToAction("Index", "Home");
         }
@@ -47,7 +55,12 @@ namespace PrimeShop.Web.Controllers
             return RedirectToAction("Login");
         }
 
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Response.Cookies.Delete("jwt");
+            return RedirectToAction("Login");
+        }
 
-      
     }
 }

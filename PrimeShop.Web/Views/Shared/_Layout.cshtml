@@ -19,6 +19,7 @@
 	<link rel="stylesheet" href="~/css/nouislider.min.css" />
 	<link rel="stylesheet" href="~/css/ion.rangeSlider.css" />
 	<link rel="stylesheet" href="~/css/ion.rangeSlider.skinFlat.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 	<link rel="stylesheet" href="~/css/main.css" />
 	
 
@@ -41,9 +42,19 @@
 						<ul class="nav navbar-nav menu_nav ml-auto">
 							<li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
 							<li class="nav-item"><a class="nav-link" asp-controller="Product" asp-action="ShopCategory">Shop</a></li>
-							<li class="nav-item"><a class="nav-link" asp-controller="Order" asp-action="OrderTracking">Tracking</a></li>
+							@if (User.IsInRole("Customer"))
+								{
+								<li class="nav-item"><a class="nav-link" asp-controller="Order" asp-action="OrderTracking">Tracking</a></li>
+								}
 							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-							<li class="nav-item"><a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a></li>
+							@if (!User.Identity.IsAuthenticated)
+							{
+								<li class="nav-item"><a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a></li>
+							}
+							else
+							{
+								<li class="nav-item"><a class="nav-link" asp-controller="Auth" asp-action="Logout">Logout</a></li>
+							}
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="nav-item"><a class="cart" asp-controller="Basket" asp-action="ShippingCart"><span class="ti-bag"></span></a></li>

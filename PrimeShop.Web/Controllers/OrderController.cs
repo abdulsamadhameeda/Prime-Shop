@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PrimeShop.Application.features.Order.Dtos;
 using PrimeShop.Application.features.OrderItem.Dtos;
+using PrimeShop.Application.features.Product.Dtos;
 using PrimeShop.Domain.Entities;
 using PrimeShop.Domain.Enums;
 using PrimeShop.Web.Interface;
@@ -23,7 +24,8 @@ namespace PrimeShop.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> CheckoutAsync()
         {
-            var token = HttpContext.Session.GetString("Token");
+            //var token = HttpContext.Session.GetString("Token");
+            var token = HttpContext.Request.Cookies["jwt"];
             if (string.IsNullOrEmpty(token))
             {
                 return RedirectToAction("Login", "Auth");
@@ -41,7 +43,8 @@ namespace PrimeShop.Web.Controllers
         public async Task<IActionResult> Checkout(string shippingStreet, string shippingCity, decimal totalAmount)
         {
 
-            var token = HttpContext.Session.GetString("Token");
+            //var token = HttpContext.Session.GetString("Token");
+            var token = HttpContext.Request.Cookies["jwt"];
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
 
@@ -67,6 +70,18 @@ namespace PrimeShop.Web.Controllers
                 var product = products.FirstOrDefault(x => x.Id == item.ProductId);
 
                 await _api.CreateOrderItemAsync(new CreateOrderItemCommand(item.Quantity, product.Price, orderId, item.ProductId));
+
+                var newQuantity = product.StockQuantity - item.Quantity;
+                await _api.UpdateProductBAsync(new UpdateProductCommand(
+                          product.Id,
+                          product.Name,
+                          product.Description, 
+                          product.Price,
+                          newQuantity,        
+                          product.ProductImage,
+                          product.CategoryId
+                ));
+
                 await _api.DeleteBasketItemAsync(item.Id);
             }
 
@@ -96,7 +111,8 @@ namespace PrimeShop.Web.Controllers
         public async Task<IActionResult> OrderTracking()
         {
 
-            var token = HttpContext.Session.GetString("Token");
+            //var token = HttpContext.Session.GetString("Token");
+            var token = HttpContext.Request.Cookies["jwt"];
             if (string.IsNullOrEmpty(token))
             {
                 return RedirectToAction("Login", "Auth");
@@ -119,7 +135,8 @@ namespace PrimeShop.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> OrderTracking(Guid? orderId)
         {
-            var token = HttpContext.Session.GetString("Token");
+            //var token = HttpContext.Session.GetString("Token");
+            var token = HttpContext.Request.Cookies["jwt"];
             if (string.IsNullOrEmpty(token))
             {
                 return RedirectToAction("Login", "Auth");
