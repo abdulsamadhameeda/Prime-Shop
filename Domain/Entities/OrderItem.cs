@@ -12,21 +12,17 @@ namespace PrimeShop.Domain.Entities
 
     
 
-        [Required]
         public int Quantity { get; set; }
 
-        [Required]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal UnitPrice { get; set; }
 
-        [Required]
         [ForeignKey("Order")]
 
         public Guid OrderId { get; set; }
 
         public Order Order { get; set; }
 
-        [Required]
         [ForeignKey("Product")]
 
         public Guid ProductId { get; set; }

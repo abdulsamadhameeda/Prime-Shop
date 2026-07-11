@@ -89,32 +89,38 @@
                     @foreach (var product in Model)
                     {
                         <div class="col-lg-4 col-md-6">
-                            <div class="single-product">
+                            <div class="single-product" >
+
                                 <img class="img-fluid" src="@(product.ProductImage != null && product.ProductImage.Length > 0 ? $"data:image/png;base64,{Convert.ToBase64String(product.ProductImage)}" : "/img/product/p1.jpg")" alt="@product.Name" style="background-color: #f8f9fa; object-fit: contain; width: 100%; height: 250px;">                                <div class="product-details">
-                                    <h6>@product.Name</h6>
-                                    <div class="price">
-                                        <h6>$@product.Price</h6>
-                                    </div>
-                                    <div class="prd-bottom">
-                                        <a onclick="addToBasket('@product.Id')" class="social-info">
-                                            <span class="ti-bag"></span>
-                                            <p class="hover-text">add to bag</p>
-                                        </a>
-                                        <a asp-controller="Product" asp-action="ProductDetails" asp-route-id="@product.Id" class="social-info">
-                                            <span class="lnr lnr-move"></span>
-                                            <p class="hover-text">view more</p>
-                                        </a>
-                                    </div>
+                                <h6>@product.Name</h6>
+                                <div class="price">
+                                    <h6>$@product.Price</h6>
+                                </div>
+                                <div class="prd-bottom">
+                                    <a onclick="addToBasket('@product.Id')" class="social-info">
+                                        <span class="ti-bag"></span>
+                                        <p class="hover-text">add to bag</p>
+                                    </a>
+                                    <a  class="social-info">
+                                        <span class="lnr lnr-heart"></span>
+                                        <p class="hover-text">Wishlist</p>
+                                    </a>
+                                    <a asp-controller="Product" asp-action="ProductDetails" asp-route-id="@product.Id" class="social-info">
+                                        <span class="lnr lnr-move"></span>
+                                        <p class="hover-text">view more</p>
+                                    </a>
+
                                 </div>
                             </div>
                         </div>
-                    }
-                </div>
-            </section>
-            <!-- End Best Seller -->
+                    </div>
+                }
+            </div>
+        </section>
+        <!-- End Best Seller -->
 
-        </div>
     </div>
+</div>
 </div>
 
 @section Scripts {

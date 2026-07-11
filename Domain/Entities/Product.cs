@@ -10,24 +10,18 @@ namespace PrimeShop.Domain.Entities
     public class Product : Entity
     {
 
-        [Required]
-        [MaxLength(100)]
         public string Name { get; set; }
 
 
-        [MaxLength(200)]
         public string Description { get; set; }
 
-        [Required]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
 
-        [Required]
         public int StockQuantity { get; set; }
 
         public byte[]? ProductImage { get; set; }
 
-        [Required]
         [ForeignKey("Category")]
 
         public Guid CategoryId { get; set; }
