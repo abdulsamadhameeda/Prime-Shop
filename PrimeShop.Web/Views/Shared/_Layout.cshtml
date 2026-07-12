@@ -9,150 +9,198 @@
     @* <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> *@
     <link rel="stylesheet" href="~/PrimeShop.Web.styles.css" asp-append-version="true" />
 
-	<link rel="stylesheet" href="~/css/bootstrap.css" />
-	<link rel="stylesheet" href="~/css/font-awesome.min.css" />
-	<link rel="stylesheet" href="~/css/themify-icons.css" />
-	<link rel="stylesheet" href="~/css/linearicons.css" />
-	<link rel="stylesheet" href="~/css/owl.carousel.css" />
-	<link rel="stylesheet" href="~/css/nice-select.css" />
-	<link rel="stylesheet" href="~/css/magnific-popup.css" />
-	<link rel="stylesheet" href="~/css/nouislider.min.css" />
-	<link rel="stylesheet" href="~/css/ion.rangeSlider.css" />
-	<link rel="stylesheet" href="~/css/ion.rangeSlider.skinFlat.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-	<link rel="stylesheet" href="~/css/main.css" />
-	
+    <link rel="stylesheet" href="~/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/css/themify-icons.css" />
+    <link rel="stylesheet" href="~/css/linearicons.css" />
+    <link rel="stylesheet" href="~/css/owl.carousel.css" />
+    <link rel="stylesheet" href="~/css/nice-select.css" />
+    <link rel="stylesheet" href="~/css/magnific-popup.css" />
+    <link rel="stylesheet" href="~/css/nouislider.min.css" />
+    <link rel="stylesheet" href="~/css/ion.rangeSlider.css" />
+    <link rel="stylesheet" href="~/css/ion.rangeSlider.skinFlat.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/main.css" />
 
+    @* ============admin link================= *@
+    <link rel="stylesheet" href="~/css/plugins.min.css" />
+    <link rel="stylesheet" href="~/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="~/css/demo.css" />
+  
 </head>
 <body>
-	<header class="header_area sticky-header">
-		<div class="main_menu">
-			<nav class="navbar navbar-expand-lg navbar-light main_box">
-				<div class="container">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<a class="navbar-brand logo_h" asp-controller="Home" asp-action="Index"><img src="/img/logo.png" alt=""></a>
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-							aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-						<ul class="nav navbar-nav menu_nav ml-auto">
-							<li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-							<li class="nav-item"><a class="nav-link" asp-controller="Product" asp-action="ShopCategory">Shop</a></li>
-							@if (User.IsInRole("Customer"))
-								{
-								<li class="nav-item"><a class="nav-link" asp-controller="Order" asp-action="OrderTracking">Tracking</a></li>
-								}
-							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-							@if (!User.Identity.IsAuthenticated)
-							{
-								<li class="nav-item"><a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a></li>
-							}
-							else
-							{
-								<li class="nav-item"><a class="nav-link" asp-controller="Auth" asp-action="Logout">Logout</a></li>
-							}
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item"><a class="cart" asp-controller="Basket" asp-action="ShippingCart"><span class="ti-bag"></span></a></li>
-							<li class="nav-item">
-								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-		</div>
-		<div class="search_input" id="search_input_box">
-			<div class="container">
-				<form class="d-flex justify-content-between">
-					<input type="text" class="form-control" id="search_input" placeholder="Search Here">
-					<button type="submit" class="btn"></button>
-					<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
-				</form>
-			</div>
-		</div>
-	</header>
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-  
-	<!-- start footer Area -->
-	<footer class="footer-area section_gap bg-dark text-light pb-4">
-		<div class="container">
-			<div class="row gy-4">
-				<div class="col-lg-5 col-md-6">
-					<div class="single-footer-widget">
-						<h6 class="text-uppercase mb-3">About Us</h6>
-						<p class="text-secondary">
-							PrimeShop is your trusted destination for quality products at unbeatable prices. We bring you a curated
-							selection of electronics, fashion, and lifestyle essentials, backed by fast delivery and a seamless
-							shopping experience from browsing to checkout.
-						</p>
-					</div>
-				</div>
+    <header class="header_area @(User.IsInRole("Admin") ? "static-header" : "sticky-header")">
+        <div class="main_menu">
+            <nav class="navbar navbar-expand-lg navbar-light @(User.IsInRole("Admin") ? "admin-nav" : "main_box")">
+                <div class="container">
+                        <!-- Brand and toggle get grouped for better mobile display -->
 
-				<div class="col-lg-4 col-md-6">
-					<div class="single-footer-widget">
-						<h6 class="text-uppercase mb-3">Quick Links</h6>
-						<ul class="list-unstyled">
-							<li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-							<li class="nav-item"><a class="nav-link" asp-controller="Product" asp-action="ShopCategory">Shop</a></li>
-							<li class="nav-item"><a class="nav-link" asp-controller="Order" asp-action="OrderTracking">Tracking</a></li>
-							<li class="nav-item"><a class="nav-link" asp-controller="" asp-action="" >Contact</a></li>
-							<li class="nav-item"><a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a></li>
-						</ul>
-					</div>
-				</div>
+                        <a class="navbar-brand logo_h" asp-controller="Home" asp-action="Index"><img src="/img/logo.png" alt=""></a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                            <ul class="nav navbar-nav menu_nav ml-auto">
+                                @if (!User.IsInRole("Admin"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-controller="Product" asp-action="ShopCategory">Shop</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
 
-				<div class="col-lg-3 col-md-6">
-					<div class="single-footer-widget">
-						<h6 class="text-uppercase mb-3">Follow Us</h6>
-						<p class="text-secondary mb-3">Let us be social</p>
-						<div class="footer-social d-flex align-items-center gap-3">
-							<a href="#" class="text-light fs-5"><i class="fa fa-facebook"></i></a>
-							<a href="#" class="text-light fs-5"><i class="fa fa-twitter"></i></a>
-							<a href="#" class="text-light fs-5"><i class="fa fa-dribbble"></i></a>
-							<a href="#" class="text-light fs-5"><i class="fa fa-behance"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
+                                }
+                                @if (User.IsInRole("Customer"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" asp-controller="Order" asp-action="OrderTracking">Tracking</a></li>
+                                }
+                                @if (!User.Identity.IsAuthenticated)
+                                {
+                                    <li class="nav-item"><a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a></li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="javascript:void(0)" onclick="confirmLogout()">Logout</a></li>
+                                }
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                @if (User.IsInRole("Customer") )
+                                {
 
-			<hr class="border-secondary my-4">
+                                    <li class="nav-item"><a class="cart" asp-controller="Basket" asp-action="ShippingCart"><span class="ti-bag"></span></a></li>
+                                    <li class="nav-item">
+                                        <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+              @if (User.IsInRole("Customer") )
+                                {
+            <div class="search_input" id="search_input_box">
+                <div class="container">
+                    <form class="d-flex justify-content-between">
+                        <input type="text" class="form-control" id="search_input" placeholder="Search Here">
+                        <button type="submit" class="btn"></button>
+                        <span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
+                    </form>
+                </div>
+            </div>
+        }
+        </header>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
 
-			<div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
-				<p class="footer-text m-0 pt-2 text-secondary text-center">
-					Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved 
-				</p>
-			</div>
-		</div>
-	</footer>
-	<!-- End footer Area -->
+    <!-- start footer Area -->
+    @if (!User.IsInRole("Admin"))
+        {
+            <footer class="footer-area section_gap bg-dark text-light pb-4">
+                <div class="container">
+                    <div class="row gy-4">
+                        <div class="col-lg-5 col-md-6">
+                            <div class="single-footer-widget">
+                                <h6 class="text-uppercase mb-3">About Us</h6>
+                                <p class="text-secondary">
+                                    PrimeShop is your trusted destination for quality products at unbeatable prices. We bring you a curated
+                                    selection of electronics, fashion, and lifestyle essentials, backed by fast delivery and a seamless
+                                    shopping experience from browsing to checkout.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6">
+                            <div class="single-footer-widget">
+                                <h6 class="text-uppercase mb-3">Quick Links</h6>
+                                <ul class="list-unstyled">
+                                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-controller="Product" asp-action="ShopCategory">Shop</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-controller="Order" asp-action="OrderTracking">Tracking</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-controller="" asp-action="">Contact</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+                            <div class="single-footer-widget">
+                                <h6 class="text-uppercase mb-3">Follow Us</h6>
+                                <p class="text-secondary mb-3">Let us be social</p>
+                                <div class="footer-social d-flex align-items-center gap-3">
+                                    <a href="#" class="text-light fs-5"><i class="fa fa-facebook"></i></a>
+                                    <a href="#" class="text-light fs-5"><i class="fa fa-twitter"></i></a>
+                                    <a href="#" class="text-light fs-5"><i class="fa fa-dribbble"></i></a>
+                                    <a href="#" class="text-light fs-5"><i class="fa fa-behance"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="border-secondary my-4">
+
+                    <div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
+                        <p class="footer-text m-0 pt-2 text-secondary text-center">
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
+                        </p>
+                    </div>
+                </div>
+            </footer>
+        }
+        <!-- End footer Area -->
+    @if (User.IsInRole("Admin"))
+    {
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="~/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+        <script src="~/js/kaiadmin.min.js"></script>
+    }
+    else
+    {
+        <script src="~/js/vendor/jquery-2.2.4.min.js"></script>
+        <script src="~/js/vendor/popper.js"></script>
+        <script src="~/js/vendor/bootstrap.min.js"></script>
+        <script src="~/js/ion.rangeSlider.js"></script>
+        <script src="~/js/jquery.ajaxchimp.min.js"></script>
+        <script src="~/js/jquery.magnific-popup.min.js"></script>
+        <script src="~/js/jquery.nice-select.min.js"></script>
+        <script src="~/js/jquery.sticky.js"></script>
+        <script src="~/js/nouislider.min.js"></script>
+        <script src="~/js/owl.carousel.min.js"></script>
+        <script src="~/js/countdown.js"></script>
+        <script src="~/js/main.js"></script>
+    }
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
    
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/js/ion.rangeSlider.js"></script>
-    @* <script src="~/js/site.js" asp-append-version="true"></script> *@
 
 
-	<script src="~/js/vendor/jquery-2.2.4.min.js"></script>
-	<script src="~/js/vendor/bootstrap.min.js"></script>
-	<script src="~/js/vendor/popper.js"></script>
-	<script src="~/js/jquery.ajaxchimp.min.js"></script>
-	<script src="~/js/jquery.magnific-popup.min.js"></script>
-	<script src="~/js/jquery.nice-select.min.js"></script>
-	<script src="~/js/jquery.sticky.js"></script>
-	<script src="~/js/nouislider.min.js"></script>
-	<script src="~/js/owl.carousel.min.js"></script>
-	<script src="~/js/countdown.js"></script>
-	<script src="~/js/main.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	@await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        function confirmLogout() {
+        Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to logout?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#FFA500',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Logout!',
+        cancelButtonText: 'Cancel'
+        }).then((result) => {
+        if (result.isConfirmed) {
+        window.location.href = '/Auth/Logout';
+        }
+        });
+        }
+    </script>
+
 
 </body>
 </html>

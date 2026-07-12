@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PrimeShop.Domain.Entities;
+using PrimeShop.Infrastructure.Identity;
 
 namespace PrimeShop.Infrastructure.Persistence.Seed
 {
     public class DbSeeder
     {
-        public static async Task SeedAsync(ApplicationDbContext context , RoleManager<IdentityRole> roleManager)
+        public static async Task SeedAsync(ApplicationDbContext context , RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             if (!await context.Lookups.AnyAsync())
             {
@@ -33,7 +34,7 @@ namespace PrimeShop.Infrastructure.Persistence.Seed
                 await context.Lookups.AddRangeAsync(lookups);
                 await context.SaveChangesAsync();
             }
-            // Seed Roles في AspNetRoles
+
             if (!await roleManager.RoleExistsAsync("Admin")) 
             {
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
@@ -43,7 +44,18 @@ namespace PrimeShop.Infrastructure.Persistence.Seed
             {
                 await roleManager.CreateAsync(new IdentityRole("Customer"));
             }
+            if (await userManager.FindByEmailAsync("admin@primeshop.com") == null)
+            {
+                var admin = new ApplicationUser
+                {
+                    Email = "admin@primeshop.com",
+                    UserName = "admin@primeshop.com",
+                    CustomerId = Guid.Empty
+                };
 
+                await userManager.CreateAsync(admin, "Admin@1234");
+                await userManager.AddToRoleAsync(admin, "Admin");
+            }
 
         }
     }

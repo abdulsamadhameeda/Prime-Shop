@@ -46,6 +46,18 @@ namespace PrimeShop.WebApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetTotalProfit")]
+        public async Task<IActionResult> GetTotalProfit()
+        {
+            var result = await _mediator.Send(new TotalProfitQueries());
+            return Ok(result);
+        }
+        [HttpGet("GetTotalOrders")]
+        public async Task<IActionResult> GetTotalOrders()
+        {
+            var result = await _mediator.Send(new TotalNumsOfOrderQueries());
+            return Ok(result);
+        }
         [HttpPost("Create")]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)
         {

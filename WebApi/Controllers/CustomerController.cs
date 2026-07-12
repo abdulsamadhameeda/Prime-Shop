@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PrimeShop.Application.features.Category.Dtos;
 using PrimeShop.Application.features.Customer.Dtos;
+using PrimeShop.Application.features.Order.Dtos;
 
 
 namespace PrimeShop.WebApi.Controllers
@@ -38,7 +39,12 @@ namespace PrimeShop.WebApi.Controllers
             return Ok(result);
         }
 
-
+        [HttpGet("GetTotalCustomers")]
+        public async Task<IActionResult> GetTotalCustomers()
+        {
+            var result = await _mediator.Send(new TotalNumsOfCustomerQueries());
+            return Ok(result);
+        }
 
         [HttpPost("Create")]
         public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerCommand command)

@@ -19,6 +19,8 @@ namespace PrimeShop.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            Response.Cookies.Delete("jwt");
+
             var latestProducts = await _api.GetRandomProductBAsync(8);
             return View(latestProducts);
             

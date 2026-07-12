@@ -22,8 +22,15 @@ namespace PrimeShop.Web.Interface
         Task RegisterAsync([FromBody] RegisterCommand command);
 
 
+
+
         [Get("/api/Category/GetAll")]
         Task<List<CategoryDto>> GetCategoriesAsync();
+
+
+        [Get("/api/Customer/GetTotalCustomers")]
+        Task<int> GetTotalCustomersAsync();
+
 
 
         [Get("/api/Product/GetAll")]
@@ -41,6 +48,9 @@ namespace PrimeShop.Web.Interface
         [Put("/api/Product/Update")]
         Task<Guid> UpdateProductBAsync([FromBody] UpdateProductCommand command);
 
+        [Get("/api/Product/GetTotalProducts")]
+        Task<int> GetTotalProductsAsync();
+
 
 
 
@@ -53,12 +63,21 @@ namespace PrimeShop.Web.Interface
         [Post("/api/Order/Create")]
         Task<Guid> CreateOrderAsync([FromBody] CreateOrderCommand command);
 
+        [Get("/api/Order/GetTotalProfit")]
+        Task<decimal> GetTotalProfitAsync();
+
+        [Get("/api/Order/GetTotalOrders")]
+        Task<int> GetTotalOrdersAsync();
+
+
+
 
         [Post("/api/OrderItem/Create")]
         Task<Guid> CreateOrderItemAsync([FromBody] CreateOrderItemCommand command);
 
         [Get("/api/OrderItem/GetAll")]
         Task<List<OrderItemDto>> GetOrderItemAsync([FromQuery] Guid? orderId);
+
 
 
 
@@ -72,6 +91,8 @@ namespace PrimeShop.Web.Interface
         Task DeleteBasketAsync([FromQuery] Guid id);
 
 
+
+
         [Post("/api/BasketItem/Create")]
         Task<Guid> CreateBasketItemAsync([FromBody] CreateBasketItemCommand command);
 
@@ -83,6 +104,9 @@ namespace PrimeShop.Web.Interface
 
         [Get("/api/BasketItem/GetByBasketIdBasketItems")]
         Task<List<BasketItemDto>> GetBasketItemsByBasketIdAsync([FromQuery] Guid basketId);
+
+
+
 
 
         [Get("/api/Lookup/GetSpecificType")] 

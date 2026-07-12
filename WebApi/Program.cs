@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using PrimeShop.Application;
 using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Infrastructure;
+using PrimeShop.Infrastructure.Identity;
 using PrimeShop.Infrastructure.Persistence;
 using PrimeShop.Infrastructure.Persistence.Seed;
 
@@ -49,8 +50,9 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-    await DbSeeder.SeedAsync(context, roleManager);
+    await DbSeeder.SeedAsync(context, roleManager , userManager);
 }
 
 app.UseHttpsRedirection();  

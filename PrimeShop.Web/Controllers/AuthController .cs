@@ -3,6 +3,7 @@ using PrimeShop.Application.features.Auth.Login.Dtos;
 using PrimeShop.Application.features.Auth.Register.Dtos;
 using PrimeShop.Web.Interface;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace PrimeShop.Web.Controllers
 {
@@ -35,7 +36,13 @@ namespace PrimeShop.Web.Controllers
                 SameSite = SameSiteMode.Strict,
                 Expires = DateTimeOffset.UtcNow.AddDays(1)
             });
-
+            var handler = new JwtSecurityTokenHandler();
+            var jwt = handler.ReadJwtToken(token);
+            var role = jwt.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (role == "Admin")
+            {
+                return RedirectToAction("Index", "Admin"); 
+            }
 
             return RedirectToAction("Index", "Home");
         }

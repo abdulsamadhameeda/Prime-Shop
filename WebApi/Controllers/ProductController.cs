@@ -39,6 +39,8 @@ namespace PrimeShop.WebApi.Controllers
             return Ok(result);
         }
 
+
+
         [HttpGet("GetRandomProduct")]
         public async Task<IActionResult> GetRandomProduct([FromQuery] int count)
         {
@@ -51,6 +53,13 @@ namespace PrimeShop.WebApi.Controllers
         public async Task<IActionResult> GetByIds([FromBody] List<Guid> ids)
         {
             var result = await _mediator.Send(new GetProductsByIdsQuery(ids));
+            return Ok(result);
+        }
+
+        [HttpGet("GetTotalProducts")]
+        public async Task<IActionResult> GetTotalProducts()
+        {
+            var result = await _mediator.Send(new TotalNumsOfProductQuery());
             return Ok(result);
         }
 
