@@ -1,0 +1,3 @@
+﻿SELECT TOP 6 *
+FROM Customers
+ORDER BY CreatedAt DESC; 

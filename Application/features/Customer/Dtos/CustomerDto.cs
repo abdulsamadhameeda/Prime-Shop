@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PrimeShop.Application.features.Customer.Dtos
 {
-    internal class CustomerDto
+    public class CustomerDto
     {
         public Guid Id { get; set; }
 

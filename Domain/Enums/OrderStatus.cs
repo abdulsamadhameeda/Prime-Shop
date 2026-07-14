@@ -14,4 +14,4 @@ namespace PrimeShop.Domain.Enums
 
 
     }
-}   
+}       

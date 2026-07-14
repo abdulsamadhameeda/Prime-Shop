@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using PrimeShop.Web.Interface;
 using PrimeShop.Web.Models;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace PrimeShop.Web.Controllers
 {
@@ -19,11 +21,33 @@ namespace PrimeShop.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            Response.Cookies.Delete("jwt");
 
+            var token = Request.Cookies["jwt"];
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                var handler = new JwtSecurityTokenHandler();
+
+                if (handler.CanReadToken(token))
+                {
+                    var jwtToken = handler.ReadJwtToken(token);
+
+                    if (jwtToken.ValidTo > DateTime.UtcNow)
+                    {
+                        var roleClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value;
+
+                        if (roleClaim == "Admin")
+                        {
+                            return RedirectToAction( "Dashboard" , "Admin");
+                        }
+                    }
+                }
+            }
+
+           
             var latestProducts = await _api.GetRandomProductBAsync(8);
             return View(latestProducts);
-            
+
         }
 
         public IActionResult Privacy()

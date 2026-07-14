@@ -41,7 +41,7 @@ namespace PrimeShop.Web.Controllers
             var role = jwt.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
             if (role == "Admin")
             {
-                return RedirectToAction("Index", "Admin"); 
+                return RedirectToAction("Dashboard", "Admin"); 
             }
 
             return RedirectToAction("Index", "Home");

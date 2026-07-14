@@ -22,6 +22,8 @@ namespace PrimeShop.Domain.Entities
        
         public string PhoneNumber { get; set; }
 
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
 
         public ICollection<Order> Orders { get; set; } = new List<Order>();
         public string? ApplicationUserId { get; set; } 

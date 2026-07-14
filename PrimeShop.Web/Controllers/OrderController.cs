@@ -5,6 +5,7 @@ using PrimeShop.Application.features.Product.Dtos;
 using PrimeShop.Domain.Entities;
 using PrimeShop.Domain.Enums;
 using PrimeShop.Web.Interface;
+using PrimeShop.Web.Models;
 using Refit;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -151,5 +152,35 @@ namespace PrimeShop.Web.Controllers
 
             return View(order);
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> OrderManagment()
+        {
+            var model = new TableViewModel
+            {
+                Columns = new List<string> { "Id", "OrderDate", "TotalAmount", "Status", "ShippingStreet", "ShippingCity" }
+            };
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> GetOrdersData(DataTableRequest request)
+        {
+            var query = new GetDataTableOrdersQuery
+            {
+                Draw = request.Draw,
+                Start = request.Start,
+                Length = request.Length,
+                Search = request.Search?.Value ??""
+            };
+
+          
+            var response = await _api.GetOrdersDataAsync(query);
+
+            return Json(response);
+        }
+
     }
 }

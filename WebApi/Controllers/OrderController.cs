@@ -58,6 +58,28 @@ namespace PrimeShop.WebApi.Controllers
             var result = await _mediator.Send(new TotalNumsOfOrderQueries());
             return Ok(result);
         }
+
+        [HttpGet("GetOrdersPerMonth")]
+        public async Task<IActionResult> GetOrdersPerMonth([FromQuery] int year)
+        {
+            var result = await _mediator.Send(new GetOrdersPerMonthQuery(year));
+            return Ok(result);
+        }
+        [HttpGet("GetOrderStatus")]
+        public async Task<IActionResult> GetOrderStatus()
+        {
+            var result = await _mediator.Send(new GetOrderStatusQuery());
+            return Ok(result);
+        }
+
+        [HttpGet("GetTodaysSales")]
+        public async Task<IActionResult> GetTodaysSales()
+        {
+            var result = await _mediator.Send(new TodaysSalesQueries());
+            return Ok(result);
+        }
+
+
         [HttpPost("Create")]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)
         {
@@ -76,6 +98,15 @@ namespace PrimeShop.WebApi.Controllers
         {
             var order = await _mediator.Send(command);
             return Ok(order);
+        }
+
+
+
+        [HttpPost("datatable")]
+        public async Task<IActionResult> GetOrdersData([FromBody] GetDataTableOrdersQuery query)
+        {
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
     }
 }

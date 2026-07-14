@@ -19,7 +19,7 @@ namespace PrimeShop.Application.features.Order.Queries
             string filePath = Path.Combine(AppContext.BaseDirectory, "SQL", "TotalProfit.sql");
             string sqlQuery = await File.ReadAllTextAsync(filePath);
 
-            var result = await _OrderRepo.QuerySql<int>(sqlQuery, null);
+            var result = await _OrderRepo.QuerySql<int>(sqlQuery);
 
             return result.FirstOrDefault();
 

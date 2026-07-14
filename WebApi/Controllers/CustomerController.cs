@@ -46,6 +46,16 @@ namespace PrimeShop.WebApi.Controllers
             return Ok(result);
         }
 
+
+
+        [HttpGet("GetTop6NewCustomers")]
+        public async Task<IActionResult> GetTop6NewCustomers()
+        {
+            var result = await _mediator.Send(new Top6NewCustomersQueries());
+            return Ok(result);
+        }
+
+
         [HttpPost("Create")]
         public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerCommand command)
         {

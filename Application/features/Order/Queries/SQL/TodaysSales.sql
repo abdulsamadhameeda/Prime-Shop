@@ -1,0 +1,4 @@
+﻿SELECT ISNULL(SUM(TotalAmount), 0) 
+FROM Orders
+WHERE CAST(OrderDate AS DATE) = CAST(GETDATE() AS DATE)
+AND [Status] = 4;

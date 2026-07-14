@@ -4,6 +4,7 @@ using PrimeShop.Application.features.Auth.Register.Dtos;
 using PrimeShop.Application.features.Basket.Dtos;
 using PrimeShop.Application.features.BasketItem.Dtos;
 using PrimeShop.Application.features.Category.Dtos;
+using PrimeShop.Application.features.Customer.Dtos;
 using PrimeShop.Application.features.Lookup.Dtos;
 using PrimeShop.Application.features.Order.Dtos;
 using PrimeShop.Application.features.OrderItem.Dtos;
@@ -30,6 +31,9 @@ namespace PrimeShop.Web.Interface
 
         [Get("/api/Customer/GetTotalCustomers")]
         Task<int> GetTotalCustomersAsync();
+
+        [Get("/api/Customer/GetTop6NewCustomers")]
+        Task<List<CustomerDto>> GetTop6NewCustomersAsync();
 
 
 
@@ -69,6 +73,17 @@ namespace PrimeShop.Web.Interface
         [Get("/api/Order/GetTotalOrders")]
         Task<int> GetTotalOrdersAsync();
 
+        [Get("/api/Order/GetOrdersPerMonth")]
+        Task<List<OrdersPerMonthDto>> GetOrdersPerMonthAsync([FromQuery] int year);
+
+        [Get("/api/Order/GetOrderStatus")]
+        Task<List<OrderStatusDto>> GetOrderStatusAsync();
+
+        [Get("/api/Order/GetTodaysSales")]
+        Task<decimal> GetTodaysSalesAsync();
+
+        [Post("/api/order/datatable")]  
+        Task<DataTableResponse<OrderDto>> GetOrdersDataAsync([Body] GetDataTableOrdersQuery query);
 
 
 
