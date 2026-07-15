@@ -1,0 +1,77 @@
+﻿
+function addToBasket(productId) {
+    var basket = JSON.parse(localStorage.getItem('basket')) || [];
+    var quantity = document.getElementById('sst').value;
+    var token = '@Context.Request.Cookies["jwt"]';
+
+    if (token) {
+        $.ajax({
+            url: '/Basket/AddItemToBasket',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify([{ productId: productId, quantity: quantity }]),
+            success: function () {
+                Swal.fire({
+                    toast: true,
+                    position: 'bottom-end',
+                    icon: 'success',
+                    title: 'Added to basket!',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    background: '#FFA500',
+                    color: '#fff',
+                    iconColor: '#fff',
+                    showClass: {
+                        popup: 'swal2-noanimation'
+                    },
+                    hideClass: {
+                        popup: ''
+                    }
+                });
+            },
+            error: function () {
+                Swal.fire({
+                    toast: true,
+                    position: 'bottom-right',
+                    icon: 'error',
+                    title: 'Error adding to basket!',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    background: '#ff4444',
+                    color: '#fff',
+                    iconColor: '#fff'
+                });
+            }
+        });
+    } else {
+        var existing = basket.find(x => x.productId === productId);
+
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            basket.push({ productId: productId, quantity: quantity });
+        }
+
+        localStorage.setItem('basket', JSON.stringify(basket));
+        Swal.fire({
+            toast: true,
+            position: 'bottom-end',
+            icon: 'success',
+            title: 'Added to basket!',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            background: '#FFA500',
+            color: '#fff',
+            iconColor: '#fff',
+            showClass: {
+                popup: 'swal2-noanimation'
+            },
+            hideClass: {
+                popup: ''
+            }
+        });
+    }
+}
+

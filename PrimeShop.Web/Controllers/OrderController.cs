@@ -182,5 +182,53 @@ namespace PrimeShop.Web.Controllers
             return Json(response);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetByIdOrder(Guid id)
+        {
+           
+            var order = await _api.GetOrderByIdAsync(id);
+
+            return Json(order); 
+        }
+
+
+
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteOrder([FromQuery] Guid id)
+        {
+            await _api.DeleteOrderAsync(id);
+            return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCities()
+        {
+            var cities = await _api.GetSpecificTypeAsync("City");
+
+            return Json(cities);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
+        {
+            try
+            {
+                var result = await _api.UpdateOrderAsync(command);
+                if (result != Guid.Empty)
+                    return Json(new { success = true });
+
+                return BadRequest("error");
+            }
+            catch (Refit.ApiException apiEx)
+            {
+                var content = await apiEx.GetContentAsAsync<object>();
+                return BadRequest(content);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

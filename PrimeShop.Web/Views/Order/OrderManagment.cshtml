@@ -1,14 +1,27 @@
 ﻿
 
+<style>
+    /* تغيير لون زر الصفحة النشطة في الـ Pagination للون البرتقالي */
+    .pagination .page-item.active .page-link {
+        background-color: #FFA500 !important;
+        border-color: #FFA500 !important;
+        color: #ffffff !important;
+        box-shadow: 0 3px 6px rgba(255, 165, 0, 0.16); /* لمسة جمالية (ظلال خفيفة) */
+    }
 
+    /* تأثير عند تمرير الماوس فوق أزرار الصفحات الأخرى */
+    .pagination .page-link:hover {
+        color: #FFA500 !important;
+    }
+</style>    
 
 <div class="container-fluid">
     <div class="page-inner">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header" >
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Orders</h4>
-                    <button class="btn btn-primary btn-round ms-auto"
+                    <button class="btn text-white  btn-round ms-auto" style="background-color:#FFA500"
                             data-bs-toggle="modal"
                             data-bs-target="#addRowModal">
                         <i class="fa fa-plus"></i>
@@ -98,102 +111,74 @@
         </div>
     </div>
 </div>
+    <div class="modal fade" id="updateOrderModal" tabindex="-1" aria-labelledby="updateOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow">
 
+            <div class="modal-header  text-white" style="background-color:#FFA500">
+                    <h5 class="modal-title" id="updateOrderModalLabel">
+                        <i class="fa fa-edit me-2"></i>update
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="updateOrderForm">
+                        <input type="hidden" id="editOrderId" name="Id" />
+                        <input type="hidden" id="editCustomerId" name="CustomerId" />
+                        <input type="hidden" id="editOrderDateRaw" name="OrderDate" />
+                        <input type="hidden" id="editTotalAmountRaw" name="TotalAmount" />
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="editOrderDate" class="form-label fw-bold text-muted">Order date</label>
+                                <input type="text" class="form-control bg-light" id="editOrderDate" readonly />
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="editTotalAmount" class="form-label fw-bold text-muted">total($)</label>
+                                <input type="text" class="form-control bg-light" id="editTotalAmount" readonly />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="editOrderStatus" class="form-label fw-bold "> status</label>
+                                <select class="form-select" id="editOrderStatus" name="Status">
+                                    <option value="1">Pending</option>
+                                    <option value="2">Processing</option>
+                                    <option value="3">Shipped</option>
+                                    <option value="4">Delivered</option>
+                                    <option value="5">Cancelled</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="editShippingCity" class="form-label fw-bold ">Shipping City</label>
+                                <select class="form-select " id="editShippingCity" name="ShippingCity" required>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label for="editShippingStreet" class="form-label fw-bold ">Shipping Street</label>
+                                <input type="text" class="form-control " id="editShippingStreet" name="ShippingStreet" required />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer bg-light">
+                <button type="button" class="btn text-white " data-bs-dismiss="modal" style="background-color:#d33">Cancel</button>
+                <button type="button" class="btn px-4 text-white" style="background-color:#FFA500" onclick="UpdateOrder()">Save</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 @section Scripts {
 
-    
+    <script src="~/js/order/orderManagment.js" asp-append-version="true"></script>
 
-    <script>
-
-        $(document).ready(function () {
-            $('#ordersTable').DataTable({
-                  
-                processing: true,
-                serverSide: true,
-                ordering: false,
-                pageLength: 5,
-                lengthMenu: [5, 10, 25],
-                ajax: {
-                    url: '/Order/GetOrdersData',
-                    type: 'POST',
-                },
-                columns: [
-                    { data: 'id', name: 'Id'  },
-                    {
-                        data: 'orderDate',
-                        name: 'OrderDate',
-                        render: function (data) {
-                            if (!data) return '';
-                            var date = new Date(data);
-                            return date.toLocaleDateString();
-                        }
-                    },
-                    {
-                        data: 'totalAmount',
-                        name: 'TotalAmount',
-                        render: function (data) {
-                            return parseFloat(data).toFixed(2) + " $";
-                        }
-                    },
-                    {
-                        data: 'status',
-                        name: 'Status',
-                        render: function (data) {
-                          let badgeClass = "badge badge-secondary";
-        let statusText = data;
-
-        if (data === 1 || data === "Pending") {
-            badgeClass = "badge badge-warning text-dark";
-            statusText = "Pending";
-        }
-        else if (data === 2 || data === "Processing") {
-            badgeClass = "badge badge-info";
-            statusText = "Processing";
-        }
-        else if (data === 3 || data === "Shipped") {
-            badgeClass = "badge badge-primary";
-            statusText = "Shipped";
-        }
-        else if (data === 4 || data === "Delivered") {
-            badgeClass = "badge badge-success";
-            statusText = "Delivered";
-        }
-        else if (data === 5 || data === "Cancelled") {
-            badgeClass = "badge badge-danger";
-            statusText = "Cancelled";
-        }
-
-        return `<span class="${badgeClass}">${statusText}</span>`;
-                        }
-                    },
-                    { data: 'shippingStreet', name: 'ShippingStreet' },
-                    { data: 'shippingCity', name: 'ShippingCity' },
-                    {
-                        data: 'id',
-                        orderable: false,
-                        render: function (data) {
-                           return `
-                                <div class="form-button-action">
-                                    <a href="/Order/UpdateOrder/${data}" class="btn btn-link btn-primary btn-lg" data-bs-toggle="tooltip" title="تعديل">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <button type="button" class="btn btn-link btn-danger" onclick="deleteOrder('${data}')" data-bs-toggle="tooltip" title="حذف">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </div>
-                            `;
-                        }
-                    }
-                ]
-
-                
-            });
-        });
-
-        function deleteOrder(id) {
-            if (confirm("هل أنت متأكد من حذف هذا الطلب؟")) {
-                console.log("جاري حذف الطلب رقم: " + id);
-            }
-        }
-    </script>
 }

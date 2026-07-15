@@ -102,9 +102,7 @@
         }
     </header>
 
-    @*   <main role="main" class="pb-3">
-        @RenderBody()
-    </main> *@
+    
     
     @if (User.IsInRole("Admin"))
     {
@@ -238,20 +236,7 @@
             </div>
         </footer>
     }
-    <!-- End footer Area -->
-    @* @if (User.IsInRole("Admin"))
-    {
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-        <script src="~/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-        <script src="~/js/kaiadmin.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-
-        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-
-    } *@
+  
     @if (User.IsInRole("Admin"))
     {
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>

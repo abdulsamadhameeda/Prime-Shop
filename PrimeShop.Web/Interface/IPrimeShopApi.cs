@@ -83,7 +83,13 @@ namespace PrimeShop.Web.Interface
         Task<decimal> GetTodaysSalesAsync();
 
         [Post("/api/order/datatable")]  
-        Task<DataTableResponse<OrderDto>> GetOrdersDataAsync([Body] GetDataTableOrdersQuery query);
+        Task<DataTableResponse<OrderDto>> GetOrdersDataAsync([FromBody] GetDataTableOrdersQuery query);
+
+        [Delete("/api/Order/Delete")]
+        Task DeleteOrderAsync([FromQuery] Guid id);
+
+        [Put("/api/Order/Update")]
+        Task<Guid> UpdateOrderAsync([Body] UpdateOrderCommand command);
 
 
 
