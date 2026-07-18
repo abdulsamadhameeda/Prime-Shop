@@ -1,6 +1,6 @@
 ﻿function addToBasket(productId) {
     var basket = JSON.parse(localStorage.getItem('basket')) || [];
-    var token = '@Context.Request.Cookies["jwt"]';
+    var token = jwtToken;
     if (token) {
         $.ajax({
             url: '/Basket/AddItemToBasket',

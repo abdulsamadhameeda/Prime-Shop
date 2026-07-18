@@ -1,18 +1,22 @@
-﻿<section class="banner-area organic-breadcrumb">
+﻿
+<section class="banner-area organic-breadcrumb">
     <div class="container">
         <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
             <div class="col-first">
-                <h1>Shopping Cart</h1>
-                <nav class="d-flex align-items-center">
-                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="category.html">Cart</a>
-                </nav>
+                <h1>Cart</h1>
+               
             </div>
         </div>
     </div>
 </section>
 <section class="cart_area">
     <div class="container">
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger text-center">
+                @TempData["Error"]
+            </div>
+        }
         <div class="cart_inner">
             <div class="table-responsive">
                 <table class="table">
@@ -49,6 +53,9 @@
 </section>
 
 @section Scripts {
+    <script>
+        var jwtToken = '@Context.Request.Cookies["jwt"]';
+    </script>
     <script src="~/js/basket/ShippingCart.js" asp-append-version="true"></script>
 
 }

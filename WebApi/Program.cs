@@ -2,14 +2,13 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PrimeShop.Application;
-using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Infrastructure;
 using PrimeShop.Infrastructure.Identity;
 using PrimeShop.Infrastructure.Persistence;
 using PrimeShop.Infrastructure.Persistence.Seed;
 using System.Text.Json.Serialization;
 
-var builder = WebApplication.CreateBuilder(args);   
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -17,7 +16,7 @@ builder.Services.AddControllers()
     .AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-}); ;
+});
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -57,10 +56,10 @@ using (var scope = app.Services.CreateScope())
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-    await DbSeeder.SeedAsync(context, roleManager , userManager);
+    await DbSeeder.SeedAsync(context, roleManager, userManager);
 }
 
-app.UseHttpsRedirection();  
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

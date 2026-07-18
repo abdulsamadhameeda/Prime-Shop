@@ -2,14 +2,14 @@
 
  
 <table id="ordersTable"
-       class="display table table-striped table-hover align-middle w-100 text-nowrap">
+       class="display table table-striped table-hover align-middle w-100 text-nowrap text-center">
     <thead>
-        <tr>
+        <tr class="align-middle">
             @foreach (var column in Model.Columns ?? new List<string>())
             {
-                <th>@column</th>
+                <th class="text-center">@column</th>
             }
-            <th>Actions</th>
+            <th class="text-center">Actions</th>
 
  
  

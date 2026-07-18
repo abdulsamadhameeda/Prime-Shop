@@ -12,15 +12,13 @@
 
     @if (User.IsInRole("Admin"))
     {
-        <!-- Admin CSS فقط - شلنا Template CSS عشان ما يتعارض -->
         <link rel="stylesheet" href="~/css/plugins.min.css" />
         <link rel="stylesheet" href="~/css/kaiadmin.min.css" />
         <link rel="stylesheet" href="~/css/demo.css" />
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" /> <!-- غيّرنا من jquery.dataTables.min.css -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" /> 
     }
     else
     {
-        <!-- Template CSS فقط للـ Customer/Guest -->
         <link rel="stylesheet" href="~/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/font-awesome.min.css" />
         <link rel="stylesheet" href="~/css/themify-icons.css" />
@@ -44,7 +42,7 @@
                 <div class="container">
                     <!-- Brand and toggle get grouped for better mobile display -->
 
-                    <a class="navbar-brand logo_h" asp-controller="Home" asp-action="Index"><img src="/img/logo.png" alt=""></a>
+                    <a class="navbar-brand logo_h" asp-controller="Home" asp-action="Index"><img src="/img/primeLogo.png" alt=""></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="icon-bar"></span>
@@ -78,11 +76,12 @@
                             @if (User.IsInRole("Customer"))
                             {
 
-                                <li class="nav-item"><a class="cart" asp-controller="Basket" asp-action="ShippingCart"><span class="ti-bag"></span></a></li>
                                 <li class="nav-item">
                                     <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
                                 </li>
                             }
+                            <li class="nav-item"><a class="cart" asp-controller="Basket" asp-action="ShippingCart"><span class="ti-bag"></span></a></li>
+
                         </ul>
                     </div>
                 </div>
@@ -192,7 +191,7 @@
                         <div class="single-footer-widget">
                             <h6 class="text-uppercase mb-3">About Us</h6>
                             <p class="text-secondary">
-                                PrimeShop is your trusted destination for quality products at unbeatable prices. We bring you a curated
+                                Prime Shop is your trusted destination for quality products at unbeatable prices. We bring you a curated
                                 selection of electronics, fashion, and lifestyle essentials, backed by fast delivery and a seamless
                                 shopping experience from browsing to checkout.
                             </p>
@@ -203,11 +202,25 @@
                         <div class="single-footer-widget">
                             <h6 class="text-uppercase mb-3">Quick Links</h6>
                             <ul class="list-unstyled">
-                                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li class="nav-item"><a class="nav-link" asp-controller="Product" asp-action="ShopCategory">Shop</a></li>
-                                <li class="nav-item"><a class="nav-link" asp-controller="Order" asp-action="OrderTracking">Tracking</a></li>
-                                <li class="nav-item"><a class="nav-link" asp-controller="" asp-action="">Contact</a></li>
-                                <li class="nav-item"><a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a></li>
+                               @if (!User.IsInRole("Admin"))
+                            {
+                                    <li class="mb-2"><a class="text-white text-decoration-none opacity-75" asp-controller="Home" asp-action="Index">Home</a></li>
+                                    <li class="mb-2"><a class="text-white text-decoration-none opacity-75" asp-controller="Product" asp-action="ShopCategory">Shop</a></li>
+                                    <li class="mb-2"><a class="text-white text-decoration-none opacity-75">Contact</a></li>
+
+                            }
+                            @if (User.IsInRole("Customer"))
+                            {
+                                    <li class="mb-2"><a class="text-white text-decoration-none opacity-75" asp-controller="Order" asp-action="OrderTracking">Tracking</a></li>
+                            }
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                    <li class="mb-2"><a class="text-white text-decoration-none opacity-75k" asp-controller="Auth" asp-action="Login">Login</a></li>
+                            }
+                            else
+                            {
+                                    <li class="mb-2"><a class="text-white text-decoration-none opacity-75" href="javascript:void(0)" onclick="confirmLogout()">Logout</a></li>
+                            }
                             </ul>
                         </div>
                     </div>

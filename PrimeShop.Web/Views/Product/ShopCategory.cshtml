@@ -11,7 +11,7 @@
     <div class="container">
         <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
             <div class="col-first">
-                <h1>Shop Category page</h1>
+                <h1>Shop</h1>
 
             </div>
         </div>
@@ -42,7 +42,7 @@
             <div class="sidebar-filter mt-50">
                 <div class="top-filter-head">Product Filters</div>
                 <div class="common-filter">
-                    <div class="head">Price</div>
+                    <div class="head pl-0">Price</div>
                     <form method="get" asp-action="ShopCategory">
                         <input type="hidden" name="categoryId" value="@Context.Request.Query["categoryId"]" />
                         <div class="d-flex align-items-center gap-2 mb-3">
@@ -97,16 +97,18 @@
                                     <h6>$@product.Price</h6>
                                 </div>
                                 <div class="prd-bottom">
-                                    <a onclick="addToBasket('@product.Id')" class="social-info">
+                                    <a @(product.StockQuantity > 0 ? $"onclick=addToBasket('{product.Id}')" : "")
+                                        class="social-info"
+                                        style="@(product.StockQuantity <= 0 ? "pointer-events: none; opacity: 0.5; cursor: not-allowed;" : "cursor: pointer;")">
                                         <span class="ti-bag"></span>
-                                        <p class="hover-text">add to bag</p>
+                                        <p class="hover-text">@(product.StockQuantity > 0 ? "add to bag" : "Out of stock")</p>
                                     </a>
                                     <a  class="social-info">
                                         <span class="lnr lnr-heart"></span>
                                         <p class="hover-text">Wishlist</p>
                                     </a>
                                     <a asp-controller="Product" asp-action="ProductDetails" asp-route-id="@product.Id" class="social-info">
-                                        <span class="lnr lnr-move"></span>
+                                        <span class="lnr lnr-eye " ></span>
                                         <p class="hover-text">view more</p>
                                     </a>
 
@@ -124,6 +126,9 @@
 </div>
 
 @section Scripts {
+    <script>
+        var jwtToken = '@Context.Request.Cookies["jwt"]';
+    </script>
     <script src="~/js/product/shopCategory.js" asp-append-version="true"></script>
 
 }

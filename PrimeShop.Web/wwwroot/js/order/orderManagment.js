@@ -3,7 +3,7 @@
 $(document).ready(function () {
     $('#ordersTable').DataTable({
 
-        processing: true,
+        processing: false,
         serverSide: true,
         ordering: false,
         pageLength: 5,
@@ -87,10 +87,7 @@ $(document).ready(function () {
     loadCitiesLookup();
 });
 
-function deleteOrder(id) {
-    if (confirm("هل أنت متأكد من حذف هذا الطلب؟")) {
-    }
-}
+
 
 function confirmDelete(id) {
     Swal.fire({
@@ -160,7 +157,7 @@ function openUpdateModal(orderId) {
         success: function (response) {
 
             $('#editOrderId').val(response.id);
-            $('#editCustomerId').val(response.customerId); // حشو الـ CustomerId الإجباري بالـ Command
+            $('#editCustomerId').val(response.customerId); 
             $('#editOrderDateRaw').val(response.orderDate);
             $('#editTotalAmountRaw').val(response.totalAmount);
 
@@ -220,12 +217,11 @@ function UpdateOrder() {
         id: $('#editOrderId').val(),
         customerId: $('#editCustomerId').val(),
         orderDate: $('#editOrderDateRaw').val(),
-        totalAmount: parseFloat($('#editTotalAmountRaw').val()), // ← parseFloat
+        totalAmount: parseFloat($('#editTotalAmountRaw').val()), 
         status: parseInt($('#editOrderStatus').val()),
         shippingStreet: $('#editShippingStreet').val(),
         shippingCity: $('#editShippingCity').val()
     };
-    console.log(formData); // ← شوف شو بيطلع هون
 
     $.ajax({
         url: '/Order/UpdateOrder',

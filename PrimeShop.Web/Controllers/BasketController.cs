@@ -26,7 +26,6 @@ namespace PrimeShop.Web.Controllers
         public async Task<IActionResult> ShippingCart()
         {
 
-            //var token = HttpContext.Session.GetString("Token");
             var token = HttpContext.Request.Cookies["jwt"];
             if (string.IsNullOrEmpty(token)) return View();
 
@@ -51,7 +50,6 @@ namespace PrimeShop.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddItemToBasket([FromBody] List<BasketItemDto> items)
         {
-            //var token = HttpContext.Session.GetString("Token");
             var token = HttpContext.Request.Cookies["jwt"];
 
             if (string.IsNullOrEmpty(token))

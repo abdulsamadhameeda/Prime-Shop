@@ -20,7 +20,11 @@
                                     <h5>@product.Price.ToString("C")</h5>
 
                                     <div class="add-bag d-flex align-items-center">
-                                        <a class="add-btn" onclick="addToBasket('@product.Id')"><span class="lnr lnr-cross"></span></a>
+                                        <a @(product.StockQuantity > 0 ? $"onclick=addToBasket('{product.Id}')" : "")
+                                            class="add-btn"
+                                            style="@(product.StockQuantity <= 0 ? "pointer-events: none; opacity: 0.5; cursor: not-allowed;" : "cursor: pointer;")">
+                                            <span class="lnr lnr-cross"></span>
+                                        </a>
                                         <span class="add-text text-uppercase">Add to Bag</span>
                                     </div>
                                 </div>
@@ -31,6 +35,7 @@
 
                                         <img class="img-fluid rounded-5 w-75 mx-auto d-block" src="@(product.ProductImage != null && product.ProductImage.Length > 0 ? $"data:image/png;base64,{Convert.ToBase64String(product.ProductImage)}" : "/img/product/p1.jpg")" />
                                     </a>
+
                                 </div>
                             </div>
                         </div>
@@ -117,16 +122,18 @@
                                     <h6>@product.Price.ToString("C")</h6>
                                 </div>
                                 <div class="prd-bottom">
-                                    <a onclick="addToBasket('@product.Id')" class="social-info">
+                                    <a @(product.StockQuantity > 0 ? $"onclick=addToBasket('{product.Id}')" : "")
+                                        class="social-info"
+                                        style="@(product.StockQuantity <= 0 ? "pointer-events: none; opacity: 0.5; cursor: not-allowed;" : "cursor: pointer;")">
                                         <span class="ti-bag"></span>
-                                        <p class="hover-text">add to bag</p>
+                                        <p class="hover-text">@(product.StockQuantity > 0 ? "add to bag" : "Out of stock")</p>
                                     </a>
                                     <a href="" class="social-info">
                                         <span class="lnr lnr-heart"></span>
                                         <p class="hover-text">Wishlist</p>
                                     </a>
                                     <a asp-controller="Product" asp-action="ProductDetails" asp-route-id="@product.Id" class="social-info">
-                                        <span class="lnr lnr-move"></span>
+                                        <span class="lnr lnr-eye"></span>
                                         <p class="hover-text">view more</p>
                                     </a>
                                 </div>
@@ -142,30 +149,12 @@
 </section>
 <!-- end product Area -->
 
-<!-- Start brand Area -->
-<section class="brand-area section_gap pt-1">
-    <div class="container">
-        <div class="row">
-            <a class="col single-img" href="#">
-                <img class="img-fluid d-block mx-auto" src="img/brand/1.png" alt="">
-            </a>
-            <a class="col single-img" href="#">
-                <img class="img-fluid d-block mx-auto" src="img/brand/2.png" alt="">
-            </a>
-            <a class="col single-img" href="#">
-                <img class="img-fluid d-block mx-auto" src="img/brand/3.png" alt="">
-            </a>
-            <a class="col single-img" href="#">
-                <img class="img-fluid d-block mx-auto" src="img/brand/4.png" alt="">
-            </a>
-            <a class="col single-img" href="#">
-                <img class="img-fluid d-block mx-auto" src="img/brand/5.png" alt="">
-            </a>
-        </div>
-    </div>
-</section>
-<!-- End brand Area -->
+
 @section Scripts {
+
+    <script>
+        var jwtToken = '@Context.Request.Cookies["jwt"]';
+    </script>
     <script src="~/js/home/index.js" asp-append-version="true"></script>
 
 

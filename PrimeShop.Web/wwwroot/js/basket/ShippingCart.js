@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     var basket = JSON.parse(localStorage.getItem('basket')) || [];
-    var token = '@Context.Request.Cookies["jwt"]';
+
+    var token = jwtToken;
 
     if (basket.length === 0) {
         if (token) {
@@ -39,8 +40,12 @@
 
 function loadCartProducts(currentBasket) {
     var ids = currentBasket.map(x => x.productId);
-    if (ids.length === 0) return;
-
+    if (ids.length === 0) {
+        $('#checkout-section').hide(); 
+        $('#basket-items').html('<tr><td colspan="4" class="p-5"><div class="alert text-center" role="alert" style="background-color: #fff8f0; color: #333; border: 1px solid #ffe8cc; font-size: 18px;">Your cart is empty </div></td></tr>');
+        $('#basket-total').text('$0.00'); 
+        return;
+    }
     $.ajax({
         url: '/Basket/GetProductsByIds',
         type: 'POST',
@@ -55,13 +60,13 @@ function loadCartProducts(currentBasket) {
                 var quantity = item ? item.quantity : 1;
                 var itemTotal = product.price * quantity;
                 total += itemTotal;
-
+                var imgSrc = product.productImage ? `data:image/png;base64,${product.productImage}` : '/img/product/p1.jpg';
                 html += `
     <tr>
         <td>
             <div class="media">
                 <div class="d-flex">
-                    <img src="/${product.imageUrl}" class="img-fluid" style="max-width: 80px;" alt="" >
+                    <img src="${imgSrc}"     class="img-fluid" style="max-width: 80px;" alt="" >
                 </div>
                 <div class="media-body">
                     <p>${product.name}</p>
@@ -71,6 +76,8 @@ function loadCartProducts(currentBasket) {
         <td><h5>$${product.price}</h5></td>
         <td>${quantity}</td>
         <td><h5>$${itemTotal.toFixed(2)}</h5></td>
+        <td><a onclick="confirmDelete('${product.id}')"  class="genric-btn danger medium circle text-white"><i class="fa-regular fa-trash-can"></i></a> </td>
+
     </tr>
     `;
             });
@@ -139,7 +146,7 @@ function loadCartFromDb() {
     });
 }
 
-function confirmDelete(basketItemId) {
+function confirmDelete(id) {
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -151,49 +158,62 @@ function confirmDelete(basketItemId) {
         cancelButtonText: 'Cancel'
     }).then((result) => {
         if (result.isConfirmed) {
-            deleteItem(basketItemId);
+            deleteItem(id);
         }
     });
 }
 
-function deleteItem(basketItemId) {
-    $.ajax({
-        url: '/Basket/DeleteItem?id=' + basketItemId,
-        type: 'DELETE',
-        success: function (response) {
+function deleteItem(id) {
+    var token = jwtToken;
 
-            Swal.fire({
-                toast: true,
-                position: 'bottom-end',
-                icon: 'success',
-                title: 'Your item has been removed from the basket.',
-                showConfirmButton: false,
-                timer: 2000,
-                timerProgressBar: true,
-                background: '#FFA500',
-                color: '#fff',
-                iconColor: '#fff',
-                showClass: {
-                    popup: 'swal2-noanimation'
-                },
-                hideClass: {
-                    popup: ''
-                }
-            });
+    if (token) {
+        $.ajax({
+            url: '/Basket/DeleteItem?id=' + id,
+            type: 'DELETE',
+            success: function (response) {
+
+                showSuccessToast();
+                loadCartFromDb();
 
 
-            loadCartFromDb();
+            },
+            error: function (xhr, status, error) {
+                Swal.fire(
+                    'Error!',
+                    'Something went wrong. Please try again.',
+                    'error'
+                );
+                console.error("Delete failed: ", error);
+            }
+        });
+    } 
+    else {
 
+        var basket = JSON.parse(localStorage.getItem('basket')) || [];
 
-        },
-        error: function (xhr, status, error) {
-            Swal.fire(
-                'Error!',
-                'Something went wrong. Please try again.',
-                'error'
-            );
-            console.error("Delete failed: ", error);
-        }
+        basket = basket.filter(x => x.productId !== id);
+        localStorage.setItem('basket', JSON.stringify(basket));
+
+        showSuccessToast();
+        loadCartProducts(basket);
+
+    }
+}
+
+function showSuccessToast  () {
+    Swal.fire({
+        toast: true,
+        position: 'bottom-end',
+        icon: 'success',
+        title: 'Your item has been removed from the basket.',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        background: '#FFA500',
+        color: '#fff',
+        iconColor: '#fff',
+        showClass: { popup: 'swal2-noanimation' },
+        hideClass: { popup: '' }
     });
 }
 

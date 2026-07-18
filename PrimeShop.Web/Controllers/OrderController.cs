@@ -44,22 +44,11 @@ namespace PrimeShop.Web.Controllers
         public async Task<IActionResult> Checkout(string shippingStreet, string shippingCity, decimal totalAmount)
         {
 
-            //var token = HttpContext.Session.GetString("Token");
             var token = HttpContext.Request.Cookies["jwt"];
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
 
             var customerId = Guid.Parse(jwt.Claims.First(c => c.Type == "CustomerId").Value);
-
-            var orderId = await _api.CreateOrderAsync(new CreateOrderCommand(
-                DateTime.Now,
-                totalAmount,
-                OrderStatus.Pending,
-                shippingStreet,
-                shippingCity,
-                customerId
-            ));
-
             var basket = await _api.GetBasketByCustomerIdAsync(customerId);
             var items = await _api.GetBasketItemsByBasketIdAsync(basket.Id);
 
@@ -70,22 +59,51 @@ namespace PrimeShop.Web.Controllers
             {
                 var product = products.FirstOrDefault(x => x.Id == item.ProductId);
 
-                await _api.CreateOrderItemAsync(new CreateOrderItemCommand(item.Quantity, product.Price, orderId, item.ProductId));
+                if (product == null)
+                {
+                    TempData["Error"] = "One of the products in your cart is no longer available.";
+                    return RedirectToAction("ShippingCart", "Basket"); 
+                }
+
+                if (item.Quantity > product.StockQuantity)
+                {
+                    TempData["Error"] = $"Sorry, the quantity for '{product.Name}' exceeds available stock. We only have {product.StockQuantity} left.";
+                    return RedirectToAction("ShippingCart", "Basket"); 
+                }
+            }
+
+            foreach (var item in items)
+            {
+                var product = products.First(x => x.Id == item.ProductId); 
 
                 var newQuantity = product.StockQuantity - item.Quantity;
+
                 await _api.UpdateProductBAsync(new UpdateProductCommand(
                           product.Id,
                           product.Name,
-                          product.Description, 
+                          product.Description,
                           product.Price,
-                          newQuantity,        
+                          newQuantity,
                           product.ProductImage,
                           product.CategoryId
                 ));
-
-                await _api.DeleteBasketItemAsync(item.Id);
             }
 
+            var orderId = await _api.CreateOrderAsync(new CreateOrderCommand(
+                DateTime.Now,
+                totalAmount,
+                OrderStatus.Pending,
+                shippingStreet,
+                shippingCity,
+                customerId
+            ));
+
+            foreach (var item in items)
+            {
+                var product = products.First(x => x.Id == item.ProductId);
+                await _api.CreateOrderItemAsync(new CreateOrderItemCommand(item.Quantity, product.Price, orderId, item.ProductId));
+                await _api.DeleteBasketItemAsync(item.Id);
+            }
 
             return RedirectToAction("OrderConfirmation", new { orderId = orderId });
 
@@ -147,8 +165,9 @@ namespace PrimeShop.Web.Controllers
             var customerId = Guid.Parse(jwt.Claims.First(c => c.Type == "CustomerId").Value);
 
             var order = await _api.GetOrderByIdAndCustomerIdAsync(orderId, customerId);
-            if (order == null)
+            if (order == null) {
                 return View("OrderNotFound");
+            }
 
             return View(order);
         }
@@ -159,7 +178,7 @@ namespace PrimeShop.Web.Controllers
         {
             var model = new TableViewModel
             {
-                Columns = new List<string> { "Id", "OrderDate", "TotalAmount", "Status", "ShippingStreet", "ShippingCity" }
+                Columns = new List<string> { "Id", "Order Date", "Total Amount", "Status", "Shipping Street", "Shipping City" }
             };
             return View(model);
         }
@@ -216,7 +235,9 @@ namespace PrimeShop.Web.Controllers
             {
                 var result = await _api.UpdateOrderAsync(command);
                 if (result != Guid.Empty)
+                {
                     return Json(new { success = true });
+                }
 
                 return BadRequest("error");
             }

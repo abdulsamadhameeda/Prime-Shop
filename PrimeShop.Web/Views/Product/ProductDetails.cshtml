@@ -7,10 +7,10 @@
     <div class="container">
         <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
             <div class="col-first">
-                <h1>Product Details Page</h1>
+                <h1>Product Details</h1>
 
             </div>
-        </div>
+        </div>	
     </div>
 </section>
 
@@ -38,7 +38,6 @@
                     </ul>
                     <p>@Model.Description</p>
 
-                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
                         <input type="hidden" name="productId" value="@Model.Id" />
 
                         <div class="product_count">
@@ -57,13 +56,15 @@
                         </div>
 
                         <div class="card_area d-flex align-items-center">
-                            <button type="button" class="primary-btn text-white border-0" onclick="addToBasket('@Model.Id')" @(Model.StockQuantity == 0 ? "disabled" : "")>
-                                Add to Cart
-                            </button>
-                            <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
-
-                        </div>
-                    </form>
+    <button type="button" 
+        class="primary-btn text-white border-0" 
+        onclick="addToBasket('@Model.Id', @Model.StockQuantity)"
+        @(Model.StockQuantity <= 0 ? "disabled style=background:#cccccc;cursor:not-allowed;border-color:#cccccc;" : "")>
+        @(Model.StockQuantity > 0 ? "Add to Cart" : "Out of Stock")
+    </button>
+    
+    <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+</div>
                 </div>
             </div>
         </div>
@@ -220,6 +221,9 @@
 
 
 @section Scripts {
+	<script>
+        var jwtToken = '@Context.Request.Cookies["jwt"]';
+    </script>
 	    <script src="~/js/product/productDetails.js" asp-append-version="true"></script>
 
 }
