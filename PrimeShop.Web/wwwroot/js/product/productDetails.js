@@ -14,7 +14,6 @@ function addToBasket(productId, stockQuantity) {
         return;
     }
 
-    // 3. الفحص الثاني: إذا طلب العميل كمية أكبر مما هو متوفر بالمخزن
     if (quantityInput > stockQuantity) {
         Swal.fire({
             icon: 'warning',
@@ -22,10 +21,9 @@ function addToBasket(productId, stockQuantity) {
             html: `Sorry, we only have <b>${stockQuantity}</b> items left in stock. <br>Please lower your quantity.`,
             confirmButtonColor: '#ff6c00'
         });
-        return; // توقف فوراً ولا تضف للسلة
+        return; 
     }
 
-    // 4. الفحص الثالث: للتأكد من أنه لم يدخل قيمة سالبة أو صفر بالخطأ
     if (quantityInput <= 0) {
         Swal.fire({
             icon: 'warning',

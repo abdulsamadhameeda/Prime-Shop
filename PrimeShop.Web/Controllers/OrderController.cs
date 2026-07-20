@@ -231,8 +231,7 @@ namespace PrimeShop.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
         {
-            try
-            {
+           
                 var result = await _api.UpdateOrderAsync(command);
                 if (result != Guid.Empty)
                 {
@@ -240,16 +239,8 @@ namespace PrimeShop.Web.Controllers
                 }
 
                 return BadRequest("error");
-            }
-            catch (Refit.ApiException apiEx)
-            {
-                var content = await apiEx.GetContentAsAsync<object>();
-                return BadRequest(content);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            
+            
         }
     }
 }

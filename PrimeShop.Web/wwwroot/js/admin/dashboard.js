@@ -5,20 +5,17 @@ var chart = echarts.init(document.getElementById('ordersChart'));
 var chart;
 var pieChart;
 
-// ضفنا هذه الدالة لتستقبل البيانات وتبدأ الرسم فوراً:
 function initDashboardCharts(initialBarData, initialPieData) {
-    // تهيئة شارت الأعمدة
     var barDom = document.getElementById('ordersChart');
     if (barDom) {
         chart = echarts.init(barDom);
-        renderChart(initialBarData); // استدعاء دالة الرسم القديمة بالبيانات الممررة
+        renderChart(initialBarData); 
     }
 
-    // تهيئة شارت الدائرة
     var pieDom = document.getElementById('orderStatusChart');
     if (pieDom) {
         pieChart = echarts.init(pieDom);
-        renderPieChart(initialPieData); // استدعاء دالة رسم الدائرة بالبيانات الممررة
+        renderPieChart(initialPieData); 
     }
 }
 
@@ -57,13 +54,10 @@ function filterByYear(year) {
     });
 }
 
-// var initialData = @Json.Serialize(Model.OrdersPerMonth);
-// renderChart(initialData);
 var pieChart = echarts.init(document.getElementById('orderStatusChart'));
 
 var statusNames = ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
 var statusColors = ['#eda100', '#2a78d6', '#4a3aa7', '#1baf7a', '#e34948'];
-// var data = @Json.Serialize(Model.OrderStatus);
 
 function renderPieChart(data) {
     if (!pieChart) return;

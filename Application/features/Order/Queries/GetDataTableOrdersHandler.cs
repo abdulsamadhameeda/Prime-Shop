@@ -1,10 +1,7 @@
 ﻿using MediatR;
 using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Application.features.Order.Dtos;
-using System;
-using System.Buffers;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace PrimeShop.Application.features.Order.Queries
 {

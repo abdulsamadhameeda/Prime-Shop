@@ -2,11 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using PrimeShop.Application.features.Basket.Dtos;
 using PrimeShop.Application.features.BasketItem.Dtos;
-using PrimeShop.Domain.Entities;
 using PrimeShop.Web.Interface;
-using ReactiveUI.Primitives.Advanced;
 using System.IdentityModel.Tokens.Jwt;
-using System.Runtime.CompilerServices;
 
 namespace PrimeShop.Web.Controllers
 {
