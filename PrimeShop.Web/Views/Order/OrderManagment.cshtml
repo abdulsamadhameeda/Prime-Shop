@@ -1,15 +1,13 @@
 ﻿
 
 <style>
-    /* تغيير لون زر الصفحة النشطة في الـ Pagination للون البرتقالي */
     .pagination .page-item.active .page-link {
         background-color: #FFA500 !important;
         border-color: #FFA500 !important;
         color: #ffffff !important;
-        box-shadow: 0 3px 6px rgba(255, 165, 0, 0.16); /* لمسة جمالية (ظلال خفيفة) */
+        box-shadow: 0 3px 6px rgba(255, 165, 0, 0.16); 
     }
 
-    /* تأثير عند تمرير الماوس فوق أزرار الصفحات الأخرى */
     .pagination .page-link:hover {
         color: #FFA500 !important;
     }
@@ -21,7 +19,7 @@
             <div class="card-header" >
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Orders</h4>
-                    <button class="btn text-white  btn-round ms-auto" style="background-color:#FFA500"
+                    <button class="btn text-white  btn-round ms-auto disabled   " style="background-color:#FFA500"
                             data-bs-toggle="modal"
                             data-bs-target="#addRowModal">
                         <i class="fa fa-plus"></i>

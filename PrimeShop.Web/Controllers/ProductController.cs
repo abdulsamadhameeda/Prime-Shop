@@ -15,20 +15,22 @@ namespace PrimeShop.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ShopCategory(Guid? categoryId , decimal? minPrice , decimal? maxPrice )
+        public async Task<IActionResult> ShopCategory()
         {
-            var products = await _api.GetProductsAsync(categoryId, minPrice, maxPrice);
 
             var categories = await _api.GetCategoriesAsync();
-
+                
             ViewBag.Categories = categories;
-            ViewBag.MinPrice = minPrice;
-            ViewBag.MaxPrice = maxPrice;
-
-            return View(products);
+           
+            return View();
         }
 
-
+        [HttpGet]
+        public async Task<IActionResult> FilterProducts(Guid? categoryId, decimal? minPrice, decimal? maxPrice)
+        {
+            var products = await _api.GetProductsAsync(categoryId, minPrice, maxPrice);
+            return Json(products);
+        }
 
 
 

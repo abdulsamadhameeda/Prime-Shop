@@ -76,7 +76,9 @@ function loadCartProducts(currentBasket) {
         <td><h5>$${product.price}</h5></td>
         <td>${quantity}</td>
         <td><h5>$${itemTotal.toFixed(2)}</h5></td>
-        <td><a onclick="confirmDelete('${product.id}')"  class="genric-btn danger medium circle text-white"><i class="fa-regular fa-trash-can"></i></a> </td>
+        <td>   <button type="button" class="btn  btn-danger" onclick="confirmDelete('${product.id}')" data-bs-toggle="tooltip" title="delete">
+                                        <i class="fa fa-times fs-6"></i>
+                                    </button> </td>
 
     </tr>
     `;

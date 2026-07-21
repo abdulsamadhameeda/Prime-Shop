@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="~/css/plugins.min.css" />
         <link rel="stylesheet" href="~/css/kaiadmin.min.css" />
         <link rel="stylesheet" href="~/css/demo.css" />
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" /> 
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
     }
     else
     {
@@ -54,9 +54,9 @@
                         <ul class="nav navbar-nav menu_nav ml-auto">
                             @if (!User.IsInRole("Admin"))
                             {
-                                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                                <li class="nav-item active"><a class="nav-link  " asp-controller="Home" asp-action="Index">Home</a></li>
                                 <li class="nav-item"><a class="nav-link" asp-controller="Product" asp-action="ShopCategory">Shop</a></li>
-                                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                                <li class="nav-item"><a class="nav-link disabled" href="contact.html">Contact</a></li>
 
                             }
                             @if (User.IsInRole("Customer"))
@@ -141,13 +141,13 @@
                                 <h4 class="text-section">Management</h4>
                             </li>
                             <li class="nav-item">
-                                <a asp-controller="Product" asp-action="Index">
+                                <a class="disabled" >
                                     <i class="fas fa-store"></i>
                                     <p>Products</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a asp-controller="Category" asp-action="Index">
+                                <a class="disabled">
                                     <i class="fas fa-tags"></i>
                                     <p>Categories</p>
                                 </a>
@@ -159,7 +159,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a asp-controller="User" asp-action="Index">
+                                <a class="disabled">
                                     <i class="fas fa-users"></i>
                                     <p>Customers</p>
                                 </a>
@@ -202,25 +202,25 @@
                         <div class="single-footer-widget">
                             <h6 class="text-uppercase mb-3">Quick Links</h6>
                             <ul class="list-unstyled">
-                               @if (!User.IsInRole("Admin"))
-                            {
+                                @if (!User.IsInRole("Admin"))
+                                {
                                     <li class="mb-2"><a class="text-white text-decoration-none opacity-75" asp-controller="Home" asp-action="Index">Home</a></li>
                                     <li class="mb-2"><a class="text-white text-decoration-none opacity-75" asp-controller="Product" asp-action="ShopCategory">Shop</a></li>
                                     <li class="mb-2"><a class="text-white text-decoration-none opacity-75">Contact</a></li>
 
-                            }
-                            @if (User.IsInRole("Customer"))
-                            {
+                                }
+                                @if (User.IsInRole("Customer"))
+                                {
                                     <li class="mb-2"><a class="text-white text-decoration-none opacity-75" asp-controller="Order" asp-action="OrderTracking">Tracking</a></li>
-                            }
-                            @if (!User.Identity.IsAuthenticated)
-                            {
+                                }
+                                @if (!User.Identity.IsAuthenticated)
+                                {
                                     <li class="mb-2"><a class="text-white text-decoration-none opacity-75k" asp-controller="Auth" asp-action="Login">Login</a></li>
-                            }
-                            else
-                            {
+                                }
+                                else
+                                {
                                     <li class="mb-2"><a class="text-white text-decoration-none opacity-75" href="javascript:void(0)" onclick="confirmLogout()">Logout</a></li>
-                            }
+                                }
                             </ul>
                         </div>
                     </div>
@@ -230,10 +230,10 @@
                             <h6 class="text-uppercase mb-3">Follow Us</h6>
                             <p class="text-secondary mb-3">Let us be social</p>
                             <div class="footer-social d-flex align-items-center gap-3">
-                                <a href="#" class="text-light fs-5"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="text-light fs-5"><i class="fa fa-twitter"></i></a>
-                                <a href="#" class="text-light fs-5"><i class="fa fa-dribbble"></i></a>
-                                <a href="#" class="text-light fs-5"><i class="fa fa-behance"></i></a>
+                                <a class="text-light fs-5"><i class="fa fa-facebook"></i></a>
+                                <a class="text-light fs-5"><i class="fa fa-twitter"></i></a>
+                                <a class="text-light fs-5"><i class="fa fa-snapchat"></i></a>
+                                <a class="text-light fs-5"><i class="fa fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -249,7 +249,7 @@
             </div>
         </footer>
     }
-  
+
     @if (User.IsInRole("Admin"))
     {
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -304,6 +304,11 @@
         }
         });
         }
+        $(document).ready(function () {
+        $('.navbar-nav .nav-item, .nav-secondary .nav-item').removeClass('active');
+
+        $(`a[href="${window.location.pathname}"]`).closest('.nav-item').addClass('active');
+        });
     </script>
 
 

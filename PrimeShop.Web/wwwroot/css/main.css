@@ -1222,9 +1222,9 @@ h1, h2, h3, h4, h5, h6 {
     @media (max-width: 1680px) {
       .banner-area .active-banner-slider .owl-nav {
         right: 0px; } }
-    @media (max-width: 991px) {
+/*    @media (max-width: 991px) {
       .banner-area .active-banner-slider .owl-nav {
-        display: none; } }
+        display: none; } }*/
     .banner-area .active-banner-slider .owl-nav .owl-prev,
     .banner-area .active-banner-slider .owl-nav .owl-next {
       display: inline-block;
