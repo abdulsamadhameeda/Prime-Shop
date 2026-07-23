@@ -39,13 +39,12 @@ namespace PrimeShop.Infrastructure.Identity
         {
             var user = await _userManager.FindByEmailAsync(email);
 
-            if (user == null)
-                throw new Exception("user not found");
+                if (user == null) return null;
+
 
             var result = await _userManager.CheckPasswordAsync(user, password);
 
-            if (!result)
-                throw new Exception("error password");
+            if (!result) return null;
 
             var roles = await _userManager.GetRolesAsync(user);
 

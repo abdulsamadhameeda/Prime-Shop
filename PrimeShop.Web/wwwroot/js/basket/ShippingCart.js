@@ -41,9 +41,9 @@
 function loadCartProducts(currentBasket) {
     var ids = currentBasket.map(x => x.productId);
     if (ids.length === 0) {
-        $('#checkout-section').hide(); 
+        $('#checkout-section').hide();
         $('#basket-items').html('<tr><td colspan="4" class="p-5"><div class="alert text-center" role="alert" style="background-color: #fff8f0; color: #333; border: 1px solid #ffe8cc; font-size: 18px;">Your cart is empty </div></td></tr>');
-        $('#basket-total').text('$0.00'); 
+        $('#basket-total').text('$0.00');
         return;
     }
     $.ajax({
@@ -134,7 +134,10 @@ function loadCartFromDb() {
                                                     <td><h5>$${product.price}</h5></td>
                                                     <td>${quantity}</td>
                                                     <td><h5>$${itemTotal.toFixed(2)}</h5></td>
-                                                    <td><a  onclick="confirmDelete('${basketItemId}')" class="genric-btn danger medium circle text-white"><i class="fa-regular fa-trash-can"></i></a> </td>
+                                                    <td>   <button type="button" class="btn  btn-danger" onclick="confirmDelete('${basketItemId}')" data-bs-toggle="tooltip" title="delete">
+                                                           <i class="fa fa-times fs-6"></i>
+                                                           </button>
+                                                    </td>                                          
                                                 </tr>`
                             ;
                     });
@@ -188,7 +191,7 @@ function deleteItem(id) {
                 console.error("Delete failed: ", error);
             }
         });
-    } 
+    }
     else {
 
         var basket = JSON.parse(localStorage.getItem('basket')) || [];
@@ -202,7 +205,7 @@ function deleteItem(id) {
     }
 }
 
-function showSuccessToast  () {
+function showSuccessToast() {
     Swal.fire({
         toast: true,
         position: 'bottom-end',

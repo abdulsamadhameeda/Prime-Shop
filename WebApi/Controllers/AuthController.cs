@@ -35,6 +35,12 @@ namespace PrimeShop.WebApi.Controllers
         public async Task<IActionResult> Login([FromBody] LoginCommand command)
         {
             var token = await _mediator.Send(command);
+
+            if (token == null)
+            {
+                return BadRequest();
+            }
+
             return Ok(token);
         }
     }

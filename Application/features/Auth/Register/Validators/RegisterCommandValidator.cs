@@ -21,7 +21,9 @@ namespace PrimeShop.Application.features.Auth.Register.Validators
                  .NotEmpty().WithMessage("Email address is required.")
                   .EmailAddress().WithMessage("A valid email address is required.");
 
-            RuleFor(x => x.Password).NotEmpty()
+            RuleFor(x => x.Password)
+                .Cascade(CascadeMode.Stop)
+                .NotEmpty()
                 .MinimumLength(8)
                 .Matches(@"[A-Z]").WithMessage("Password must contain at least one uppercase letter")
                 .Matches(@"[a-z]").WithMessage("Password must contain at least one lowercase letter")

@@ -27,26 +27,32 @@
             <div class="col-lg-6">
                 <div class="login_form_inner  " style="padding-top:75px">
                     <h3>Create an Account</h3>
-                    <form asp-action="Register" method="post" class="row login_form" novalidate="novalidate">
+                    <form asp-action="Register" method="post" class="row login_form" id="registerForm"   novalidate="novalidate">
+                        <div asp-validation-summary="ModelOnly" class="col-md-12 text-danger mb-2"></div>
                         <div class="col-md-12 form-group">
                             <input asp-for="FirstName" class="form-control" placeholder="First Name"
                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" />
+                            <span asp-validation-for="FirstName" class="text-danger small d-block text-start"></span>
                         </div>
                         <div class="col-md-12 form-group">
                             <input asp-for="LastName" class="form-control" placeholder="Last Name"
                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'" />
+                            <span asp-validation-for="LastName" class="text-danger small d-block text-start"></span>
                         </div>
                         <div class="col-md-12 form-group">
                             <input asp-for="Email" class="form-control" placeholder="Email"
                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" />
+                            <span asp-validation-for="Email" class="text-danger small d-block text-start"></span>
                         </div>
                         <div class="col-md-12 form-group">
                             <input asp-for="Password" type="password" class="form-control" placeholder="Password"
                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" />
+                            <span asp-validation-for="Password" class="text-danger small d-block text-start"></span>
                         </div>
                         <div class="col-md-12 form-group">
                             <input asp-for="PhoneNumber" class="form-control" placeholder="Phone Number"
                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger small d-block text-start  "></span>
                         </div>
                         <div class="col-md-12 form-group">
                             <button type="submit" value="submit" class="primary-btn">Create Account</button>
@@ -57,3 +63,32 @@
         </div>
     </div>
 </section>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(document).ready(function () {
+            $('#registerForm').submit(function (e) {
+                e.preventDefault(); // 1. يمنع الـ Reload
+
+                var form = $(this);
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function (response) {
+                        // إذا رجع الـ Controller الفيو مع الأخطاء بدون Reload، بيبدل المحتوى فوراً
+                        var newForm = $(response).find('#registerForm').html();
+                        if (newForm) {
+                            $('#registerForm').html(newForm);
+                        } else {
+                            // إذا نجح وحول لـ Login
+                            window.location.href = '/Auth/Login';
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

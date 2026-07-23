@@ -26,6 +26,7 @@
                 <div class="login_form_inner">
                     <h3>Login to enter</h3>
                     <form asp-action="Login" method="post" class="row login_form" novalidate="novalidate">
+                        <div asp-validation-summary="ModelOnly" class="col-md-12 text-danger small  mb-2"></div>
                         <div class="col-md-12 form-group">
                             <input asp-for="Email" class="form-control" placeholder="Email"
                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" />

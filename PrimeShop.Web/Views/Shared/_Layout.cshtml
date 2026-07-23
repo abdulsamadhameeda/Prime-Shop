@@ -31,7 +31,16 @@
         <link rel="stylesheet" href="~/css/ion.rangeSlider.skinFlat.css" />
         <link rel="stylesheet" href="~/css/main.css" />
     }
-
+    <style>
+        /* عندما يتم ضب السايدبار يخفي شعار اللوغو بالكامل */
+        .sidebar_minimize .sidebar .logo-header .navbar-brand {
+        display: none !important;
+        }
+        /* عندما يكون السايدبار مصغراً ويتم وضع الماوس فوقه (هوفر)، أظهر اللوغو */
+        .sidebar_minimize .sidebar:hover .logo-header .navbar-brand {
+        display: block !important;
+        }
+    </style>
 </head>
 <body>
     <header class="header_area @(User.IsInRole("Admin") ? "static-header" : "sticky-header")">
@@ -41,8 +50,10 @@
             <nav class="navbar navbar-expand-lg navbar-light @(User.IsInRole("Admin") ? "admin-nav" : "main_box")">
                 <div class="container">
                     <!-- Brand and toggle get grouped for better mobile display -->
-
-                    <a class="navbar-brand logo_h" asp-controller="Home" asp-action="Index"><img src="/img/primeLogo.png" alt=""></a>
+                    @if (!User.IsInRole("Admin"))
+                    {
+                        <a class="navbar-brand logo_h" asp-controller="Home" asp-action="Index"><img src="/img/primeLogo.png" alt=""></a>
+                    }
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="icon-bar"></span>
@@ -51,7 +62,7 @@
                     </button>
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav menu_nav ml-auto">
+                        <ul class="nav navbar-nav menu_nav ml-auto @(User.IsInRole("Admin") ? "w-100 d-flex justify-content-end" : "")" ">
                             @if (!User.IsInRole("Admin"))
                             {
                                 <li class="nav-item active"><a class="nav-link  " asp-controller="Home" asp-action="Index">Home</a></li>
@@ -109,9 +120,8 @@
             <div class="sidebar" data-background-color="dark">
                 <div class="sidebar-logo">
                     <div class="logo-header" data-background-color="dark">
-                        <a asp-controller="Admin" asp-action="Dashboard" class="logo text-white fw-bold fs-5 ms-2">
-                            <h2 class="text-white">Prime Shop</h2>
-                        </a>
+                        <a class="navbar-brand logo_h" asp-controller="Home" asp-action="Index"><img src="/img/primeLogo.png" alt=""></a>
+
                         <div class="nav-toggle">
                             <button class="btn btn-toggle toggle-sidebar">
                                 <i class="gg-menu-right"></i>
@@ -141,7 +151,7 @@
                                 <h4 class="text-section">Management</h4>
                             </li>
                             <li class="nav-item">
-                                <a class="disabled" >
+                                <a class="disabled">
                                     <i class="fas fa-store"></i>
                                     <p>Products</p>
                                 </a>
