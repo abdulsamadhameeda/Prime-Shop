@@ -16,19 +16,21 @@ namespace PrimeShop.Application.features.Order.Commands
         }
 
         public async Task<Guid> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
-                    {
+        {
             var order = await _OrderRepo.GetAsync(request.Id);
 
-            if (order != null)
+            if (order == null)
             {
-                order.CustomerId = request.CustomerId;
-                order.ShippingStreet = request.ShippingStreet;
-                order.ShippingCity = request.ShippingCity;
-                order.Status = request.Status;
-                order.TotalAmount = request.TotalAmount;
-                order.OrderDate = request.OrderDate;
-
+                throw new Exception("Order not found");
             }
+
+
+            order.CustomerId = request.CustomerId;
+            order.ShippingStreet = request.ShippingStreet;
+            order.ShippingCityId = request.ShippingCityId;
+            order.Status = request.Status;
+            order.TotalAmount = request.TotalAmount;
+            order.OrderDate = request.OrderDate;
 
             _OrderRepo.Update(order);
 

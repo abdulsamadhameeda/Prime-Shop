@@ -19,7 +19,7 @@ namespace PrimeShop.Application.features.Order.Dtos
          string ShippingStreet,
 
 
-         string ShippingCity,
+          Guid ShippingCityId,
 
 
          Guid CustomerId

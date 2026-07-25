@@ -23,9 +23,11 @@ namespace PrimeShop.Domain.Entities
       
         public string ShippingStreet { get; set; }
 
-     
-        public string ShippingCity { get; set; }
 
+        [Required]
+        [ForeignKey("ShippingCityLookup")]
+        public Guid ShippingCityId { get; set; }
+        public Lookup ShippingCityLookup { get; set; }
 
         [Required]
         [ForeignKey("Customer")]

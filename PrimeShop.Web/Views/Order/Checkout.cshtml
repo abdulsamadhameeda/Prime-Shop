@@ -56,13 +56,13 @@
                         <input type="hidden" id="total-amount" name="totalAmount" />
 
                         <div class="col-md-6 form-group p_star">
-                            <select class="country_select" name="shippingCity" required>
+                            <select class="country_select" name="ShippingCityId" required>
                                 <option value="">Select City</option>
                                 @if (ViewBag.Cities != null)
                                 {
                                     foreach (var city in ViewBag.Cities)
                                     {
-                                        <option value="@city.Value">@city.Value</option>
+                                        <option value="@city.Id">@city.Value</option>
                                     }
                                 }
                             </select>

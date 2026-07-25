@@ -41,7 +41,7 @@ namespace PrimeShop.Web.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Checkout(string shippingStreet, string shippingCity, decimal totalAmount)
+        public async Task<IActionResult> Checkout(string shippingStreet, Guid ShippingCityId, decimal totalAmount)
         {
 
             var token = HttpContext.Request.Cookies["jwt"];
@@ -94,7 +94,7 @@ namespace PrimeShop.Web.Controllers
                 totalAmount,
                 OrderStatus.Pending,
                 shippingStreet,
-                shippingCity,
+                ShippingCityId,
                 customerId
             ));
 

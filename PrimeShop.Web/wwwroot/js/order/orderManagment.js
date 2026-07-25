@@ -165,10 +165,10 @@ function openUpdateModal(orderId) {
             $('#editOrderStatus').val(response.status);
             $('#editShippingStreet').val(response.shippingStreet);
 
-            $('#editShippingCity').val(response.shippingCity);
 
             loadCitiesLookup(function () {
-                $('#editShippingCity').val(response.shippingCity);
+                $('#editShippingCity').val(response.shippingCityId);
+
             });
             if (response.orderDate) {
                 let date = new Date(response.orderDate);
@@ -202,7 +202,7 @@ function loadCitiesLookup(callback) {
             select.append('<option value="">Select City</option>');
 
             cities.forEach(city => {
-                select.append(`<option value="${city.value}">${city.value}</option>`);
+                select.append(`<option value="${city.id}">${city.value}</option>`);
             });
 
             if (callback) callback();
@@ -220,9 +220,12 @@ function UpdateOrder() {
         totalAmount: parseFloat($('#editTotalAmountRaw').val()), 
         status: parseInt($('#editOrderStatus').val()),
         shippingStreet: $('#editShippingStreet').val(),
-        shippingCity: $('#editShippingCity').val()
+        shippingCityId: $('#editShippingCity').val()
     };
-
+    if (!formData.shippingCityId) {
+        Swal.fire('Warning', 'Please select a shipping city', 'warning');
+        return;
+    }
     $.ajax({
         url: '/Order/UpdateOrder',
         type: 'POST',

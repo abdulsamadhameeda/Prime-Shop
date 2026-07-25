@@ -22,9 +22,9 @@ namespace PrimeShop.Application.features.Order.Validatords
     .NotEmpty().WithMessage("Shipping street address is required.")
     .MaximumLength(200).WithMessage("Shipping street cannot exceed 200 characters.");
 
-            RuleFor(c => c.ShippingCity)
-                .NotEmpty().WithMessage("Shipping city is required.")
-                .MaximumLength(100).WithMessage("Shipping city cannot exceed 100 characters.");
+            RuleFor(c => c.ShippingCityId)
+       .NotEmpty().WithMessage("Shipping city is required.")
+       .NotEqual(Guid.Empty).WithMessage("Please select a valid city.");
 
             RuleFor(c => c.CustomerId)
     .NotEmpty().WithMessage("Customer ID is required.")

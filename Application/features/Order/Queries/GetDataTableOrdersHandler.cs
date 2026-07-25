@@ -24,7 +24,7 @@ namespace PrimeShop.Application.features.Order.Queries
             {
                 query = query.Where(o => o.Status.ToString().Contains(request.Search) ||
                           o.ShippingStreet.Contains(request.Search) ||
-                          o.ShippingCity.Contains(request.Search) ||
+                          o.ShippingCityLookup.Value.Contains(request.Search) || 
                           o.Id.ToString().Contains(request.Search));
             }
 
@@ -40,7 +40,7 @@ namespace PrimeShop.Application.features.Order.Queries
                TotalAmount = x.TotalAmount,
                Status = x.Status, 
                ShippingStreet = x.ShippingStreet,
-               ShippingCity = x.ShippingCity,
+               ShippingCity = x.ShippingCityLookup.Value, 
                CustomerId = x.CustomerId 
            })
            .ToList();

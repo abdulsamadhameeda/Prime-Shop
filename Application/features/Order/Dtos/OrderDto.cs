@@ -8,15 +8,16 @@ namespace PrimeShop.Application.features.Order.Dtos
 
         public DateTime OrderDate { get; set; }
 
-       
+
         public decimal TotalAmount { get; set; }
 
         public OrderStatus Status { get; set; }
 
-       
+
         public string ShippingStreet { get; set; }
 
-       
+        public Guid ShippingCityId { get; set; }
+
         public string ShippingCity { get; set; }
 
 

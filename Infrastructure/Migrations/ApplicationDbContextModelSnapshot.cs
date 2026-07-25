@@ -285,9 +285,8 @@ namespace PrimeShop.Infrastructure.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ShippingCity")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("ShippingCityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ShippingStreet")
                         .IsRequired()
@@ -302,6 +301,8 @@ namespace PrimeShop.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("ShippingCityId");
 
                     b.ToTable("Orders");
                 });
@@ -530,7 +531,15 @@ namespace PrimeShop.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PrimeShop.Domain.Entities.Lookup", "ShippingCityLookup")
+                        .WithMany()
+                        .HasForeignKey("ShippingCityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Customer");
+
+                    b.Navigation("ShippingCityLookup");
                 });
 
             modelBuilder.Entity("PrimeShop.Domain.Entities.OrderItem", b =>
