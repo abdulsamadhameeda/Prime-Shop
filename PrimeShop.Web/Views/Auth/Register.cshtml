@@ -69,7 +69,7 @@
     <script>
         $(document).ready(function () {
             $('#registerForm').submit(function (e) {
-                e.preventDefault(); // 1. يمنع الـ Reload
+                e.preventDefault(); 
 
                 var form = $(this);
 
@@ -78,12 +78,10 @@
                     type: 'POST',
                     data: form.serialize(),
                     success: function (response) {
-                        // إذا رجع الـ Controller الفيو مع الأخطاء بدون Reload، بيبدل المحتوى فوراً
                         var newForm = $(response).find('#registerForm').html();
                         if (newForm) {
                             $('#registerForm').html(newForm);
                         } else {
-                            // إذا نجح وحول لـ Login
                             window.location.href = '/Auth/Login';
                         }
                     }

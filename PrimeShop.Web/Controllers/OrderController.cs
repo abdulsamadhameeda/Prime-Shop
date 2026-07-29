@@ -130,7 +130,6 @@ namespace PrimeShop.Web.Controllers
         public async Task<IActionResult> OrderTracking()
         {
 
-            //var token = HttpContext.Session.GetString("Token");
             var token = HttpContext.Request.Cookies["jwt"];
             if (string.IsNullOrEmpty(token))
             {
@@ -154,7 +153,6 @@ namespace PrimeShop.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> OrderTracking(Guid? orderId)
         {
-            //var token = HttpContext.Session.GetString("Token");
             var token = HttpContext.Request.Cookies["jwt"];
             if (string.IsNullOrEmpty(token))
             {

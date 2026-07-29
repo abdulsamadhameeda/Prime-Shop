@@ -31,7 +31,6 @@ namespace PrimeShop.Web.Controllers
             {
                 var token = await _api.LoginAsync(command);
 
-                //HttpContext.Session.SetString("Token", token);
                 HttpContext.Response.Cookies.Append("jwt", token, new CookieOptions
                 {
                     HttpOnly = true,

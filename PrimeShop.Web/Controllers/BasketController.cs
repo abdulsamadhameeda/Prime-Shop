@@ -98,7 +98,6 @@ namespace PrimeShop.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetBasketItems()
         {
-            //var token = HttpContext.Session.GetString("Token");
             var token = HttpContext.Request.Cookies["jwt"];
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);

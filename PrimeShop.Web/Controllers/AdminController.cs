@@ -17,8 +17,8 @@ namespace PrimeShop.Web.Controllers
         public async Task<IActionResult> Dashboard()
         {
             var currentYear = DateTime.Now.Year;
-            var ordersPerMonth = await _api.GetOrdersPerMonthAsync(currentYear);
 
+            var ordersPerMonth = await _api.GetOrdersPerMonthAsync(currentYear);
             var orderStatus = await _api.GetOrderStatusAsync();
 
             var totalOrders = await _api.GetTotalOrdersAsync();

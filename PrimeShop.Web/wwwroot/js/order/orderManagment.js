@@ -38,7 +38,7 @@ $(document).ready(function () {
                     let statusText = data;
 
                     if (data === 1 || data === "Pending") {
-                        badgeClass = "badge badge-warning text-dark";
+                        badgeClass = "badge badge-warning ";
                         statusText = "Pending";
                     }
                     else if (data === 2 || data === "Processing") {
@@ -224,6 +224,13 @@ function UpdateOrder() {
     };
     if (!formData.shippingCityId) {
         Swal.fire('Warning', 'Please select a shipping city', 'warning');
+        Swal.fire({
+            title: 'warning',
+            text: "Please select a shipping city!",
+            icon: 'warning',
+            confirmButtonColor: '#FFA500',
+            confirmButtonText: 'ok',
+        });
         return;
     }
     $.ajax({
