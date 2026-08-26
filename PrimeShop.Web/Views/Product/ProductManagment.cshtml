@@ -1,0 +1,113 @@
+﻿
+
+<style>
+    .pagination .page-item.active .page-link {
+        background-color: #FFA500 !important;
+        border-color: #FFA500 !important;
+        color: #ffffff !important;
+        box-shadow: 0 3px 6px rgba(255, 165, 0, 0.16);
+    }
+
+    .pagination .page-link:hover {
+        color: #FFA500 !important;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="page-inner">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex align-items-center">
+                    <h4 class="card-title">Products</h4>
+                    <button class="btn text-white  btn-round ms-auto disabled   " style="background-color:#FFA500"
+                            data-bs-toggle="modal"
+                            data-bs-target="#addRowModal">
+                        <i class="fa fa-plus"></i>
+                        Add Row
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+
+               
+                <div class="table-responsive">
+                    <partial name="_DynamicTable" model="Model" />
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="updateProductModal" tabindex="-1" aria-labelledby="updateProductModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow">
+
+            <div class="modal-header  text-white" style="background-color:#FFA500">
+                <h5 class="modal-title" id="updateOrderModalLabel">
+                    <i class="fa fa-edit me-2"></i>update
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="updateProductForm">
+                    <input type="hidden" id="editProductId" name="Id" />
+                    <input type="hidden" id="existingImageUrl" name="ExistingImageUrl" />
+                   
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="editName" class="form-label fw-bold text-muted">Name</label>
+                            <input type="text" class="form-control bg-light" id="editName"  />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="editPrice" class="form-label fw-bold text-muted">Price</label>
+                            <input type="text" class="form-control bg-light" id="editPrice"  />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="editCategory" class="form-label fw-bold "> Category</label>
+                            <select class="form-select" id="editCategory" name="Category">
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="editStockQuantity" class="form-label fw-bold ">StockQuantity</label>
+                            <input type="text" class="form-control bg-light" id="editStockQuantity"  />
+
+                        </div>
+                    </div>
+                    <div class="row">
+            <div class="col-md-8 mb-3">
+                <label for="editImage" class="form-label fw-bold">Product Image</label>
+                <input type="file" class="form-control" id="editImage" accept="image/png" onchange="previewSelectedImage(this)" />
+            </div>
+            <div class="col-md-4 mb-3 text-center">
+                <label class="form-label fw-bold d-block">Current Preview</label>
+                <img id="imagePreview" src="/images/no-image.png" alt="Preview" class="img-thumbnail" style="max-height: 100px; object-fit: cover;" />
+            </div>
+        </div>
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label for="editDescription" class="form-label fw-bold ">Description</label>
+                            <input type="text" class="form-control " id="editDescription" name="Description" required />
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn text-white " data-bs-dismiss="modal" style="background-color:#d33">Cancel</button>
+                <button type="button" class="btn px-4 text-white" style="background-color:#FFA500" onclick="UpdateProduct()">Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+    <script src="~/js/product/ProductManagment.js" asp-append-version="true"></script>
+
+}

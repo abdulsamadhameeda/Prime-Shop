@@ -1,7 +1,7 @@
 ﻿
 
 $(document).ready(function () {
-    $('#ordersTable').DataTable({
+    $('#DataTable').DataTable({
 
         processing: false,
         serverSide: true,
@@ -223,7 +223,6 @@ function UpdateOrder() {
         shippingCityId: $('#editShippingCity').val()
     };
     if (!formData.shippingCityId) {
-        Swal.fire('Warning', 'Please select a shipping city', 'warning');
         Swal.fire({
             title: 'warning',
             text: "Please select a shipping city!",

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PrimeShop.Application.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,13 +14,7 @@ namespace PrimeShop.Application.features.Order.Dtos
         public string Search { get; set; }
     }
 
-    public class DataTableResponse<T>
-    {
-        public int Draw { get; set; }
-        public int RecordsTotal { get; set; }
-        public int RecordsFiltered { get; set; }
-        public List<T> Data { get; set; }
-    }
+   
 
 }
 

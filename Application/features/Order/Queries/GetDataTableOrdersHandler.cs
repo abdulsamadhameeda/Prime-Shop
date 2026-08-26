@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using PrimeShop.Application.Common.Interfaces;
+using PrimeShop.Application.Common.Models;
 using PrimeShop.Application.features.Order.Dtos;
 
 

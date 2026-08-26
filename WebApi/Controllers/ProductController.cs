@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PrimeShop.Application.features.Category.Dtos;
+using PrimeShop.Application.features.Order.Dtos;
 using PrimeShop.Application.features.Product.Dtos;
 
 namespace PrimeShop.WebApi.Controllers
@@ -83,5 +84,12 @@ namespace PrimeShop.WebApi.Controllers
             return Ok(product);
         }
 
+
+        [HttpPost("datatable")]
+        public async Task<IActionResult> GetProductsData([FromBody] GetDataTableProductsQuery query)
+        {
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
     }
 }

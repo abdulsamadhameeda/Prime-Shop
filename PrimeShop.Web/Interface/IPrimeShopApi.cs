@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PrimeShop.Application.Common.Models;
 using PrimeShop.Application.features.Auth.Login.Dtos;
 using PrimeShop.Application.features.Auth.Register.Dtos;
 using PrimeShop.Application.features.Basket.Dtos;
@@ -54,6 +55,9 @@ namespace PrimeShop.Web.Interface
 
         [Get("/api/Product/GetTotalProducts")]
         Task<int> GetTotalProductsAsync();
+
+        [Post("/api/Product/datatable")]
+        Task<DataTableResponse<ProductDto>> GetProductsDataAsync([FromBody] GetDataTableProductsQuery query);
 
 
 
