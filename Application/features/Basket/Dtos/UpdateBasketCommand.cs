@@ -11,7 +11,7 @@ namespace PrimeShop.Application.features.Basket.Dtos
 
      DateTime CreatedAt,
 
-     Guid CustomerId
+    string UserId
 
 ) : IRequest<Guid>;
 }

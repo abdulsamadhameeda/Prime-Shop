@@ -10,11 +10,11 @@ namespace PrimeShop.Application.features.Customer.Queries
     internal class GetAllCustomerHandler : IRequestHandler<GetAllCustomerQueries, List<CustomerDto>>
     {
 
-        private readonly IRepository<Domain.Entities.Customer> _customerRepo;
+        private readonly ISqlQueryService _sql;
 
-        public GetAllCustomerHandler(IRepository<Domain.Entities.Customer> customerRepo)
+        public GetAllCustomerHandler(ISqlQueryService sql)
         {
-            _customerRepo = customerRepo;
+            _sql = sql;
         }
 
         public async Task<List<CustomerDto>> Handle(GetAllCustomerQueries request, CancellationToken cancellationToken)
@@ -23,7 +23,7 @@ namespace PrimeShop.Application.features.Customer.Queries
 
             string sqlQuery = await File.ReadAllTextAsync(filePath);
 
-            var result = await _customerRepo.QuerySql<CustomerDto>(sqlQuery, new { Name = request.name });
+            var result = await _sql.QuerySql<CustomerDto>(sqlQuery, new { Name = request.name });
 
             return result.ToList();
 

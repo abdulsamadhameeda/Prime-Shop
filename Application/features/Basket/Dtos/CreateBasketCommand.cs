@@ -5,12 +5,6 @@ using System.Text;
 
 namespace PrimeShop.Application.features.Basket.Dtos
 {
- 
-    public record CreateBasketCommand(
 
-    
-
-     Guid CustomerId 
-
-) : IRequest<Guid>;
+    public record CreateBasketCommand(string UserId) : IRequest<Guid>;
 }

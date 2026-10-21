@@ -30,7 +30,7 @@ namespace PrimeShop.Application.features.Product.Commands
                 product.Description = request.Description;
                 product.Price = request.Price;
                 product.StockQuantity = request.StockQuantity;
-                product.ProductImage = request.ImageUrl;
+                product.ImageUrl = request.ImageUrl;
                 product.CategoryId = request.CategoryId;
             
             }

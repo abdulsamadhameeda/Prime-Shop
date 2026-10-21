@@ -16,20 +16,21 @@ namespace PrimeShop.Infrastructure.Identity
             _jwtTokenService = jwtTokenService;
         }
 
-        public async Task<string> RegisterAsync(string email, string password ,Guid customerId)
-            {
+        public async Task<string> RegisterAsync(string email, string password, string firstName, string lastName, string? phoneNumber)
+        {
             var user = new ApplicationUser
             {
                 Email = email,
                 UserName = email,
-                CustomerId = customerId
-
+                FirstName = firstName,
+                LastName = lastName,
+                PhoneNumber = phoneNumber
             };
 
             var result = await _userManager.CreateAsync(user, password);
 
             if (!result.Succeeded)
-                throw new Exception();
+                throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
 
             await _userManager.AddToRoleAsync(user, "Customer");
 
@@ -39,8 +40,7 @@ namespace PrimeShop.Infrastructure.Identity
         {
             var user = await _userManager.FindByEmailAsync(email);
 
-                if (user == null) return null;
-
+            if (user == null || user.IsDeleted) return null;
 
             var result = await _userManager.CheckPasswordAsync(user, password);
 

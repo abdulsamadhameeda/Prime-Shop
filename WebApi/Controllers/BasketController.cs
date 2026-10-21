@@ -27,11 +27,10 @@ namespace PrimeShop.WebApi.Controllers
         }
 
 
-        [HttpGet("GetByCustomerId")]
-        public async Task<IActionResult> GetByCustomerId([FromQuery] Guid CustomerId)
+        [HttpGet("GetByUserId")]
+        public async Task<IActionResult> GetByUserId([FromQuery] string userId)
         {
-            var result = await _mediator.Send(new GetByCustomerIdBasketQueries(CustomerId));
-
+            var result = await _mediator.Send(new GetByCustomerIdBasketQueries(userId));
             return Ok(result);
         }
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using PrimeShop.Application.features.Wishlist.Dtos;
 using PrimeShop.Web.Interface;
 using PrimeShop.Web.Models;
 using System.Diagnostics;
@@ -21,7 +22,7 @@ namespace PrimeShop.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-
+            var wishlistProductIds = new List<WishlistItemDto>();
             var token = Request.Cookies["jwt"];
 
             if (!string.IsNullOrEmpty(token))
@@ -34,20 +35,31 @@ namespace PrimeShop.Web.Controllers
 
                     if (jwtToken.ValidTo > DateTime.UtcNow)
                     {
-                        var roleClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value;
+                        var roleClaim = jwtToken.Claims
+                            .FirstOrDefault(c =>
+                                c.Type == ClaimTypes.Role || c.Type == "role")
+                            ?.Value;
 
                         if (roleClaim == "Admin")
+                            return RedirectToAction("Dashboard", "Admin");
+
+                        var userId = jwtToken.Claims
+                            .FirstOrDefault(c => c.Type == "Id")
+                            ?.Value;
+
+                        if (!string.IsNullOrEmpty(userId))
                         {
-                            return RedirectToAction( "Dashboard" , "Admin");
+                            wishlistProductIds =
+                                await _api.GetWishlistProductIdsByUserIdAsync(userId);
                         }
                     }
                 }
             }
 
-           
+            ViewBag.WishlistProductIds = wishlistProductIds;
+
             var latestProducts = await _api.GetRandomProductBAsync(8);
             return View(latestProducts);
-
         }
 
         public IActionResult Privacy()

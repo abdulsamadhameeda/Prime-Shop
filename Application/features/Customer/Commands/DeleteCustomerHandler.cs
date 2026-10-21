@@ -8,31 +8,23 @@ namespace PrimeShop.Application.features.Customer.Commands
     internal class DeleteCustomerHandler : IRequestHandler<DeleteCustomerCommand, bool>
     {
 
-        private readonly IRepository<Domain.Entities.Customer> _customerRepo;
+        private readonly IUserService _userService;
 
-        public DeleteCustomerHandler(IRepository<Domain.Entities.Customer> customerRepo)
+        public DeleteCustomerHandler(IUserService userService)
         {
-            _customerRepo = customerRepo;
+            _userService = userService;
         }
 
         public async Task<bool> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customer = await _customerRepo.GetAsync(request.Id);
+            var deactivated = await _userService.DeactivateAsync(request.Id);
 
-            if (customer == null)
+            if (!deactivated)
             {
-                throw new Exception();
+                throw new KeyNotFoundException($"User with id {request.Id} was not found.");
             }
 
-
-            _customerRepo.Delete(customer);
-
-            await _customerRepo.UnitOfWork.SaveChangesAsync();
-
             return true;
-
-
-
         }
     }
 }

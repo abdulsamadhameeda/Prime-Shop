@@ -13,13 +13,11 @@ $(document).ready(function () {
         },
         columns: [
             {
-                data: 'productImage',
-                name: 'ProductImage',
+                data: 'imageUrl',
+                name: 'ImageUrl',
                 orderable: false,
                 render: function (data) {
-                    var src = (data && data.length > 0)
-                        ? `data:image/png;base64,${data}`
-                        : '/img/product/p1.jpg';
+                    var src = (data && data.length > 0) ? data : '/img/product/p1.jpg';
                     return `<img src="${src}" alt="product" style="width:50px;height:50px;object-fit:cover;border-radius:4px;" />`;
                 }
             },
@@ -121,7 +119,11 @@ let updateProductModalInstance = null;
 //         }
 //     });
 // }
-
+function previewSelectedImage(input) {
+    if (input.files && input.files[0]) {
+        $('#imagePreview').attr('src', URL.createObjectURL(input.files[0]));
+    }
+}
 function openUpdateModal(productId) {
     $.ajax({
         url: `/Product/GetByIdProduct?id=${productId}`,
@@ -135,22 +137,16 @@ function openUpdateModal(productId) {
             $('#editStockQuantity').val(response.stockQuantity);
             $('#editDescription').val(response.description);
 
-            // تفريغ حقل ملف رفع الصورة الجديد
             $('#editImage').val('');
 
-            let productImage = response.productImage;
+            let imageUrl = response.imageUrl;
 
-            if (productImage) {
-                // 1. استخراج النص الصافي (بدون data:image/png;base64,) للحقل المخفي
-                let rawBase64 = productImage.includes(',') ? productImage.split(',')[1] : productImage;
-                $('#existingImageUrl').val(rawBase64);
-
-                // 2. تركِيب الـ Prefix لغايات المعاينة فقط في عنصر <img>
-                let previewSrc = 'data:image/png;base64,' + rawBase64;
-                $('#imagePreview').attr('src', previewSrc);
+            if (imageUrl) {
+                $('#existingImageUrl').val(imageUrl);
+                $('#imagePreview').attr('src', imageUrl);
             } else {
-                $('#imagePreview').attr('src', '/images/no-image.png');
                 $('#existingImageUrl').val('');
+                $('#imagePreview').attr('src', '/images/no-image.png');
             }
 
             loadCategories(function () {
@@ -251,41 +247,12 @@ function loadCategories(callback) {
 //         }
 //     });
 // }
-
 function UpdateProduct() {
-    let fileInput = $('#editImage')[0];
+    let name = $('#editName').val();
+    let price = parseFloat($('#editPrice').val());
+    let categoryId = $('#editCategory').val();
 
-    // إذا اختار المستخدم صورة جديدة
-    if (fileInput.files && fileInput.files[0]) {
-        let reader = new FileReader();
-        reader.onload = function (e) {
-            // استخراج نص الـ Base64 الصافي للملف الجديد
-            let newBase64 = e.target.result.split(',')[1];
-            sendProductUpdate(newBase64);
-        };
-        reader.readAsDataURL(fileInput.files[0]);
-    } else {
-        // إذا لم يختَر صورة جديدة، نأخذ النص القديم الصافي من الحقل المخفي
-        let existingBase64 = $('#existingImageUrl').val() || '';
-        // تنظيف أي Prefix زائد إن وجد لضمان عدم تلف النص
-        existingBase64 = existingBase64.replace(/^data:image\/[a-z]+;base64,/, "");
-        sendProductUpdate(existingBase64);
-    }
-}
-
-// دالة الإرسال عبر الـ AJAX
-function sendProductUpdate(imageBase64) {
-    var formData = {
-        id: $('#editProductId').val(),
-        name: $('#editName').val(),
-        price: parseFloat($('#editPrice').val()),
-        categoryId: $('#editCategory').val(),
-        stockQuantity: parseInt($('#editStockQuantity').val()),
-        description: $('#editDescription').val(),
-        productImage: imageBase64
-    };
-
-    if (!formData.name || !formData.price || !formData.categoryId) {
+    if (!name || !price || !categoryId) {
         Swal.fire({
             title: 'warning',
             text: "Please fill in all required fields!",
@@ -296,32 +263,38 @@ function sendProductUpdate(imageBase64) {
         return;
     }
 
+    let formData = new FormData();
+    formData.append('Id', $('#editProductId').val());
+    formData.append('Name', name);
+    formData.append('Price', price);
+    formData.append('CategoryId', categoryId);
+    formData.append('StockQuantity', parseInt($('#editStockQuantity').val()));
+    formData.append('Description', $('#editDescription').val());
+            formData.append('ImageUrl', $('#existingImageUrl').val() || '');
+
+    let fileInput = $('#editImage')[0];
+    if (fileInput.files && fileInput.files[0]) {
+        formData.append('image', fileInput.files[0]);
+    }
+
     $.ajax({
         url: '/Product/UpdateProduct',
         type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(formData),
+        data: formData,
+        processData: false,   // مهم
+        contentType: false,   // مهم
         success: function (response) {
             updateProductModalInstance.hide();
-
             Swal.fire({
-                toast: true,
-                position: 'bottom-end',
-                icon: 'success',
+                toast: true, position: 'bottom-end', icon: 'success',
                 title: 'the product has been updated',
-                showConfirmButton: false,
-                timer: 2000,
-                timerProgressBar: true,
-                background: '#FFA500',
-                color: '#fff',
-                iconColor: '#fff',
-                showClass: { popup: 'swal2-noanimation' },
-                hideClass: { popup: '' }
+                showConfirmButton: false, timer: 2000, timerProgressBar: true,
+                background: '#FFA500', color: '#fff', iconColor: '#fff',
+                showClass: { popup: 'swal2-noanimation' }, hideClass: { popup: '' }
             });
-
-            $('#productsTable').DataTable().ajax.reload(null, false);
+            $('#DataTable').DataTable().ajax.reload(null, false);
         },
-        error: function (xhr) {
+        error: function () {
             Swal.fire('Error!', 'Something went wrong!', 'error');
         }
     });

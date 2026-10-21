@@ -6,7 +6,7 @@
     o.ShippingStreet,
     o.ShippingCityId,
     l.Value AS ShippingCity, 
-    o.CustomerId
+    o.UserId
 FROM Orders o
 LEFT JOIN Lookups l ON o.ShippingCityId = l.Id
 WHERE o.Id = @Id

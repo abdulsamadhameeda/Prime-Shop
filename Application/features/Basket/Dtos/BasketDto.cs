@@ -12,7 +12,7 @@ namespace PrimeShop.Application.features.Basket.Dtos
 
         public DateTime CreatedAt { get; set; }
 
-        public Guid CustomerId { get; set; }
+        public string UserId { get; set; }
 
     }
 }

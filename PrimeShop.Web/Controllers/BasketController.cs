@@ -28,13 +28,13 @@ namespace PrimeShop.Web.Controllers
 
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
-            var customerId = Guid.Parse(jwt.Claims.First(c => c.Type == "CustomerId").Value);
+            var userId = jwt.Claims.First(c => c.Type == "Id").Value;
 
-            var basket = await _api.GetBasketByCustomerIdAsync(customerId);
+            var basket = await _api.GetBasketByCustomerIdAsync(userId);
 
             if (basket == null)
             {
-                await _api.CreateBasketAsync(new CreateBasketCommand(customerId));
+                await _api.CreateBasketAsync(new CreateBasketCommand(userId));
             }
 
 
@@ -56,10 +56,15 @@ namespace PrimeShop.Web.Controllers
 
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
-            var customerId = Guid.Parse(jwt.Claims.First(c => c.Type == "CustomerId").Value);
+            var userId = jwt.Claims.First(c => c.Type == "Id").Value;
 
-            var basket = await _api.GetBasketByCustomerIdAsync(customerId);
+            var basket = await _api.GetBasketByCustomerIdAsync(userId);
 
+            if (basket == null)
+            {
+                await _api.CreateBasketAsync(new CreateBasketCommand(userId));
+                basket = await _api.GetBasketByCustomerIdAsync(userId);
+            }
 
             foreach (var item in items)
             {
@@ -101,9 +106,9 @@ namespace PrimeShop.Web.Controllers
             var token = HttpContext.Request.Cookies["jwt"];
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
-            var customerId = Guid.Parse(jwt.Claims.First(c => c.Type == "CustomerId").Value);
+            var userId = jwt.Claims.First(c => c.Type == "Id").Value;
 
-            var basket = await _api.GetBasketByCustomerIdAsync(customerId);
+            var basket = await _api.GetBasketByCustomerIdAsync(userId);
             if (basket == null) return Json(new List<BasketItemDto>());
 
             var items = await _api.GetBasketItemsByBasketIdAsync(basket.Id);

@@ -26,9 +26,8 @@ namespace PrimeShop.Application.features.Order.Validatords
        .NotEmpty().WithMessage("Shipping city is required.")
        .NotEqual(Guid.Empty).WithMessage("Please select a valid city.");
 
-            RuleFor(c => c.CustomerId)
-    .NotEmpty().WithMessage("Customer ID is required.")
-    .NotEqual(Guid.Empty).WithMessage("The provided Customer ID is invalid.");
+            RuleFor(c => c.UserId)
+    .NotEmpty().WithMessage("Customer ID is required.");
         }
     }
 }

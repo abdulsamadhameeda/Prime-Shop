@@ -48,8 +48,8 @@ namespace PrimeShop.Web.Controllers
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
 
-            var customerId = Guid.Parse(jwt.Claims.First(c => c.Type == "CustomerId").Value);
-            var basket = await _api.GetBasketByCustomerIdAsync(customerId);
+            var userId = jwt.Claims.First(c => c.Type == "Id").Value;
+            var basket = await _api.GetBasketByCustomerIdAsync(userId);
             var items = await _api.GetBasketItemsByBasketIdAsync(basket.Id);
 
             var productIds = items.Select(x => x.ProductId).ToList();
@@ -84,7 +84,7 @@ namespace PrimeShop.Web.Controllers
                           product.Description,
                           product.Price,
                           newQuantity,
-                          product.ProductImage,
+                          product.ImageUrl,
                           product.CategoryId
                 ));
             }
@@ -95,7 +95,7 @@ namespace PrimeShop.Web.Controllers
                 OrderStatus.Pending,
                 shippingStreet,
                 ShippingCityId,
-                customerId
+                userId
             ));
 
             foreach (var item in items)
@@ -137,9 +137,9 @@ namespace PrimeShop.Web.Controllers
             }
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
-            var customerId = Guid.Parse(jwt.Claims.First(c => c.Type == "CustomerId").Value);
+            var userId = jwt.Claims.First(c => c.Type == "Id").Value;
 
-            var order = await _api.GetOrderByIdAndCustomerIdAsync(null, customerId);
+            var order = await _api.GetByIdAndUserIdAsync(null, userId);
             if (order == null)
             {
                 return View("OrderNotFound");
@@ -160,9 +160,9 @@ namespace PrimeShop.Web.Controllers
             }
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
-            var customerId = Guid.Parse(jwt.Claims.First(c => c.Type == "CustomerId").Value);
+            var userId = jwt.Claims.First(c => c.Type == "Id").Value;
 
-            var order = await _api.GetOrderByIdAndCustomerIdAsync(orderId, customerId);
+            var order = await _api.GetByIdAndUserIdAsync(orderId, userId);
             if (order == null) {
                 return View("OrderNotFound");
             }

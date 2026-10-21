@@ -36,10 +36,10 @@ namespace PrimeShop.WebApi.Controllers
 
             return Ok(result);
         }
-        [HttpGet("GetByIdAndCustomerId")]
-        public async Task<IActionResult> GetByIdAndCustomerId([FromQuery] Guid? orderId, Guid? customerId)
+        [HttpGet("GetByIdAndUserId")]
+        public async Task<IActionResult> GetByIdAndUserId([FromQuery] Guid? orderId, [FromQuery] string userId)
         {
-            var result = await _mediator.Send(new GetOrderByIdAndCustomerIdQuery(orderId, customerId));
+            var result = await _mediator.Send(new GetOrderByIdAndCustomerIdQuery(orderId, userId));
             if (result == null) {
                 return NotFound();
             }

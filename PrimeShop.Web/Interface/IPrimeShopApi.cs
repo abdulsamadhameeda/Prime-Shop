@@ -10,6 +10,7 @@ using PrimeShop.Application.features.Lookup.Dtos;
 using PrimeShop.Application.features.Order.Dtos;
 using PrimeShop.Application.features.OrderItem.Dtos;
 using PrimeShop.Application.features.Product.Dtos;
+using PrimeShop.Application.features.Wishlist.Dtos;
 using Refit;
 
 namespace PrimeShop.Web.Interface
@@ -62,8 +63,8 @@ namespace PrimeShop.Web.Interface
 
 
 
-        [Get("/api/Order/GetByIdAndCustomerId")]
-        Task<List<OrderDto>> GetOrderByIdAndCustomerIdAsync([FromQuery] Guid? orderId,  Guid? customerId);
+        [Get("/api/Order/GetByIdAndUserId")]
+        Task<List<OrderDto>> GetByIdAndUserIdAsync([FromQuery] Guid? orderId,  string? userId);
 
         [Get("/api/Order/GetByIdOrder")]
         Task<OrderDto> GetOrderByIdAsync([FromQuery] Guid orderId);
@@ -106,8 +107,8 @@ namespace PrimeShop.Web.Interface
 
 
 
-        [Get("/api/Basket/GetByCustomerId")]
-        Task<BasketDto> GetBasketByCustomerIdAsync([FromQuery] Guid customerId);
+        [Get("/api/Basket/GetByUserId")]
+        Task<BasketDto> GetBasketByCustomerIdAsync([FromQuery] string userId);
 
         [Post("/api/Basket/Create")]
         Task<Guid> CreateBasketAsync([FromBody] CreateBasketCommand command);
@@ -139,6 +140,15 @@ namespace PrimeShop.Web.Interface
 
 
 
+
+
+        [Post("/api/Wishlist/Add")]
+        Task<Guid> AddToWishlistAsync([Body] AddToWishlistCommand command);
+
+        [Get("/api/Wishlist/GetProductIdsByUserId")]
+        Task<List<WishlistItemDto>> GetWishlistProductIdsByUserIdAsync([Query] string userId);
+        [Delete("/api/Wishlist/Delete")]
+        Task<bool> DeleteWishlistAsync([FromQuery] DeleteWishlistCommand command);
 
     }
 }

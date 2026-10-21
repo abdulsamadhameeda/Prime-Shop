@@ -7,38 +7,30 @@ using System.Text;
 
 namespace PrimeShop.Application.features.Customer.Commands
 {
-    internal class UpdateCustomerHandler : IRequestHandler<UpdateCustomerCommand, Guid>
+    internal class UpdateCustomerHandler : IRequestHandler<UpdateCustomerCommand, string>
     {
+        private readonly IUserService _userService;
 
-        private readonly IRepository<Domain.Entities.Customer> _customerRepo;
-
-        public UpdateCustomerHandler(IRepository<Domain.Entities.Customer> customerRepo)
+        public UpdateCustomerHandler(IUserService userService)
         {
-            _customerRepo = customerRepo;
+            _userService = userService;
         }
 
-        public async Task<Guid> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
+            var updated = await _userService.UpdateProfileAsync(
+                request.Id,
+                request.FirstName,
+                request.LastName,
+                request.Email,
+                request.PhoneNumber);
 
-            var customer = await _customerRepo.GetAsync(request.Id);
-
-            if (customer != null)
+            if (!updated)
             {
-                customer.FirstName = request.FirstName;
-                customer.LastName = request.LastName;
-                customer.Email = request.Email;
-                customer.PhoneNumber = request.PhoneNumber;
-             
-
+                throw new KeyNotFoundException($"User with id {request.Id} was not found or could not be updated.");
             }
 
-            _customerRepo.Update(customer);
-
-            await _customerRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
-
-            return customer.Id;
-
-
+            return request.Id;
         }
     }
 }

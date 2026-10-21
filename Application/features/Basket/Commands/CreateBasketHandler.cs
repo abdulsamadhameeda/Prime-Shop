@@ -20,7 +20,7 @@ namespace PrimeShop.Application.features.Basket.Commands
             var basket = new Domain.Entities.Basket
             {
                 CreatedAt = DateTime.Now,
-                CustomerId = request.CustomerId
+                UserId = request.UserId
 
             };
 
@@ -32,5 +32,5 @@ namespace PrimeShop.Application.features.Basket.Commands
         }
 
 
-    }
+    }   
 }

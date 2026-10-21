@@ -19,8 +19,7 @@
         <div class="row s_product_inner">
             <div class="col-lg-6">
 
-                <img class="img-fluid" src="@(Model.ProductImage != null && Model.ProductImage.Length > 0 ? $"data:image/png;base64,{Convert.ToBase64String(Model.ProductImage)}" : "/img/product/p1.jpg")" style="background-color: #f8f9fa; object-fit: contain; width: 100%; height:auto;" />
-            </div>
+<img class="img-fluid" src="@(!string.IsNullOrEmpty(Model.ImageUrl) ? Model.ImageUrl : "/img/product/p1.jpg")" style="background-color: #f8f9fa; object-fit: contain; width: 100%; height:auto;" />            </div>
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
                     <h3>@Model.Name</h3>
@@ -39,7 +38,7 @@
                     <p>@Model.Description</p>
 
                         <input type="hidden" name="productId" value="@Model.Id" />
-
+						
                         <div class="product_count">
                             <label for="qty">Quantity:</label>
                             <input type="number" name="quantity" id="sst" min="1"
@@ -63,7 +62,14 @@
         @(Model.StockQuantity > 0 ? "Add to Cart" : "Out of Stock")
     </button>
     
-    <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+<a class="icon_btn"
+   href="#"
+   id="wishlist-button"
+   data-product-id="@Model.Id"
+   data-wishlist-id=""
+   onclick="addToWishlist('@Model.Id', this); return false;">
+    <i class="wishlist-icon far fa-heart"></i>
+</a>
 </div>
                 </div>
             </div>

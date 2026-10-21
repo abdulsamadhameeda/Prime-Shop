@@ -1,1 +1,1 @@
-﻿SELECT COUNT(*) FROM Customers
+﻿SELECT COUNT(*) FROM AspNetUsers WHERE IsDeleted = 0;

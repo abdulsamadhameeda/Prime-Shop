@@ -25,7 +25,7 @@ namespace PrimeShop.Application.features.Order.Commands
             }
 
 
-            order.CustomerId = request.CustomerId;
+            order.UserId = request.UserId;
             order.ShippingStreet = request.ShippingStreet;
             order.ShippingCityId = request.ShippingCityId;
             order.Status = request.Status;

@@ -4,9 +4,9 @@
     o.TotalAmount,
     o.Status,
     o.ShippingStreet,
-    l.Value AS ShippingCity, 
-    o.CustomerId
+    l.Value AS ShippingCity,
+    o.UserId
 FROM Orders o
 LEFT JOIN Lookups l ON o.ShippingCityId = l.Id
 WHERE (o.Id = @OrderId OR @OrderId IS NULL)
-  AND (o.CustomerId = @CustomerId);
+  AND o.UserId = @UserId;

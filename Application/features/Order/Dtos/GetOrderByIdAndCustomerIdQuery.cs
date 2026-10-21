@@ -5,6 +5,6 @@ using System.Text;
 
 namespace PrimeShop.Application.features.Order.Dtos
 {
-    public record GetOrderByIdAndCustomerIdQuery(Guid? OrderId, Guid? CustomerId) : IRequest<List<OrderDto>>;
+    public record GetOrderByIdAndCustomerIdQuery(Guid? OrderId, string? UserId) : IRequest<List<OrderDto>>;
    
 }

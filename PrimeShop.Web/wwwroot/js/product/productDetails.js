@@ -114,3 +114,112 @@ function addToBasket(productId, stockQuantity) {
     }
 }
 
+
+$(function () {
+    const button = $('#wishlist-button');
+    const productId = button.attr('data-product-id').toLowerCase();
+
+    $.get('/Wishlist/GetWishlistItems', function (items) {
+        var item = items.find(function (x) {
+            return x.productId.toLowerCase() === productId;
+        });
+
+        if (item) {
+            button.attr('data-wishlist-id', item.id);
+            button.find('.wishlist-icon')
+                .removeClass('far')
+                .addClass('fas');
+        }
+    });
+});
+
+
+function addToWishlist(productId, link) {
+    var token = jwtToken;
+    const heart = $(link).find('.wishlist-icon');
+
+    if (!token) {
+        Swal.fire({
+            toast: true,
+            position: 'bottom-end',
+            icon: 'warning',
+            title: 'Please login to use your wishlist.',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        return;
+    }
+
+    if (heart.hasClass('fas')) {
+
+
+        $.ajax({
+            url: '/Wishlist/Remove',
+            type: 'POST',
+            data: {
+                id: $(link).attr('data-wishlist-id')
+            },
+            success: function () {
+                heart.removeClass('fas').addClass('far');
+                $(link).removeAttr('data-wishlist-id');
+
+                Swal.fire({
+                    toast: true,
+                    position: 'bottom-end',
+                    icon: 'success',
+                    title: 'Removed from wishlist!',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    background: '#FFA500',
+                    color: '#fff',
+                    iconColor: '#fff',
+                    showClass: {
+                        popup: 'swal2-noanimation'
+                    },
+                    hideClass: {
+                        popup: ''
+                    }
+                });
+            },
+            error: function () {
+                alert('Error removing from wishlist!');
+            }
+        });
+
+
+        return;
+    }
+
+    $.ajax({
+        url: '/Wishlist/Add',
+        type: 'POST',
+        data: { productId: productId },
+        success: function (id) {
+            heart.removeClass('far').addClass('fas');
+            $(link).attr('data-wishlist-id', id);
+
+            Swal.fire({
+                toast: true,
+                position: 'bottom-end',
+                icon: 'success',
+                title: 'Added to Wishlist!',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                background: '#FFA500',
+                color: '#fff',
+                iconColor: '#fff',
+                showClass: {
+                    popup: 'swal2-noanimation'
+                },
+                hideClass: {
+                    popup: ''
+                }
+            });
+        },
+        error: function () {
+            alert('Error adding to wishlist!');
+        }
+    });
+}

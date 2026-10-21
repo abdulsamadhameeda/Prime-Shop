@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PrimeShop.Application.features.Customer.Dtos
 {
-    public record GetByIdCustomerQueries(Guid id) : IRequest<CustomerDto>
+    public record GetByIdCustomerQueries(string id) : IRequest<CustomerDto>
     {
     }
 }

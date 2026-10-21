@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PrimeShop.Application.features.Order.Dtos;
 using PrimeShop.Application.features.Product.Dtos;
 using PrimeShop.Web.Interface;
 using PrimeShop.Web.Models;
@@ -22,9 +21,9 @@ namespace PrimeShop.Web.Controllers
         {
 
             var categories = await _api.GetCategoriesAsync();
-                
+
             ViewBag.Categories = categories;
-           
+
             return View();
         }
 
@@ -51,7 +50,7 @@ namespace PrimeShop.Web.Controllers
         {
             var model = new TableViewModel
             {
-                Columns = new List<string> { "ProductImage","Name", "Description", "Price", "StockQuantity", "Category" }
+                Columns = new List<string> { "ProductImage", "Name", "Description", "Price", "StockQuantity", "Category" }
             };
             return View(model);
         }
@@ -82,18 +81,28 @@ namespace PrimeShop.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductCommand command)
+        public async Task<IActionResult> UpdateProduct([FromForm] UpdateProductCommand command, IFormFile? image, [FromServices] IWebHostEnvironment env)
         {
-
-            var result = await _api.UpdateProductBAsync(command);
-            if (result != Guid.Empty)
+            if (image != null && image.Length > 0)
             {
-                return Json(new { success = true });
+                var folder = Path.Combine(env.WebRootPath, "images", "products");
+                Directory.CreateDirectory(folder);
+
+                var fileName = $"{Guid.NewGuid()}.png";
+                using (var stream = new FileStream(Path.Combine(folder, fileName), FileMode.Create))
+                {
+                    await image.CopyToAsync(stream);
+                }
+
+                command = command with { ImageUrl = $"/images/products/{fileName}" };
             }
 
+            var result = await _api.UpdateProductBAsync(command);
+
+            if (result != Guid.Empty)
+                return Json(new { success = true });
+
             return BadRequest("error");
-
-
         }
     }
 }

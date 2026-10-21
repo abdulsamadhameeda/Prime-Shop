@@ -13,7 +13,7 @@ namespace PrimeShop.Application.features.Basket.Validatords
             //.NotEmpty().WithMessage("This feild is requird")
             //.LessThanOrEqualTo(DateTime.Now).WithMessage("Creation date cannot be in the future.");
 
-            RuleFor(c => c.CustomerId).NotEmpty().WithMessage("Customer Id is requird");
+            RuleFor(c => c.UserId).NotEmpty().WithMessage("Customer Id is requird");
 
 
         }

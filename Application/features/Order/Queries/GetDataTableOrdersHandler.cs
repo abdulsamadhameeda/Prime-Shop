@@ -41,8 +41,8 @@ namespace PrimeShop.Application.features.Order.Queries
                TotalAmount = x.TotalAmount,
                Status = x.Status, 
                ShippingStreet = x.ShippingStreet,
-               ShippingCity = x.ShippingCityLookup.Value, 
-               CustomerId = x.CustomerId 
+               ShippingCity = x.ShippingCityLookup.Value,
+               UserId = x.UserId
            })
            .ToList();
 

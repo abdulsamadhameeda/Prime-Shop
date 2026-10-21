@@ -157,7 +157,7 @@ function openUpdateModal(orderId) {
         success: function (response) {
 
             $('#editOrderId').val(response.id);
-            $('#editCustomerId').val(response.customerId); 
+            $('#editUserId').val(response.userId);
             $('#editOrderDateRaw').val(response.orderDate);
             $('#editTotalAmountRaw').val(response.totalAmount);
 
@@ -215,7 +215,7 @@ function loadCitiesLookup(callback) {
 function UpdateOrder() {
     var formData = {
         id: $('#editOrderId').val(),
-        customerId: $('#editCustomerId').val(),
+        userId: $('#editUserId').val(),
         orderDate: $('#editOrderDateRaw').val(),
         totalAmount: parseFloat($('#editTotalAmountRaw').val()), 
         status: parseInt($('#editOrderStatus').val()),
@@ -259,7 +259,7 @@ function UpdateOrder() {
                 }
             });
 
-            $('#ordersTable').DataTable().ajax.reload(null, false);
+            $('#DataTable').DataTable().ajax.reload(null, false);
         },
         error: function (xhr) {
             Swal.fire('Error!', 'Something went wrong!', 'error');

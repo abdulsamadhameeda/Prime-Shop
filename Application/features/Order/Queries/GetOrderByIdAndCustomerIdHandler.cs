@@ -19,7 +19,7 @@ namespace PrimeShop.Application.features.Order.Queries
         {
             string filePath = Path.Combine(AppContext.BaseDirectory, "SQL", "GetOrderByIdAndCustomerId.sql");
             string sqlQuery = await File.ReadAllTextAsync(filePath);
-            var result = await _OrderRepo.QuerySql<OrderDto>(sqlQuery, new { OrderId = request.OrderId, CustomerId = request.CustomerId });
+            var result = await _OrderRepo.QuerySql<OrderDto>(sqlQuery, new { OrderId = request.OrderId, UserId = request.UserId });
 
             return result.ToList();
 

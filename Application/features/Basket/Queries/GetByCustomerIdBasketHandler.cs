@@ -15,11 +15,11 @@ namespace PrimeShop.Application.features.Basket.Queries
         }
         public async Task<BasketDto> Handle(GetByCustomerIdBasketQueries request, CancellationToken cancellationToken)
         {
-            string filePath = Path.Combine(AppContext.BaseDirectory, "SQL", "GetByCustomerIdBasket.sql");
+            string filePath = Path.Combine(AppContext.BaseDirectory, "SQL", "GetByUserIdBasket.sql");
 
             string sqlQuery = await File.ReadAllTextAsync(filePath);
 
-            var result = await _BasketRepo.QuerySql<BasketDto>(sqlQuery , new { CustomerId = request.CustomerId});
+            var result = await _BasketRepo.QuerySql<BasketDto>(sqlQuery , new { UserId = request.UserId }   );
 
             return result.FirstOrDefault();
         }

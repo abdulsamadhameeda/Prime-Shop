@@ -50,7 +50,8 @@ namespace PrimeShop.Infrastructure.Persistence.Seed
                 {
                     Email = "admin@primeshop.com",
                     UserName = "admin@primeshop.com",
-                    CustomerId = Guid.Empty
+                    FirstName = "Admin",
+                    LastName = "User"
                 };
 
                 await userManager.CreateAsync(admin, "Admin@1234");

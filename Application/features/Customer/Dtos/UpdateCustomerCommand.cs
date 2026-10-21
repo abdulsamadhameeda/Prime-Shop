@@ -7,10 +7,10 @@ namespace PrimeShop.Application.features.Customer.Dtos
 {
   
     public record UpdateCustomerCommand(
- Guid Id,
+        string Id,
  string FirstName,
  string LastName,
  string Email,
  string PhoneNumber
-) : IRequest<Guid>;
+) : IRequest<string>;
 }

@@ -11,19 +11,14 @@ namespace PrimeShop.Domain.Entities
     {
 
 
-      
 
         [Required]
         public DateTime CreatedAt { get; set; }
 
-
         [Required]
-        [ForeignKey("Customer")]
+        public string UserId { get; set; } = null!;
 
-        public Guid CustomerId { get; set; }
 
-        public Customer Customer { get; set; }
-        
 
     }
 }

@@ -41,7 +41,7 @@ namespace PrimeShop.Application.features.Product.Queries
                Id = x.Id,
                Description = x.Description,
                Name = x.Name,
-               ProductImage = x.ProductImage,
+               ImageUrl = x.ImageUrl,
                Price = x.Price,
                StockQuantity = x.StockQuantity,
                CategoryName = x.Category.Name

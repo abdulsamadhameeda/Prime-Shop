@@ -23,15 +23,18 @@ namespace PrimeShop.Application.features.Basket.Commands
         {
             var basket = await _BasketRepo.GetAsync(request.Id);
 
-            if (basket != null)
+            if (basket == null)
             {
-                basket.CreatedAt = request.CreatedAt;
-                basket.CustomerId = request.CustomerId;
+                throw new KeyNotFoundException($"Basket with id {request.Id} was not found.");
             }
+
+            basket.CreatedAt = request.CreatedAt;
+            basket.UserId = request.UserId;
 
             _BasketRepo.Update(basket);
 
             await _BasketRepo.UnitOfWork.SaveChangesAsync(cancellationToken);
+
             return basket.Id;
         }
     }

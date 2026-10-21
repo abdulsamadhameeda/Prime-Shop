@@ -10,11 +10,12 @@ namespace PrimeShop.Application.features.Customer.Queries
     internal class Top6NewCustomersHandler : IRequestHandler<Top6NewCustomersQueries, List<CustomerDto>>
     {
 
-        private readonly IRepository<Domain.Entities.Customer> _customerRepo;
 
-        public Top6NewCustomersHandler(IRepository<Domain.Entities.Customer> customerRepo)
+        private readonly ISqlQueryService _sql;
+
+        public Top6NewCustomersHandler(ISqlQueryService sql)
         {
-            _customerRepo = customerRepo;
+            _sql = sql;
         }
 
         public async Task<List<CustomerDto>> Handle(Top6NewCustomersQueries request, CancellationToken cancellationToken)
@@ -24,7 +25,7 @@ namespace PrimeShop.Application.features.Customer.Queries
 
             string sqlQuery = await File.ReadAllTextAsync(filePath);
 
-            var result = await _customerRepo.QuerySql<CustomerDto>(sqlQuery);
+            var result = await _sql.QuerySql<CustomerDto>(sqlQuery);
 
             return result.ToList();
 

@@ -22,6 +22,6 @@ namespace PrimeShop.Application.features.Order.Dtos
           Guid ShippingCityId,
 
 
-         Guid CustomerId
+         string UserId
  ) : IRequest<Guid>;
 }

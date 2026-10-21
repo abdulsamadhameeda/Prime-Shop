@@ -32,7 +32,7 @@ namespace PrimeShop.WebApi.Controllers
 
 
         [HttpGet("GetByIdCustomer")]
-        public async Task<IActionResult> GetByIdCustomer([FromQuery] Guid id)
+        public async Task<IActionResult> GetByIdCustomer([FromQuery] string id)
         {
             var result = await _mediator.Send(new GetByIdCustomerQueries(id));
 
@@ -56,24 +56,18 @@ namespace PrimeShop.WebApi.Controllers
         }
 
 
-        [HttpPost("Create")]
-        public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerCommand command)
-        {
-            var category = await _mediator.Send(command);
-            return Ok(category);
-        }
-
+      
         [HttpPut("Update")]
         public async Task<IActionResult> UpdateCustomer([FromBody] UpdateCustomerCommand command)
         {
-            var category = await _mediator.Send(command);
-            return Ok(category);
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
         [HttpDelete("Delete")]
         public async Task<IActionResult> DeleteCustomer([FromQuery] DeleteCustomerCommand command)
         {
-            var category = await _mediator.Send(command);
-            return Ok(category);
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
 
 

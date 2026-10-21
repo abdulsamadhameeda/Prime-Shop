@@ -20,7 +20,7 @@ namespace PrimeShop.Domain.Entities
 
         public int StockQuantity { get; set; }
 
-        public byte[]? ProductImage { get; set; }
+        public string? ImageUrl { get; set; }
 
         [ForeignKey("Category")]
 

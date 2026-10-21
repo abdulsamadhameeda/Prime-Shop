@@ -21,7 +21,6 @@ namespace PrimeShop.Application.features.Order.Dtos
         public string ShippingCity { get; set; }
 
 
-        public Guid CustomerId { get; set; }
-
+        public string UserId { get; set; }
     }
 }

@@ -60,7 +60,9 @@ function loadCartProducts(currentBasket) {
                 var quantity = item ? item.quantity : 1;
                 var itemTotal = product.price * quantity;
                 total += itemTotal;
-                var imgSrc = product.productImage ? `data:image/png;base64,${product.productImage}` : '/img/product/p1.jpg';
+                var imgSrc = product.imageUrl
+                    ? product.imageUrl
+                    : '/img/product/p1.jpg';
                 html += `
     <tr>
         <td>
@@ -118,13 +120,13 @@ function loadCartFromDb() {
                         var itemTotal = product.price * quantity;
                         total += itemTotal;
                         var basketItemId = item ? item.id : '';
+                        var imgSrc = product.imageUrl ? product.imageUrl : '/img/product/p1.jpg';
                         html += `
                                                 <tr>
                                                     <td>
                                                         <div class="media">
                                                             <div class="d-flex">
-                                                               <img src="${product.productImage ? `data:image/png;base64,${product.productImage}` : '/img/product/p1.jpg'}"
-                                                                 class="img-fluid" style="max-width: 80px;" alt="">
+                                                             <img src="${imgSrc}" class="img-fluid" style="max-width: 80px;" alt="${product.name}">
                                                             </div>
                                                             <div class="media-body">
                                                                 <p>${product.name}</p>

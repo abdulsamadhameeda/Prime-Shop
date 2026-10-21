@@ -1,6 +1,11 @@
 ﻿@using PrimeShop.Application.features.Product.Dtos
+@using PrimeShop.Application.features.Wishlist.Dtos
 @model List<ProductDto>
-
+@{
+    var wishlistItems =
+        ViewBag.WishlistProductIds as List<WishlistItemDto>
+        ?? new List<WishlistItemDto>();
+}
 
 <section class="banner-area">
     <div class="container">
@@ -33,7 +38,7 @@
                                 <div class="banner-img">
                                     <a asp-controller="Product" asp-action="ProductDetails" asp-route-id="@product.Id">
 
-                                        <img class="img-fluid rounded-5 w-75 mx-auto d-block" src="@(product.ProductImage != null && product.ProductImage.Length > 0 ? $"data:image/png;base64,{Convert.ToBase64String(product.ProductImage)}" : "/img/product/p1.jpg")" />
+                                        <img class="img-fluid rounded-5 w-75 mx-auto d-block" src="@(!string.IsNullOrEmpty(product.ImageUrl) ? product.ImageUrl : "/img/product/p1.jpg")" />
                                     </a>
 
                                 </div>
@@ -84,7 +89,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="single-features">
                     <div class="f-icon">
-                        <img src="img/features/f-icon4.png" alt=""> 
+                        <img src="img/features/f-icon4.png" alt="">
                     </div>
                     <h6>Secure Payment</h6>
                     <p>100% secure payment methods</p>
@@ -94,7 +99,6 @@
     </div>
 </section>
 <!-- end features Area -->
-
 <!-- start product Area -->
 <section class="  section_gap">
     <!-- single product slide -->
@@ -113,7 +117,8 @@
                     <!-- single product -->
                     <div class="col-lg-3 col-md-6">
                         <div class="single-product">
-                            <img class="img-fluid " src="@(product.ProductImage != null && product.ProductImage.Length > 0 ? $"data:image/png;base64,{Convert.ToBase64String(product.ProductImage)}" : "/img/product/p1.jpg")" style="background-color: #f8f9fa; object-fit: contain; width: 100%; height: 250px;" />
+                            <img class="img-fluid" src="@(!string.IsNullOrEmpty(product.ImageUrl) ? product.ImageUrl : "/img/product/p1.jpg")" style="background-color: #f8f9fa; object-fit: contain; width: 100%; height: 250px;" />
+
                             <div class="product-details">
                                 <h6>
                                     @product.Name
@@ -128,8 +133,16 @@
                                         <span class="ti-bag"></span>
                                         <p class="hover-text">@(product.StockQuantity > 0 ? "add to bag" : "Out of stock")</p>
                                     </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-heart"></span>
+                                    @{
+                                        var wishlistItem = wishlistItems
+                                            .FirstOrDefault(x => x.ProductId == product.Id);
+                                    }
+
+                                    <a href="#"
+                                       class="social-info"
+                                       data-wishlist-id="@(wishlistItem?.Id)"
+                                       onclick="addToWishlist('@product.Id', this); return false;">
+                                        <span class="wishlist-icon @(wishlistItem == null ? "far" : "fas") fa-heart"></span>
                                         <p class="hover-text">Wishlist</p>
                                     </a>
                                     <a asp-controller="Product" asp-action="ProductDetails" asp-route-id="@product.Id" class="social-info">
@@ -148,8 +161,6 @@
     <!-- single product slide -->
 </section>
 <!-- end product Area -->
-
-
 @section Scripts {
 
     <script>

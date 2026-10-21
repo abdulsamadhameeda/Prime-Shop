@@ -11,18 +11,14 @@ namespace PrimeShop.Domain.Entities
     public class Order :Entity
     {
 
-
         public DateTime OrderDate { get; set; }
 
         [Column(TypeName = "decimal(18, 2)")]
         public decimal TotalAmount { get; set; }
 
-       
         public OrderStatus Status { get; set; }
 
-      
         public string ShippingStreet { get; set; }
-
 
         [Required]
         [ForeignKey("ShippingCityLookup")]
@@ -30,12 +26,9 @@ namespace PrimeShop.Domain.Entities
         public Lookup ShippingCityLookup { get; set; }
 
         [Required]
-        [ForeignKey("Customer")]
+        public string UserId { get; set; } = null!;
 
-        public Guid CustomerId { get; set; }
 
-        public Customer Customer { get; set; }
-       
 
     }
 }

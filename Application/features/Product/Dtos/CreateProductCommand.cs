@@ -11,7 +11,7 @@ namespace PrimeShop.Application.features.Product.Dtos
     string Description,
     decimal Price,
     int StockQuantity,
-    byte[]? ImageUrl,
+    string ImageUrl,
     Guid CategoryId
     ) : IRequest<Guid>;
 }

@@ -6,7 +6,7 @@ using PrimeShop.Application.Common.Interfaces;
 using PrimeShop.Infrastructure.Identity;
 using PrimeShop.Infrastructure.Persistence;
 using PrimeShop.Infrastructure.Persistence.Repositories;
-
+using PrimeShop.Infrastructure.Services;
 using System.Data;
 using System.Text;
 
@@ -47,6 +47,9 @@ namespace PrimeShop.Infrastructure
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<JwtTokenService>();
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ISqlQueryService, SqlQueryService>();
 
 
             return services;

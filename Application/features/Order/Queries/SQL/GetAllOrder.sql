@@ -5,7 +5,7 @@
     o.Status,
     o.ShippingStreet,
     l.Value AS ShippingCity, 
-    o.CustomerId
+    o.UserId
 FROM Orders o
 LEFT JOIN Lookups l ON o.ShippingCityId = l.Id
 ORDER BY o.OrderDate DESC;
