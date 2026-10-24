@@ -30,8 +30,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 
 builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices();
-
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 builder.Services.AddFluentValidationAutoValidation();
 

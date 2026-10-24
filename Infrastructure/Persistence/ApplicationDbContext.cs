@@ -25,6 +25,7 @@ namespace PrimeShop.Infrastructure.Persistence
         public DbSet<Product> Products { get; set; }
         public DbSet<Lookup> Lookups { get; set; }
         public DbSet<Wishlist> WishlistItems { get; set; }
+        public DbSet<ContactMessage> ContactMessages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

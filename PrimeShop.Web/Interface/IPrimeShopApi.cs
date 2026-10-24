@@ -5,6 +5,7 @@ using PrimeShop.Application.features.Auth.Register.Dtos;
 using PrimeShop.Application.features.Basket.Dtos;
 using PrimeShop.Application.features.BasketItem.Dtos;
 using PrimeShop.Application.features.Category.Dtos;
+using PrimeShop.Application.features.Contact.Dtos;
 using PrimeShop.Application.features.Customer.Dtos;
 using PrimeShop.Application.features.Lookup.Dtos;
 using PrimeShop.Application.features.Order.Dtos;
@@ -152,6 +153,21 @@ namespace PrimeShop.Web.Interface
         Task<List<WishlistItemDto>> GetWishlistProductIdsByUserIdAsync([Query] string userId);
         [Delete("/api/Wishlist/Delete")]
         Task<bool> DeleteWishlistAsync([FromQuery] DeleteWishlistCommand command);
+
+
+
+
+
+
+        [Post("/api/Contact/Create")]
+        Task<Guid> CreateContactMessageAsync([Body] CreateContactMessageCommand command);
+
+
+
+
+
+
+
 
     }
 }

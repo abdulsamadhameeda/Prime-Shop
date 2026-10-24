@@ -219,14 +219,24 @@ function addToWishlist(productId, link) {
     const heart = $(link).find('.wishlist-icon');
 
     if (!token) {
-        Swal.fire({
-            toast: true,
-            position: 'bottom-end',
-            icon: 'warning',
-            title: 'Please login to use your wishlist.',
-            showConfirmButton: false,
-            timer: 2000
-        });
+           Swal.fire({
+                        toast: true,
+                        position: 'bottom-end',
+                        icon: 'warning',
+                        title: 'Please login to use your wishlist',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        background: '#FFA500',
+                        color: '#fff',
+                        iconColor: '#fff',
+                        showClass: {
+                            popup: 'swal2-noanimation'
+                        },
+                        hideClass: {
+                            popup: ''
+                        }
+                    });
         return;
     }
 

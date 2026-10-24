@@ -9,12 +9,15 @@ using PrimeShop.Infrastructure.Persistence.Repositories;
 using PrimeShop.Infrastructure.Services;
 using System.Data;
 using System.Text;
+using Microsoft.Extensions.Configuration;
+using PrimeShop.Application.Common.Interfaces;
+using PrimeShop.Infrastructure.Services;
 
 namespace PrimeShop.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services , IConfiguration configuration)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -52,7 +55,10 @@ namespace PrimeShop.Infrastructure
             services.AddScoped<ISqlQueryService, SqlQueryService>();
 
 
+            services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));
+            services.AddScoped<IEmailService, SmtpEmailService>();
+
             return services;
         }
-    }
+}
 }
