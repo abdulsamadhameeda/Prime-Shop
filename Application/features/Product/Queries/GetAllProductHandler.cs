@@ -21,12 +21,7 @@ namespace PrimeShop.Application.features.Product.Queries
 
             string sqlQuery = await File.ReadAllTextAsync(filePath);
 
-            var result = await _ProductRepo.QuerySql<ProductDto>(sqlQuery , new
-            {
-                CategoryId = request.CategoryId,
-                MinPrice = request.MinPrice,
-                MaxPrice = request.MaxPrice
-            });
+            var result = await _ProductRepo.QuerySql<ProductDto>(sqlQuery);
 
             return result.ToList();
         }

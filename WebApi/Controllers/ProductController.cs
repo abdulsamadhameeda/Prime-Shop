@@ -24,14 +24,14 @@ namespace PrimeShop.WebApi.Controllers
 
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllProduct([FromQuery] Guid? categoryId,  decimal? minPrice, decimal? maxPrice)
+        public async Task<IActionResult> GetAllProduct()
         {
-            var result = await _mediator.Send(new GetAllProductQueries(categoryId, minPrice, maxPrice));
+            var result = await _mediator.Send(new GetAllProductQueries());
 
             return Ok(result);
         }
 
-            
+
         [HttpGet("GetById")]
         public async Task<IActionResult> GetByIdProduct([FromQuery] Guid id)
         {
@@ -91,5 +91,16 @@ namespace PrimeShop.WebApi.Controllers
             var result = await _mediator.Send(query);
             return Ok(result);
         }
+
+
+
+        [HttpGet("GetShopProducts")]
+        public async Task<IActionResult> GetShopProducts([FromQuery] GetShopProductsQuery query)
+        {
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+
     }
 }

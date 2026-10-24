@@ -61,27 +61,24 @@
             <!-- Start Filter Bar -->
             <div class="filter-bar d-flex flex-wrap align-items-center">
                 <div class="sorting">
-                    <select class="disabled ">
-                        <option value="1">Default sorting</option>
-                        <option value="1">Default sorting</option>
-                        <option value="1">Default sorting</option>
+                    <select id="sort-products">
+                        <option value="default">Default sorting</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name: A to Z</option>
+                        <option value="name-desc">Name: Z to A</option>
                     </select>
                 </div>
+
                 <div class="sorting mr-auto">
-                    <select class="disabled ">
-                        <option value="1">Show 12</option>
-                        <option value="1">Show 12</option>
-                        <option value="1">Show 12</option>
+                    <select id="products-per-page">
+                        <option value="12">Show 12</option>
+                        <option value="24">Show 24</option>
+                        <option value="36">Show 36</option>
                     </select>
                 </div>
-                <div class="pagination ">
-                    <a class="prev-arrow "><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
-                    <a class="active">1</a>
-                    <a>2</a>
-                    <a>3</a>
-                    <a class="dot-dot"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                    <a>6</a>
-                    <a class="next-arrow"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+
+                <div class="pagination" id="products-pagination">
                 </div>
             </div>
             <!-- End Filter Bar -->

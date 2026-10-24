@@ -281,8 +281,8 @@ function UpdateProduct() {
         url: '/Product/UpdateProduct',
         type: 'POST',
         data: formData,
-        processData: false,   // مهم
-        contentType: false,   // مهم
+        processData: false,   
+        contentType: false,   
         success: function (response) {
             updateProductModalInstance.hide();
             Swal.fire({

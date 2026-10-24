@@ -6,9 +6,6 @@ using System.Text;
 
 namespace PrimeShop.Application.features.Product.Dtos
 {
-    public record GetAllProductQueries(Guid? CategoryId , decimal? MinPrice , decimal? MaxPrice ) : IRequest<List<ProductDto>>
-    {
-      
-       
-    }   
+    public record GetAllProductQueries()
+      : IRequest<List<ProductDto>>;
 }

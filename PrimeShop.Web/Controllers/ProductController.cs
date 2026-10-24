@@ -28,10 +28,22 @@ namespace PrimeShop.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> FilterProducts(Guid? categoryId, decimal? minPrice, decimal? maxPrice)
+        public async Task<IActionResult> FilterProducts(int draw, int start, int length, Guid? categoryId, decimal? minPrice, decimal? maxPrice, string? sortBy)
         {
-            var products = await _api.GetProductsAsync(categoryId, minPrice, maxPrice);
-            return Json(products);
+            var query = new GetShopProductsQuery
+            {
+                Draw = draw,
+                Start = start,
+                Length = length,
+                CategoryId = categoryId,
+                MinPrice = minPrice,
+                MaxPrice = maxPrice,
+                SortBy = sortBy
+            };
+
+            var result = await _api.GetShopProductsAsync(query);
+
+            return Json(result);
         }
 
 

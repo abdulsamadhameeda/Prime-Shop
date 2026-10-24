@@ -60,6 +60,9 @@ namespace PrimeShop.Web.Interface
         [Post("/api/Product/datatable")]
         Task<DataTableResponse<ProductDto>> GetProductsDataAsync([FromBody] GetDataTableProductsQuery query);
 
+        [Get("/api/Product/GetShopProducts")]
+        Task<DataTableResponse<ProductDto>> GetShopProductsAsync([Query] GetShopProductsQuery query);
+
 
 
 
