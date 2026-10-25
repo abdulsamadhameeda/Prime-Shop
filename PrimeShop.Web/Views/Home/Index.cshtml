@@ -38,7 +38,15 @@
                                 <div class="banner-img">
                                     <a asp-controller="Product" asp-action="ProductDetails" asp-route-id="@product.Id">
 
-                                        <img class="img-fluid rounded-5 w-75 mx-auto d-block" src="@(!string.IsNullOrEmpty(product.ImageUrl) ? product.ImageUrl : "/img/product/p1.jpg")" />
+                                        <div class="product-image-wrapper w-75 mx-auto">
+                                            <img class="img-fluid w-100 d-block rounded-5"
+                                                 src="@(!string.IsNullOrEmpty(product.ImageUrl) ? product.ImageUrl : "/img/product/p1.jpg")" />
+
+                                            @if (product.StockQuantity <= 0)
+                                            {
+                                                <span class="out-of-stock-banner">Out of Stock</span>
+                                            }
+                                        </div>
                                     </a>
 
                                 </div>

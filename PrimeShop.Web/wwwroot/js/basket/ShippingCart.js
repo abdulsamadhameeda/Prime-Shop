@@ -68,8 +68,13 @@ function loadCartProducts(currentBasket) {
         <td>
             <div class="media">
                 <div class="d-flex">
-                    <img src="${imgSrc}"     class="img-fluid" style="max-width: 80px;" alt="" >
-                </div>
+    <a href="/Product/ProductDetails/${product.id}">
+        <img src="${imgSrc}"
+             class="img-fluid"
+             style="max-width: 80px; cursor: pointer;"
+             alt="${product.name}">
+    </a>
+</div>
                 <div class="media-body">
                     <p>${product.name}</p>
                 </div>
@@ -126,8 +131,12 @@ function loadCartFromDb() {
                                                     <td>
                                                         <div class="media">
                                                             <div class="d-flex">
-                                                             <img src="${imgSrc}" class="img-fluid" style="max-width: 80px;" alt="${product.name}">
-                                                            </div>
+<a href="/Product/ProductDetails/${product.id}">
+        <img src="${imgSrc}"
+             class="img-fluid"
+             style="max-width: 80px; cursor: pointer;"
+             alt="${product.name}">
+    </a>                                                            </div>
                                                             <div class="media-body">
                                                                 <p>${product.name}</p>
                                                             </div>
