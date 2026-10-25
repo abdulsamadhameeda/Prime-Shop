@@ -62,19 +62,19 @@ namespace PrimeShop.Web.Controllers
                 if (product == null)
                 {
                     TempData["Error"] = "One of the products in your cart is no longer available.";
-                    return RedirectToAction("ShippingCart", "Basket"); 
+                    return RedirectToAction("ShippingCart", "Basket");
                 }
 
                 if (item.Quantity > product.StockQuantity)
                 {
                     TempData["Error"] = $"Sorry, the quantity for '{product.Name}' exceeds available stock. We only have {product.StockQuantity} left.";
-                    return RedirectToAction("ShippingCart", "Basket"); 
+                    return RedirectToAction("ShippingCart", "Basket");
                 }
             }
 
             foreach (var item in items)
             {
-                var product = products.First(x => x.Id == item.ProductId); 
+                var product = products.First(x => x.Id == item.ProductId);
 
                 var newQuantity = product.StockQuantity - item.Quantity;
 
@@ -139,36 +139,70 @@ namespace PrimeShop.Web.Controllers
             var jwt = handler.ReadJwtToken(token);
             var userId = jwt.Claims.First(c => c.Type == "Id").Value;
 
-            var order = await _api.GetByIdAndUserIdAsync(null, userId);
-            if (order == null)
+            var result = await _api.GetMyOrdersAsync(new GetMyOrdersQuery
             {
-                return View("OrderNotFound");
-            }
+                UserId = userId,
+                Draw = 1,
+                Start = 0,
+                Length = 12
+            });
 
-            return View(order);
+            return View(result.Data);
         }
 
 
-
-        [HttpPost]
-        public async Task<IActionResult> OrderTracking(Guid? orderId)
+        [HttpGet]
+        public async Task<IActionResult> FilterMyOrders(OrderStatus? status,
+            DateTime? fromDate,
+            DateTime? toDate,
+            int draw = 1,
+            int start = 0,
+            int length = 12)
         {
             var token = HttpContext.Request.Cookies["jwt"];
+
             if (string.IsNullOrEmpty(token))
-            {
-                return RedirectToAction("Login", "Auth");
-            }
+                return Unauthorized();
+
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
             var userId = jwt.Claims.First(c => c.Type == "Id").Value;
 
-            var order = await _api.GetByIdAndUserIdAsync(orderId, userId);
-            if (order == null) {
-                return View("OrderNotFound");
-            }
+            var query = new GetMyOrdersQuery
+            {
+                UserId = userId,
+                Status = status,
+                FromDate = fromDate,
+                ToDate = toDate,
+                Draw = draw,
+                Start = start,
+                Length = length
+            };
 
-            return View(order);
+            var result = await _api.GetMyOrdersAsync(query);
+
+            return Json(result);
         }
+        //[HttpPost]
+        //public async Task<IActionResult> OrderTracking(Guid? orderId)
+        //{
+        //    var token = HttpContext.Request.Cookies["jwt"];
+        //    if (string.IsNullOrEmpty(token))
+        //    {
+        //        return RedirectToAction("Login", "Auth");
+        //    }
+        //    var handler = new JwtSecurityTokenHandler();
+        //    var jwt = handler.ReadJwtToken(token);
+        //    var userId = jwt.Claims.First(c => c.Type == "Id").Value;
+
+        //    var order = await _api.GetByIdAndUserIdAsync(orderId, userId);
+        //    if (order == null)
+        //    {
+        //        return View("OrderNotFound");
+        //    }
+
+        //    return View(order);
+        //}
 
 
         [HttpGet]
@@ -190,10 +224,10 @@ namespace PrimeShop.Web.Controllers
                 Draw = request.Draw,
                 Start = request.Start,
                 Length = request.Length,
-                Search = request.Search?.Value ??""
+                Search = request.Search?.Value ?? ""
             };
 
-          
+
             var response = await _api.GetOrdersDataAsync(query);
 
             return Json(response);
@@ -202,10 +236,10 @@ namespace PrimeShop.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetByIdOrder(Guid id)
         {
-           
+
             var order = await _api.GetOrderByIdAsync(id);
 
-            return Json(order); 
+            return Json(order);
         }
 
 
@@ -229,16 +263,16 @@ namespace PrimeShop.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
         {
-           
-                var result = await _api.UpdateOrderAsync(command);
-                if (result != Guid.Empty)
-                {
-                    return Json(new { success = true });
-                }
 
-                return BadRequest("error");
-            
-            
+            var result = await _api.UpdateOrderAsync(command);
+            if (result != Guid.Empty)
+            {
+                return Json(new { success = true });
+            }
+
+            return BadRequest("error");
+
+
         }
     }
 }

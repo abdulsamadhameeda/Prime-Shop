@@ -100,6 +100,9 @@ namespace PrimeShop.Web.Interface
         [Put("/api/Order/Update")]
         Task<Guid> UpdateOrderAsync([Body] UpdateOrderCommand command);
 
+        [Get("/api/Order/GetMyOrders")]
+        Task<DataTableResponse<OrderDto>> GetMyOrdersAsync([Query] GetMyOrdersQuery query);
+
 
 
         [Post("/api/OrderItem/Create")]

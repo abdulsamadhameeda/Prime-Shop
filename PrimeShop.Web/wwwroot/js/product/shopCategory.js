@@ -145,8 +145,16 @@ function filters(categoryId, minPrice, maxPrice, pageNumber) {
                         html += `
                             <div class="col-lg-4 col-md-6">
                                 <div class="single-product">
-                                    <img class="img-fluid" src="${imgSrc}" alt="${product.name}"
-                                         style="background-color: #f8f9fa; object-fit: contain; width: 100%; height: 250px;">
+                                    <div class="product-image-wrapper">
+    <img class="img-fluid"
+         src="${imgSrc}"
+         alt="${product.name}"
+         style="background-color: #f8f9fa; object-fit: contain; width: 100%; height: 250px;">
+
+    ${isOutOfStock
+                                ? '<span class="out-of-stock-banner">Out of Stock</span>'
+                                : ''}
+</div>
                                     <div class="product-details">
                                         <h6>${product.name}</h6>
                                         <div class="price">

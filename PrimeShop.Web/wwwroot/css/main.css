@@ -4487,7 +4487,6 @@ label {
 
 .pagination {
     margin-top: 10px;
-    border-left: 1px solid #eee;
     border-radius: 0px;
 }
 
@@ -7983,7 +7982,7 @@ label {
         }
 
 .contact_form .primary-btn {
-    background: #ffba00;
+    background: linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
     color: #fff;
     margin-top: 20px;
     border: none;

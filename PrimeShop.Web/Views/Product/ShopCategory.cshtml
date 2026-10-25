@@ -18,11 +18,11 @@
     </div>
 </section>
 <!-- End Banner Area -->
-<div class="container">
+<div class="container mt-3">
     <div class="row">
-        <div class="col-xl-3 col-lg-4 col-md-5">
+        <div class="col-xl-3 col-lg-4 col-md-5 ">
             <div class="sidebar-categories">
-                <div class="head">Browse Categories</div>
+                <div class="head rounded-top">Browse Categories</div>
                 <ul class="main-categories">
                     <li class="main-nav-list">
                         <a onclick="filters(null, null, null)" style="cursor:pointer;">All Products</a>
@@ -41,9 +41,9 @@
 
             </div>
             <div class="sidebar-filter mt-50">
-                <div class="top-filter-head">Product Filters</div>
+                <div class="top-filter-head rounded-top">Product Filters</div>
                 <div class="common-filter">
-                    <div class="head pl-0">Price</div>
+                    <div class="head pl-0 ">Price</div>
                     <form id="price-filter-form">
                         <input type="hidden" id="selected-category-id" value="" />
 
@@ -52,16 +52,20 @@
                             <span>to</span>
                             <input type="number" name="maxPrice" class="form-control" placeholder="Max" min="0" />
                         </div>
-                        <button type="submit" class="primary-btn btn btn-sm w-50 mx-auto d-block">Apply</button>
+                        <button type="submit"
+                                class="primary-btn w-50 mx-auto d-block "
+                                style="width: 100px; height: 40px; line-height: 40px; padding: 0 15px;  border-radius: 0; border: none;">
+                            Apply
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
         <div class="col-xl-9 col-lg-8 col-md-7">
             <!-- Start Filter Bar -->
-            <div class="filter-bar d-flex flex-wrap align-items-center">
-                <div class="sorting">
-                    <select id="sort-products">
+            <div class="filter-bar d-flex flex-wrap align-items-center rounded-top">
+                <div class="sorting ">
+                    <select id="sort-products" >
                         <option value="default">Default sorting</option>
                         <option value="price-asc">Price: Low to High</option>
                         <option value="price-desc">Price: High to Low</option>
@@ -72,9 +76,9 @@
 
                 <div class="sorting mr-auto">
                     <select id="products-per-page">
-                        <option value="12">Show 12</option>
-                        <option value="24">Show 24</option>
-                        <option value="36">Show 36</option>
+                        <option value="10">Show 10</option>
+                        <option value="20">Show 20</option>
+                        <option value="30">Show 30</option>
                     </select>
                 </div>
 
@@ -104,3 +108,24 @@
     <script src="~/js/product/shopCategory.js" asp-append-version="true"></script>
 
 }
+<style>
+    .product-image-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .out-of-stock-banner {
+        position: absolute;
+        top: 50%;
+        left: -10%;
+        width: 120%;
+        padding: 10px 0;
+        background: rgba(220, 53, 69, 0.9);
+        color: #fff;
+        text-align: center;
+        font-weight: bold;
+        text-transform: uppercase;
+        transform: translateY(-50%) rotate(-10deg);
+        pointer-events: none;
+    }
+</style>

@@ -21,11 +21,13 @@
             <div class="table-responsive">
                 <table class="table">
                     <thead>
+                       
                         <tr>
                             <th scope="col" class="col-6">Product</th>
                             <th scope="col" class="col-2">Price</th>
-                            <th scope="col" class="col-2">Quantity</th>
+                            <th scope="col" class="col-1">Quantity</th>
                             <th scope="col" class="col-2">Total</th>
+                            <th scope="col" class="col-1"></th>
                         </tr>
                     </thead>
                     <tbody id="basket-items">
@@ -36,9 +38,11 @@
                             <td></td>
                             <td><h5 class="m-0">Subtotal</h5></td>
                             <td><h5 class="m-0" id="basket-total"></h5></td>
+                            <td></td>
+
                         </tr>
                         <tr>
-                            <td colspan="4" class="text-right">
+                            <td colspan="5" class="text-right">
                                 <div class="checkout_btn_inner d-flex align-items-center justify-content-end">
                                     <a class="gray_btn mr-3" asp-controller="Product" asp-action="ShopCategory">Continue Shopping</a>
                                     <a class="primary-btn" asp-controller="Order" asp-action="Checkout">Proceed to checkout</a>

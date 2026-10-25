@@ -108,5 +108,16 @@ namespace PrimeShop.WebApi.Controllers
             var result = await _mediator.Send(query);
             return Ok(result);
         }
+
+
+
+
+        [HttpGet("GetMyOrders")]
+        public async Task<IActionResult> GetMyOrders([FromQuery] GetMyOrdersQuery query)
+        {
+            var result = await _mediator.Send(query);
+
+            return Ok(result);
+        }
     }
 }

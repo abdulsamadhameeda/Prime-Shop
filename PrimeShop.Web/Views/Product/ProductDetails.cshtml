@@ -10,7 +10,7 @@
                 <h1>Product Details</h1>
 
             </div>
-        </div>	
+        </div>
     </div>
 </section>
 
@@ -19,7 +19,17 @@
         <div class="row s_product_inner">
             <div class="col-lg-6">
 
-<img class="img-fluid" src="@(!string.IsNullOrEmpty(Model.ImageUrl) ? Model.ImageUrl : "/img/product/p1.jpg")" style="background-color: #f8f9fa; object-fit: contain; width: 100%; height:auto;" />            </div>
+				<div class="product-image-wrapper">
+					<img class="img-fluid"
+						 src="@(!string.IsNullOrEmpty(Model.ImageUrl) ? Model.ImageUrl : "/img/product/p1.jpg")"
+						 style="background-color: #f8f9fa; object-fit: contain; width: 100%; height: auto;" />
+
+					@if (Model.StockQuantity <= 0)
+					{
+						<span class="out-of-stock-banner">Out of Stock</span>
+					}
+				</div>
+			</div>
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
                     <h3>@Model.Name</h3>
@@ -37,40 +47,40 @@
                     </ul>
                     <p>@Model.Description</p>
 
-                        <input type="hidden" name="productId" value="@Model.Id" />
-						
-                        <div class="product_count">
-                            <label for="qty">Quantity:</label>
-                            <input type="number" name="quantity" id="sst" min="1"
-                                   max="@Model.StockQuantity" value="1" class="input-text qty" />
-                            <button onclick="var result = document.getElementById('sst'); if(parseInt(result.value) < @Model.StockQuantity) result.value++; return false;"
-                                    class="increase items-count" type="button">
-                                <i class="lnr lnr-chevron-up"></i>
-                            </button>
-                            <button onclick="var result = document.getElementById('sst'); if(parseInt(result.value) > 1) result.value--; return false;"
-                                    class="reduced items-count" type="button">
-                                <i class="lnr lnr-chevron-down"></i>
-                            </button>
+                    <input type="hidden" name="productId" value="@Model.Id" />
 
-                        </div>
+                    <div class="product_count">
+                        <label for="qty">Quantity:</label>
+                        <input type="number" name="quantity" id="sst" min="1"
+                               max="@Model.StockQuantity" value="1" class="input-text qty" />
+                        <button onclick="var result = document.getElementById('sst'); if(parseInt(result.value) < @Model.StockQuantity) result.value++; return false;"
+                                class="increase items-count" type="button">
+                            <i class="lnr lnr-chevron-up"></i>
+                        </button>
+                        <button onclick="var result = document.getElementById('sst'); if(parseInt(result.value) > 1) result.value--; return false;"
+                                class="reduced items-count" type="button">
+                            <i class="lnr lnr-chevron-down"></i>
+                        </button>
 
-                        <div class="card_area d-flex align-items-center">
-    <button type="button" 
-        class="primary-btn text-white border-0" 
-        onclick="addToBasket('@Model.Id', @Model.StockQuantity)"
-        @(Model.StockQuantity <= 0 ? "disabled style=background:#cccccc;cursor:not-allowed;border-color:#cccccc;" : "")>
-        @(Model.StockQuantity > 0 ? "Add to Cart" : "Out of Stock")
-    </button>
-    
-<a class="icon_btn"
-   href="#"
-   id="wishlist-button"
-   data-product-id="@Model.Id"
-   data-wishlist-id=""
-   onclick="addToWishlist('@Model.Id', this); return false;">
-    <i class="wishlist-icon far fa-heart"></i>
-</a>
-</div>
+                    </div>
+
+                    <div class="card_area d-flex align-items-center">
+                        <button type="button"
+                                class="primary-btn text-white border-0"
+                                onclick="addToBasket('@Model.Id', @Model.StockQuantity)"
+                            @(Model.StockQuantity <= 0 ? "disabled style=background:#cccccc;cursor:not-allowed;border-color:#cccccc;" : "")>
+                            @(Model.StockQuantity > 0 ? "Add to Cart" : "Out of Stock")
+                        </button>
+
+                        <a class="icon_btn"
+                           href="#"
+                           id="wishlist-button"
+                           data-product-id="@Model.Id"
+                           data-wishlist-id=""
+                           onclick="addToWishlist('@Model.Id', this); return false;">
+                            <i class="wishlist-icon far fa-heart"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,7 +97,7 @@
                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
                    aria-selected="false">Specification</a>
             </li>
-           
+
             <li class="nav-item">
                 <a class="nav-link " id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
                    aria-selected="false">Reviews</a>
@@ -108,121 +118,11 @@
                 </div>
             </div>
             <div class="tab-pane fade show " id="review" role="tabpanel" aria-labelledby="review-tab">
-				  <div class="alert text-center" role="alert" style=" color: #FFA500; background-color: #fff8f0; color: #333;">
-coming soon
-</div>
-					@* <div class="row">
-						<div class="col-lg-6">
-							<div class="row total_rate">
-								<div class="col-6">
-									<div class="box_total">
-										<h5>Overall</h5>
-										<h4>4.0</h4>
-										<h6>(03 Reviews)</h6>
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="rating_list">
-										<h3>Based on 3 Reviews</h3>
-										<ul class="list">
-											<li><a href="#">5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="review_list">
-								<div class="review_item">
-									<div class="media">
-										<div class="d-flex">
-											<img src="img/product/review-1.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
-								</div>
-								<div class="review_item">
-									<div class="media">
-										<div class="d-flex">
-											<img src="img/product/review-2.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
-								</div>
-								<div class="review_item">
-									<div class="media">
-										<div class="d-flex">
-											<img src="img/product/review-3.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="review_box">
-								<h4>Add a Review</h4>
-								<p>Your Rating:</p>
-								<ul class="list">
-									<li><a href="#"><i class="fa fa-star"></i></a></li>
-									<li><a href="#"><i class="fa fa-star"></i></a></li>
-									<li><a href="#"><i class="fa fa-star"></i></a></li>
-									<li><a href="#"><i class="fa fa-star"></i></a></li>
-									<li><a href="#"><i class="fa fa-star"></i></a></li>
-								</ul>
-								<p>Outstanding</p>
-								<form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
-									<div class="col-md-12">
-										<div class="form-group">
-											<input type="text" class="form-control" id="name" name="name" placeholder="Comment..." >
-										</div>
-									</div>
-									
-									<div class="col-md-12 text-right">
-										<button type="submit" value="submit" class="primary-btn">Submit Now</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div> *@
-				</div>
+                <div class="alert text-center" role="alert" style=" color: #FFA500; background-color: #fff8f0; color: #333;">
+                    coming soon
+                </div>
+               
+            </div>
 
         </div>
     </div>
@@ -230,9 +130,30 @@ coming soon
 
 
 @section Scripts {
-	<script>
+    <script>
         var jwtToken = '@Context.Request.Cookies["jwt"]';
     </script>
-	    <script src="~/js/product/productDetails.js" asp-append-version="true"></script>
+    <script src="~/js/product/productDetails.js" asp-append-version="true"></script>
 
 }
+<style>
+    .product-image-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .out-of-stock-banner {
+        position: absolute;
+        top: 50%;
+        left: -10%;
+        width: 120%;
+        padding: 10px 0;
+        background: rgba(220, 53, 69, 0.9);
+        color: #fff;
+        text-align: center;
+        font-weight: bold;
+        text-transform: uppercase;
+        transform: translateY(-50%) rotate(-10deg);
+        pointer-events: none;
+    }
+</style>
