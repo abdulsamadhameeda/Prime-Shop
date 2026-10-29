@@ -78,13 +78,33 @@
                     type: 'POST',
                     data: form.serialize(),
                     success: function (response) {
-                        var newForm = $(response).find('#registerForm').html();
-                        if (newForm) {
-                            $('#registerForm').html(newForm);
-                        } else {
-                            window.location.href = '/Auth/Login';
-                        }
-                    }
+    var newForm = $(response).find('#registerForm').html();
+
+    if (newForm) {
+        $('#registerForm').html(newForm);
+    } else {
+       Swal.fire({
+        toast: true,
+        position: 'bottom-end',
+        icon: 'success',
+        title: 'Account created successfully!',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        background: '#FFA500',
+        color: '#fff',
+        iconColor: '#fff',
+        showClass: {
+            popup: 'swal2-noanimation'
+        },
+        hideClass: {
+            popup: ''
+        }
+    }).then(function () {
+        window.location.href = '/Auth/Login';
+    }); 
+    }
+}
                 });
             });
         });

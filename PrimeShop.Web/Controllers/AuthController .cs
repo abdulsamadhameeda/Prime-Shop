@@ -75,22 +75,39 @@ namespace PrimeShop.Web.Controllers
 
             catch (ApiException ex)
             {
-                if (ex.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                if (ex.StatusCode == System.Net.HttpStatusCode.Conflict)
                 {
-                    var validationErrors = await ex.GetContentAsAsync<ValidationProblemDetails>();
+                    ModelState.AddModelError(
+                        nameof(command.Email),
+                        "This email is already registered.");
+                }
+                else if (ex.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    var validationErrors =
+                        await ex.GetContentAsAsync<ValidationProblemDetails>();
 
                     if (validationErrors?.Errors != null)
                     {
                         foreach (var error in validationErrors.Errors)
                         {
-                            var errorMessage = string.Join(" | ", error.Value);
-                            ModelState.AddModelError(error.Key, errorMessage);
+                            foreach (var message in error.Value)
+                            {
+                                ModelState.AddModelError(error.Key, message);
+                            }
                         }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(
+                            string.Empty,
+                            "Please check the information you entered.");
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "An unexpected error occurred, please try again later.");
+                    ModelState.AddModelError(
+                        string.Empty,
+                        "An unexpected error occurred. Please try again later.");
                 }
 
                 return View(command);

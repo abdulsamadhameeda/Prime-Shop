@@ -21,15 +21,18 @@ namespace PrimeShop.WebApi.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterCommand command)
         {
-            var result = await _mediator.Send(command);
-
-            if (!result)
-            { 
-                return BadRequest(); 
+            try
+            {
+                await _mediator.Send(command);
+                return Ok();
             }
-                
+            catch (InvalidOperationException ex)
+            {
+                var errors = new ValidationProblemDetails();
+                errors.Errors.Add(nameof(command.Email), new[] { ex.Message });
 
-            return Ok();
+                return BadRequest(errors);
+            }
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginCommand command)

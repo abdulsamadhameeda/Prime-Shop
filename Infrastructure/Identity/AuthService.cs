@@ -16,8 +16,18 @@ namespace PrimeShop.Infrastructure.Identity
             _jwtTokenService = jwtTokenService;
         }
 
-        public async Task<string> RegisterAsync(string email, string password, string firstName, string lastName, string? phoneNumber)
+        public async Task<string> RegisterAsync(
+     string email,
+     string password,
+     string firstName,
+     string lastName,
+     string phoneNumber)
         {
+            var existingUser = await _userManager.FindByEmailAsync(email);
+
+            if (existingUser != null)
+                throw new InvalidOperationException("This email is already registered.");
+
             var user = new ApplicationUser
             {
                 Email = email,
@@ -30,7 +40,18 @@ namespace PrimeShop.Infrastructure.Identity
             var result = await _userManager.CreateAsync(user, password);
 
             if (!result.Succeeded)
-                throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
+            {
+                if (result.Errors.Any(e =>
+                    e.Code == "DuplicateEmail" ||
+                    e.Code == "DuplicateUserName"))
+                {
+                    throw new InvalidOperationException(
+                        "This email is already registered.");
+                }
+
+                throw new Exception(
+                    string.Join(", ", result.Errors.Select(e => e.Description)));
+            }
 
             await _userManager.AddToRoleAsync(user, "Customer");
 
